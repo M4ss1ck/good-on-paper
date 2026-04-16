@@ -1,3 +1,5 @@
+import type { SectionType } from "./cv";
+
 export interface FieldChange<T = string> {
   field: string;
   before: T;
@@ -13,6 +15,7 @@ export interface BulletChange {
 
 export interface ItemDiff {
   itemId: string;
+  identifier: string; // human-readable key, e.g. "Role / Company"
   type: "added" | "removed" | "changed";
   fields: FieldChange[];
   bullets?: BulletChange[];
@@ -20,6 +23,8 @@ export interface ItemDiff {
 
 export interface SectionDiff {
   sectionId: string;
+  sectionTitle: string;
+  sectionType: SectionType;
   type: "added" | "removed" | "changed";
   titleChange?: FieldChange;
   visibilityChange?: FieldChange<boolean>;
@@ -36,4 +41,5 @@ export interface CVDiff {
   rightId: string;
   meta: MetaDiff;
   sections: SectionDiff[];
+  unchanged: boolean;
 }

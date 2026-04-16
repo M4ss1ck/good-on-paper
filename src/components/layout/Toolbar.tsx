@@ -8,6 +8,7 @@ import { generatePdfDefinition } from "../pdf/generatePdf";
 import { ProviderSettings } from "../ai/ProviderSettings";
 import { DetectAIText } from "../ai/DetectAIText";
 import { TailorToJob } from "../ai/TailorToJob";
+import { CVSwitcher } from "../workspace/CVSwitcher";
 
 pdfMake.addVirtualFileSystem(pdfFonts);
 
@@ -96,9 +97,13 @@ export function Toolbar() {
 
   return (
     <div className="flex items-center gap-2 px-6 py-3 border-b border-gray-200 bg-white">
-      <span className="text-sm font-semibold text-primary mr-auto">
+      <span className="text-sm font-semibold text-primary">
         Good on Paper
       </span>
+
+      <CVSwitcher />
+
+      <span className="mr-auto" />
 
       {saveLabel && (
         <span className="text-xs text-light mr-1">{saveLabel}</span>

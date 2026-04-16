@@ -191,6 +191,13 @@ export const useCVStore = create<CVStore>()(
         // Prevent deleting the last CV
         if (state.workspace.order.length <= 1) return;
 
+        // Unlink any forks that reference this CV
+        for (const cv of Object.values(state.workspace.cvs)) {
+          if (cv.parentId === id) {
+            cv.parentId = null;
+          }
+        }
+
         delete state.workspace.cvs[id];
         state.workspace.order = state.workspace.order.filter((i) => i !== id);
 

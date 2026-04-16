@@ -4,11 +4,28 @@ import { PreviewSection } from "./PreviewSection";
 
 export function CVPreview() {
   const cv = useCVStore((s) => s.activeCv());
+  const workspace = useCVStore((s) => s.workspace);
+  const setActiveCV = useCVStore((s) => s.setActiveCV);
   if (!cv) return null;
+
   const visibleSections = cv.sections.filter((s) => s.visible);
+  const parentName = cv.parentId ? workspace.cvs[cv.parentId]?.name : null;
 
   return (
-    <div className="flex items-start justify-center p-8 min-h-full">
+    <div className="flex flex-col items-center p-8 min-h-full">
+      {/* CV name badge + fork indicator */}
+      <div className="w-full max-w-[210mm] mb-2 flex items-center gap-2 text-xs text-light">
+        <span className="font-medium text-muted">{cv.name}</span>
+        {parentName && cv.parentId && (
+          <button
+            className="hover:text-accent transition-colors"
+            onClick={() => setActiveCV(cv.parentId!)}
+          >
+            ↳ forked from {parentName}
+          </button>
+        )}
+      </div>
+
       <div className="w-full max-w-[210mm] min-h-[297mm] bg-page shadow-sm rounded px-12.5 py-10">
         <PreviewMeta meta={cv.meta} />
         {visibleSections.map((section) => (

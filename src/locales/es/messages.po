@@ -12,12 +12,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #: src/components/ai/TailorToJob.tsx:269
-msgid "— Applied"
-msgstr "— Aplicado"
+msgid "- Applied"
+msgstr "- Aplicado"
 
 #: src/components/ai/TailorToJob.tsx:281
-msgid "— Dismissed"
-msgstr "— Descartado"
+msgid "- Dismissed"
+msgstr "- Descartado"
 
 #. placeholder {0}: suggestions.filter((s) => s.status === "pending").length
 #. placeholder {1}: suggestions.filter((s) => s.status === "pending").length === 1 ? "" : "s"
@@ -656,12 +656,12 @@ msgstr "Traduciendo..."
 
 #. placeholder {0}: warnings.join("; ")
 #: src/components/ai/TranslateCV.tsx:66
-msgid "Translation complete with warnings: {0}. Review — AI translations may need adjustments."
-msgstr "Traducción completada con advertencias: {0}. Revisa — las traducciones de IA pueden necesitar ajustes."
+msgid "Translation complete with warnings: {0}. Review: AI translations may need adjustments."
+msgstr "Traducción completada con advertencias: {0}. Revisa: las traducciones de IA pueden necesitar ajustes."
 
 #: src/components/ai/TranslateCV.tsx:70
-msgid "Translation complete. Review — AI translations may need adjustments."
-msgstr "Traducción completada. Revisa — las traducciones de IA pueden necesitar ajustes."
+msgid "Translation complete. Review: AI translations may need adjustments."
+msgstr "Traducción completada. Revisa: las traducciones de IA pueden necesitar ajustes."
 
 #: src/components/ai/TranslateCV.tsx:82
 msgid "Unknown error"
@@ -688,5 +688,5 @@ msgid "You have a lot of saved CVs. Consider deleting old ones to keep things fa
 msgstr "Tienes muchos CVs guardados. Considera eliminar los antiguos para mantener la velocidad."
 
 #: src/components/ai/ProviderSettings.tsx:227
-msgid "Your API key is stored locally in your browser and sent only to the AI provider you configure. It never passes through our servers — the proxy only forwards your request."
-msgstr "Tu clave API se almacena localmente en tu navegador y solo se envía al proveedor de IA que configures. Nunca pasa por nuestros servidores — el proxy solo reenvía tu solicitud."
+msgid "Your API key is stored locally in your browser and sent only to the AI provider you configure. It never passes through our servers. The proxy only forwards your request."
+msgstr "Tu clave API se almacena localmente en tu navegador y solo se envía al proveedor de IA que configures. Nunca pasa por nuestros servidores. El proxy solo reenvía tu solicitud."

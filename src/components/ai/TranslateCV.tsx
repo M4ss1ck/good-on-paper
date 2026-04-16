@@ -63,11 +63,11 @@ export function TranslateCV({ open, onClose }: TranslateCVProps) {
 
       if (warnings.length > 0) {
         setResultMessage(
-          t`Translation complete with warnings: ${warnings.join("; ")}. Review — AI translations may need adjustments.`,
+          t`Translation complete with warnings: ${warnings.join("; ")}. Review: AI translations may need adjustments.`,
         );
       } else {
         setResultMessage(
-          t`Translation complete. Review — AI translations may need adjustments.`,
+          t`Translation complete. Review: AI translations may need adjustments.`,
         );
         setTimeout(onClose, 2000);
       }

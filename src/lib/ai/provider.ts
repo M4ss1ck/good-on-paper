@@ -11,9 +11,9 @@ interface AIRequestBody {
 }
 
 function friendlyError(status: number, message: string): string {
-  if (status === 429) return "Rate limited — try again in a minute";
+  if (status === 429) return "Rate limited. Try again in a minute.";
   if (status === 401 || status === 403)
-    return "Invalid API key — check your settings";
+    return "Invalid API key. Check your settings.";
   if (status === 502 || status === 503)
     return "Couldn't reach the AI provider";
   return message || `Provider returned ${status}`;
@@ -55,7 +55,7 @@ export async function callAI(
   ).choices?.[0]?.message?.content?.trim();
 
   if (!content)
-    throw new Error("The AI returned an empty response — try again");
+    throw new Error("The AI returned an empty response. Try again.");
 
   return content;
 }

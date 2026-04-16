@@ -14,12 +14,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #: src/components/ai/TailorToJob.tsx:269
-msgid "— Applied"
-msgstr "— Applied"
+msgid "- Applied"
+msgstr "- Applied"
 
 #: src/components/ai/TailorToJob.tsx:281
-msgid "— Dismissed"
-msgstr "— Dismissed"
+msgid "- Dismissed"
+msgstr "- Dismissed"
 
 #. placeholder {0}: suggestions.filter((s) => s.status === "pending").length
 #. placeholder {1}: suggestions.filter((s) => s.status === "pending").length === 1 ? "" : "s"
@@ -658,12 +658,12 @@ msgstr "Translating..."
 
 #. placeholder {0}: warnings.join("; ")
 #: src/components/ai/TranslateCV.tsx:66
-msgid "Translation complete with warnings: {0}. Review — AI translations may need adjustments."
-msgstr "Translation complete with warnings: {0}. Review — AI translations may need adjustments."
+msgid "Translation complete with warnings: {0}. Review: AI translations may need adjustments."
+msgstr "Translation complete with warnings: {0}. Review: AI translations may need adjustments."
 
 #: src/components/ai/TranslateCV.tsx:70
-msgid "Translation complete. Review — AI translations may need adjustments."
-msgstr "Translation complete. Review — AI translations may need adjustments."
+msgid "Translation complete. Review: AI translations may need adjustments."
+msgstr "Translation complete. Review: AI translations may need adjustments."
 
 #: src/components/ai/TranslateCV.tsx:82
 msgid "Unknown error"
@@ -690,5 +690,5 @@ msgid "You have a lot of saved CVs. Consider deleting old ones to keep things fa
 msgstr "You have a lot of saved CVs. Consider deleting old ones to keep things fast."
 
 #: src/components/ai/ProviderSettings.tsx:227
-msgid "Your API key is stored locally in your browser and sent only to the AI provider you configure. It never passes through our servers — the proxy only forwards your request."
-msgstr "Your API key is stored locally in your browser and sent only to the AI provider you configure. It never passes through our servers — the proxy only forwards your request."
+msgid "Your API key is stored locally in your browser and sent only to the AI provider you configure. It never passes through our servers. The proxy only forwards your request."
+msgstr "Your API key is stored locally in your browser and sent only to the AI provider you configure. It never passes through our servers. The proxy only forwards your request."

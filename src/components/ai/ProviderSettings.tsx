@@ -226,7 +226,7 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
         <p className="text-xs text-gray-400 leading-relaxed">
           <Trans>
             Your API key is stored locally in your browser and sent only to the
-            AI provider you configure. It never passes through our servers — the
+            AI provider you configure. It never passes through our servers. The
             proxy only forwards your request.
           </Trans>
         </p>

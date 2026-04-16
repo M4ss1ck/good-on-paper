@@ -266,7 +266,7 @@ function SuggestionCard({
         <div className="flex items-center gap-2 text-xs text-green-700">
           <Check size={14} />
           <span className="font-medium capitalize">{suggestion.section}</span>
-          <span><Trans>— Applied</Trans></span>
+          <span><Trans>- Applied</Trans></span>
         </div>
       </div>
     );
@@ -278,7 +278,7 @@ function SuggestionCard({
         <div className="flex items-center gap-2 text-xs text-muted">
           <X size={14} />
           <span className="font-medium capitalize">{suggestion.section}</span>
-          <span><Trans>— Dismissed</Trans></span>
+          <span><Trans>- Dismissed</Trans></span>
         </div>
       </div>
     );

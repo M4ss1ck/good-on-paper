@@ -7,6 +7,7 @@ import type {
   SummaryItem,
   LanguageItem,
   CustomItem,
+  SectionType,
 } from "../../types/cv";
 import { localeToLanguageName } from "../localeToLanguageName";
 
@@ -180,4 +181,184 @@ export function improveBulletPrompt(
       content: `Role: ${role} at ${company}\nOriginal bullet: "${bullet}"\n\nRewrite this bullet.`,
     },
   ];
+}
+
+// ── CV Translation ─────────────────────────────────────────
+
+interface TranslatableSection {
+  type: SectionType;
+  title: string;
+  items: unknown[];
+}
+
+interface TranslatableCV {
+  meta: { title: string; location: string };
+  sections: TranslatableSection[];
+}
+
+export function serializeCVForTranslation(cv: CV): TranslatableCV {
+  return {
+    meta: {
+      title: cv.meta.title,
+      location: cv.meta.location,
+    },
+    sections: cv.sections.map((s) => ({
+      type: s.type,
+      title: s.title,
+      items: s.items.map((item) => {
+        switch (s.type) {
+          case "summary":
+            return { content: (item as SummaryItem).content };
+          case "skills":
+            return {
+              category: (item as SkillItem).category,
+              items: (item as SkillItem).items,
+            };
+          case "experience": {
+            const e = item as ExperienceItem;
+            return {
+              role: e.role,
+              company: e.company,
+              location: e.location,
+              bullets: e.bullets,
+            };
+          }
+          case "education": {
+            const ed = item as EducationItem;
+            return {
+              degree: ed.degree,
+              institution: ed.institution,
+              notes: ed.notes ?? "",
+            };
+          }
+          case "languages": {
+            const l = item as LanguageItem;
+            return { language: l.language, level: l.level };
+          }
+          case "custom":
+            return { content: (item as CustomItem).content };
+        }
+      }),
+    })),
+  };
+}
+
+export function translateCVPrompt(
+  cv: CV,
+  targetLocale: string,
+): { role: string; content: string }[] {
+  const serialized = serializeCVForTranslation(cv);
+  const sourceLang = localeToLanguageName(cv.meta.locale ?? "en");
+  const targetLang = localeToLanguageName(targetLocale);
+
+  return [
+    {
+      role: "system",
+      content: `You are a professional translator specializing in CVs and resumes. Translate the following CV content from ${sourceLang} to ${targetLang}.
+
+Rules:
+- Translate faithfully. Do not add, remove, or embellish content.
+- Preserve proper nouns: company names, technology names, city names, institution names, programming languages.
+- Keep the same professional tone.
+- Return ONLY valid JSON with the exact same structure as the input. No markdown fences, no explanation, no extra text.
+- Every key in the input must appear in your output.`,
+    },
+    {
+      role: "user",
+      content: JSON.stringify(serialized),
+    },
+  ];
+}
+
+export function deserializeTranslation(
+  originalCV: CV,
+  translatedJson: string,
+): { cv: CV; warnings: string[] } {
+  const warnings: string[] = [];
+  const clone: CV = JSON.parse(JSON.stringify(originalCV));
+
+  let parsed: TranslatableCV;
+  try {
+    parsed = JSON.parse(translatedJson);
+  } catch {
+    throw new Error("JSON_PARSE_FAILED");
+  }
+
+  // Apply meta
+  if (parsed.meta) {
+    if (typeof parsed.meta.title === "string") clone.meta.title = parsed.meta.title;
+    if (typeof parsed.meta.location === "string") clone.meta.location = parsed.meta.location;
+  }
+
+  // Apply sections
+  if (!Array.isArray(parsed.sections)) {
+    warnings.push("Missing sections array. Kept original content.");
+    return { cv: clone, warnings };
+  }
+
+  for (let si = 0; si < clone.sections.length; si++) {
+    const origSection = clone.sections[si];
+    const transSection = parsed.sections[si];
+    if (!transSection) {
+      warnings.push(`Section "${origSection.title}" not translated`);
+      continue;
+    }
+
+    if (typeof transSection.title === "string") {
+      origSection.title = transSection.title;
+    }
+
+    if (!Array.isArray(transSection.items)) continue;
+
+    for (let ii = 0; ii < origSection.items.length; ii++) {
+      const transItem = transSection.items[ii] as Record<string, unknown> | undefined;
+      if (!transItem) continue;
+
+      switch (origSection.type) {
+        case "summary": {
+          const item = origSection.items[ii] as SummaryItem;
+          if (typeof transItem.content === "string") item.content = transItem.content;
+          break;
+        }
+        case "skills": {
+          const item = origSection.items[ii] as SkillItem;
+          if (typeof transItem.category === "string") item.category = transItem.category;
+          if (Array.isArray(transItem.items)) item.items = transItem.items as string[];
+          break;
+        }
+        case "experience": {
+          const item = origSection.items[ii] as ExperienceItem;
+          if (typeof transItem.role === "string") item.role = transItem.role;
+          if (typeof transItem.company === "string") item.company = transItem.company;
+          if (typeof transItem.location === "string") item.location = transItem.location;
+          if (Array.isArray(transItem.bullets)) item.bullets = transItem.bullets as string[];
+          break;
+        }
+        case "education": {
+          const item = origSection.items[ii] as EducationItem;
+          if (typeof transItem.degree === "string") item.degree = transItem.degree;
+          if (typeof transItem.institution === "string") item.institution = transItem.institution;
+          if (typeof transItem.notes === "string") item.notes = transItem.notes;
+          break;
+        }
+        case "languages": {
+          const item = origSection.items[ii] as LanguageItem;
+          if (typeof transItem.language === "string") item.language = transItem.language;
+          if (typeof transItem.level === "string") item.level = transItem.level;
+          break;
+        }
+        case "custom": {
+          const item = origSection.items[ii] as CustomItem;
+          if (typeof transItem.content === "string") item.content = transItem.content;
+          break;
+        }
+      }
+    }
+
+    if (transSection.items.length < origSection.items.length) {
+      warnings.push(`Section "${origSection.title}": only ${transSection.items.length}/${origSection.items.length} items translated`);
+    }
+  }
+
+  return { cv: clone, warnings };
 }

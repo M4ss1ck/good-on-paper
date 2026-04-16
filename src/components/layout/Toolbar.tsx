@@ -7,6 +7,7 @@ import { useAIStore } from "../../store/aiStore";
 import { generatePdfDefinition } from "../pdf/generatePdf";
 import { ProviderSettings } from "../ai/ProviderSettings";
 import { DetectAIText } from "../ai/DetectAIText";
+import { TailorToJob } from "../ai/TailorToJob";
 
 pdfMake.addVirtualFileSystem(pdfFonts);
 
@@ -107,6 +108,8 @@ export function Toolbar() {
       />
 
       <DetectAIText />
+
+      <TailorToJob />
 
       <button
         className={btnClass}

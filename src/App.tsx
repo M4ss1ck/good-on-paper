@@ -1,15 +1,20 @@
 import { useEffect } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { Trans } from "@lingui/react/macro";
 import { AppLayout } from "./components/layout/AppLayout";
+import { LandingPage } from "./components/landing/LandingPage";
 import { useCVStore } from "./store/cvStore";
 import { useUIStore } from "./store/uiStore";
 
-function App() {
+const LAST_PAGE_KEY = "gop-last-page";
+
+function EditorRoute() {
   const loadFromStorage = useCVStore((s) => s.loadFromStorage);
   const storageError = useUIStore((s) => s.storageError);
   const setStorageError = useUIStore((s) => s.setStorageError);
 
   useEffect(() => {
+    localStorage.setItem(LAST_PAGE_KEY, "/editor");
     loadFromStorage();
   }, [loadFromStorage]);
 
@@ -37,6 +42,24 @@ function App() {
         </div>
       )}
     </>
+  );
+}
+
+function HomeRoute() {
+  if (localStorage.getItem(LAST_PAGE_KEY) === "/editor") {
+    return <Navigate to="/editor" replace />;
+  }
+  return <LandingPage />;
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomeRoute />} />
+        <Route path="/editor" element={<EditorRoute />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

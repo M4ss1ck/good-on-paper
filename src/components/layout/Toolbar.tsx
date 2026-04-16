@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Sparkles, Search, Target, Globe, Settings } from "lucide-react";
+import { Link } from "react-router";
 import { Trans } from "@lingui/react/macro";
 import { t } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react";
@@ -114,9 +115,13 @@ export function Toolbar() {
 
   return (
     <div className="flex items-center gap-2 px-6 py-3 border-b border-gray-200 bg-white">
-      <span className="text-sm font-semibold text-primary">
+      <Link
+        to="/"
+        onClick={() => localStorage.setItem("gop-last-page", "/")}
+        className="text-sm font-semibold text-primary hover:text-accent transition-colors"
+      >
         Good on Paper
-      </span>
+      </Link>
 
       <CVSwitcher />
 

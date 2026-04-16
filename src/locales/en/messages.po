@@ -80,6 +80,10 @@ msgstr "Account ID"
 msgid "active"
 msgstr "active"
 
+#: src/components/landing/LandingPage.tsx:249
+msgid "Add your experience, skills, and education."
+msgstr "Add your experience, skills, and education."
+
 #: src/components/diff/MetaDiff.tsx:20
 msgid "After"
 msgstr "After"
@@ -88,8 +92,12 @@ msgstr "After"
 msgid "Against"
 msgstr "Against"
 
+#: src/components/landing/LandingPage.tsx:188
+msgid "AI assist (BYOK)"
+msgstr "AI assist (BYOK)"
+
 #: src/components/ai/DetectAIText.tsx:63
-#: src/components/layout/Toolbar.tsx:177
+#: src/components/layout/Toolbar.tsx:182
 msgid "AI Phrase Check"
 msgstr "AI Phrase Check"
 
@@ -128,7 +136,7 @@ msgstr "Bullet points"
 #: src/components/ai/ProviderSettings.tsx:241
 #: src/components/diff/DiffPicker.tsx:96
 #: src/components/editor/SectionList.tsx:150
-#: src/components/layout/Toolbar.tsx:225
+#: src/components/layout/Toolbar.tsx:230
 #: src/components/workspace/CVListItem.tsx:174
 #: src/components/workspace/NewCVDialog.tsx:113
 msgid "Cancel"
@@ -152,7 +160,7 @@ msgid "Company"
 msgstr "Company"
 
 #: src/components/diff/DiffPicker.tsx:103
-#: src/components/layout/Toolbar.tsx:136
+#: src/components/layout/Toolbar.tsx:141
 msgid "Compare"
 msgstr "Compare"
 
@@ -172,7 +180,7 @@ msgstr "Configure AI to generate a summary"
 msgid "Configure AI to improve bullets"
 msgstr "Configure AI to improve bullets"
 
-#: src/components/layout/Toolbar.tsx:219
+#: src/components/layout/Toolbar.tsx:224
 msgid "Confirm Reset"
 msgstr "Confirm Reset"
 
@@ -199,6 +207,10 @@ msgstr "Couldn't parse the AI response as JSON. Copy and apply manually."
 #: src/components/workspace/NewCVDialog.tsx:120
 msgid "Create"
 msgstr "Create"
+
+#: src/components/landing/LandingPage.tsx:216
+msgid "Create variants for different roles. Compare versions side by side with visual diffs."
+msgstr "Create variants for different roles. Compare versions side by side with visual diffs."
 
 #: src/components/ai/TranslateCV.tsx:116
 msgid "Current language"
@@ -243,7 +255,11 @@ msgstr "Describe an achievement or responsibility..."
 msgid "Dismiss"
 msgstr "Dismiss"
 
-#: src/components/layout/Toolbar.tsx:133
+#: src/components/landing/LandingPage.tsx:240
+msgid "Download"
+msgstr "Download"
+
+#: src/components/layout/Toolbar.tsx:138
 msgid "Download PDF"
 msgstr "Download PDF"
 
@@ -259,6 +275,10 @@ msgstr "Duplicate"
 #: src/components/editor/MetaEditor.tsx:84
 msgid "e.g. en, es, pt-BR"
 msgstr "e.g. en, es, pt-BR"
+
+#: src/components/landing/LandingPage.tsx:186
+msgid "Edit anything"
+msgstr "Edit anything"
 
 #: src/components/editor/SectionList.tsx:29
 msgid "Education"
@@ -281,6 +301,10 @@ msgstr "empty"
 msgid "End date"
 msgstr "End date"
 
+#: src/components/landing/LandingPage.tsx:123
+msgid "Everything you need, nothing you don't."
+msgstr "Everything you need, nothing you don't."
+
 #: src/components/editor/SectionList.tsx:177
 msgid "Expand"
 msgstr "Expand"
@@ -293,13 +317,21 @@ msgstr "Experience"
 msgid "Experience Entry"
 msgstr "Experience Entry"
 
-#: src/components/layout/Toolbar.tsx:139
+#: src/components/landing/LandingPage.tsx:253
+msgid "Export as PDF, ready to send."
+msgstr "Export as PDF, ready to send."
+
+#: src/components/layout/Toolbar.tsx:144
 msgid "Export JSON"
 msgstr "Export JSON"
 
 #: src/components/diff/MetaDiff.tsx:18
 msgid "Field"
 msgstr "Field"
+
+#: src/components/landing/LandingPage.tsx:236
+msgid "Fill in"
+msgstr "Fill in"
 
 #: src/components/editor/CVEditor.tsx:25
 msgid "Font"
@@ -309,6 +341,10 @@ msgstr "Font"
 #: src/components/workspace/NewCVDialog.tsx:120
 msgid "Fork"
 msgstr "Fork"
+
+#: src/components/landing/LandingPage.tsx:190
+msgid "Fork & compare"
+msgstr "Fork & compare"
 
 #: src/components/workspace/CVList.tsx:63
 msgid "Fork active CV"
@@ -332,6 +368,10 @@ msgstr "forked from {parentName}"
 msgid "Found {0} phrase{1} a recruiter might notice. Click a flag to jump to it."
 msgstr "Found {0} phrase{1} a recruiter might notice. Click a flag to jump to it."
 
+#: src/components/landing/LandingPage.tsx:192
+msgid "Free forever"
+msgstr "Free forever"
+
 #: src/components/editor/CustomEditor.tsx:23
 msgid "Freeform content..."
 msgstr "Freeform content..."
@@ -343,6 +383,10 @@ msgstr "Full Name"
 #: src/components/ai/GenerateSummary.tsx:49
 msgid "Generate from my experience"
 msgstr "Generate from my experience"
+
+#: src/components/landing/LandingPage.tsx:209
+msgid "Generate summaries, improve bullets, tailor to job descriptions. Bring your own API key."
+msgstr "Generate summaries, improve bullets, tailor to job descriptions. Bring your own API key."
 
 #: src/components/pdf/PdfPreviewModal.tsx:67
 msgid "Generating PDF..."
@@ -356,7 +400,11 @@ msgstr "Hide"
 msgid "Hide section"
 msgstr "Hide section"
 
-#: src/components/layout/Toolbar.tsx:145
+#: src/components/landing/LandingPage.tsx:146
+msgid "How it works"
+msgstr "How it works"
+
+#: src/components/layout/Toolbar.tsx:150
 msgid "Import JSON"
 msgstr "Import JSON"
 
@@ -413,7 +461,7 @@ msgstr "My new CV"
 msgid "Native"
 msgstr "Native"
 
-#: src/components/layout/Toolbar.tsx:230
+#: src/components/layout/Toolbar.tsx:235
 msgid "New CV"
 msgstr "New CV"
 
@@ -461,7 +509,7 @@ msgstr "No suggestions generated. The CV may already be well-aligned."
 msgid "Notes (optional)"
 msgstr "Notes (optional)"
 
-#: src/App.tsx:34
+#: src/App.tsx:39
 msgid "OK"
 msgstr "OK"
 
@@ -485,7 +533,11 @@ msgstr "Personal Information"
 msgid "Phone"
 msgstr "Phone"
 
-#: src/components/layout/Toolbar.tsx:130
+#: src/components/landing/LandingPage.tsx:238
+msgid "Preview"
+msgstr "Preview"
+
+#: src/components/layout/Toolbar.tsx:135
 msgid "Preview PDF"
 msgstr "Preview PDF"
 
@@ -545,17 +597,25 @@ msgstr "Role / Title"
 msgid "Save"
 msgstr "Save"
 
-#: src/components/layout/Toolbar.tsx:112
+#: src/components/layout/Toolbar.tsx:113
 msgid "Saved"
 msgstr "Saved"
 
-#: src/components/layout/Toolbar.tsx:110
+#: src/components/layout/Toolbar.tsx:111
 msgid "Saving..."
 msgstr "Saving..."
 
 #: src/components/editor/SectionList.tsx:228
 msgid "Sections"
 msgstr "Sections"
+
+#: src/components/landing/LandingPage.tsx:202
+msgid "Sections, bullets, skills, education. Drag to reorder. Toggle visibility. No templates to fight."
+msgstr "Sections, bullets, skills, education. Drag to reorder. Toggle visibility. No templates to fight."
+
+#: src/components/landing/LandingPage.tsx:251
+msgid "See your CV rendered in real time."
+msgstr "See your CV rendered in real time."
 
 #: src/components/diff/DiffPicker.tsx:66
 #: src/components/diff/DiffPicker.tsx:80
@@ -571,7 +631,7 @@ msgstr "Select level"
 msgid "Select two different CVs to compare."
 msgstr "Select two different CVs to compare."
 
-#: src/components/layout/Toolbar.tsx:207
+#: src/components/layout/Toolbar.tsx:212
 msgid "Settings"
 msgstr "Settings"
 
@@ -595,11 +655,15 @@ msgstr "Skills (comma-separated, e.g. React, TypeScript, Node.js)"
 msgid "Source CV"
 msgstr "Source CV"
 
+#: src/components/landing/LandingPage.tsx:116
+msgid "Start building"
+msgstr "Start building"
+
 #: src/components/editor/ExperienceEditor.tsx:70
 msgid "Start date"
 msgstr "Start date"
 
-#: src/App.tsx:28
+#: src/App.tsx:33
 msgid "Storage Error"
 msgstr "Storage Error"
 
@@ -615,7 +679,7 @@ msgstr "Summary"
 msgid "Tailor my CV"
 msgstr "Tailor my CV"
 
-#: src/components/layout/Toolbar.tsx:187
+#: src/components/layout/Toolbar.tsx:192
 msgid "Tailor to Job"
 msgstr "Tailor to Job"
 
@@ -635,12 +699,16 @@ msgstr "Test connection"
 msgid "Testing..."
 msgstr "Testing..."
 
+#: src/components/landing/LandingPage.tsx:110
+msgid "The CV builder that gets out of your way."
+msgstr "The CV builder that gets out of your way."
+
 #: src/components/diff/DiffView.tsx:44
 msgid "These two CVs are identical."
 msgstr "These two CVs are identical."
 
 #: src/components/ai/TranslateCV.tsx:153
-#: src/components/layout/Toolbar.tsx:197
+#: src/components/layout/Toolbar.tsx:202
 msgid "Translate"
 msgstr "Translate"
 
@@ -692,3 +760,7 @@ msgstr "You have a lot of saved CVs. Consider deleting old ones to keep things f
 #: src/components/ai/ProviderSettings.tsx:227
 msgid "Your API key is stored locally in your browser and sent only to the AI provider you configure. It never passes through our servers. The proxy only forwards your request."
 msgstr "Your API key is stored locally in your browser and sent only to the AI provider you configure. It never passes through our servers. The proxy only forwards your request."
+
+#: src/components/landing/LandingPage.tsx:223
+msgid "Your data stays in your browser. No account, no cloud, no tracking. Open source."
+msgstr "Your data stays in your browser. No account, no cloud, no tracking. Open source."

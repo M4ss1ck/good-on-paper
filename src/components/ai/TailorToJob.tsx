@@ -39,7 +39,7 @@ function parseSuggestions(raw: string): TrackedSuggestion[] | null {
 }
 
 export function TailorToJob({ open, onClose }: TailorToJobProps) {
-  const cv = useCVStore((s) => s.cv);
+  const cv = useCVStore((s) => s.activeCv());
   const updateItem = useCVStore((s) => s.updateItem);
   const updateBullet = useCVStore((s) => s.updateBullet);
   const { run, state, error, reset } = useAIAction();
@@ -53,6 +53,7 @@ export function TailorToJob({ open, onClose }: TailorToJobProps) {
   };
 
   const handleTailor = async () => {
+    if (!cv) return;
     setSuggestions(null);
     setRawFallback(null);
     reset();
@@ -71,6 +72,7 @@ export function TailorToJob({ open, onClose }: TailorToJobProps) {
 
   const handleAccept = (index: number) => {
     if (!suggestions) return;
+    if (!cv) return;
     const s = suggestions[index];
 
     // Try to find the matching section and apply the change

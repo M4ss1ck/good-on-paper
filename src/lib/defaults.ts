@@ -1,8 +1,14 @@
-import type { CV } from "../types/cv";
+import type { CV, CVWorkspace } from "../types/cv";
 import { generateId } from "./id";
 
 export function createDefaultCV(): CV {
+  const now = new Date().toISOString();
   return {
+    id: generateId(),
+    name: "My CV",
+    createdAt: now,
+    updatedAt: now,
+    parentId: null,
     meta: {
       name: "",
       title: "",
@@ -48,5 +54,14 @@ export function createDefaultCV(): CV {
         items: [],
       },
     ],
+  };
+}
+
+export function createDefaultWorkspace(): CVWorkspace {
+  const cv = createDefaultCV();
+  return {
+    cvs: { [cv.id]: cv },
+    order: [cv.id],
+    activeCvId: cv.id,
   };
 }

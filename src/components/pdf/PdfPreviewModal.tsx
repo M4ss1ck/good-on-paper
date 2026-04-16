@@ -10,11 +10,11 @@ pdfMake.addVirtualFileSystem(pdfFonts);
 export function PdfPreviewModal() {
   const open = useUIStore((s) => s.pdfModalOpen);
   const close = useUIStore((s) => s.setPdfModalOpen);
-  const cv = useCVStore((s) => s.cv);
+  const cv = useCVStore((s) => s.activeCv());
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open || !cv) return;
 
     let revoked = false;
     const def = generatePdfDefinition(cv);
@@ -31,7 +31,7 @@ export function PdfPreviewModal() {
         return null;
       });
     };
-  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [open, cv]);
 
   if (!open) return null;
 

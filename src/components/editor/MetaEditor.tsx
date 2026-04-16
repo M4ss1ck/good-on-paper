@@ -1,8 +1,10 @@
 import { useCVStore } from "../../store/cvStore";
 
 export function MetaEditor() {
-  const meta = useCVStore((s) => s.cv.meta);
+  const meta = useCVStore((s) => s.activeCv()?.meta);
   const updateMeta = useCVStore((s) => s.updateMeta);
+
+  if (!meta) return null;
 
   const addLink = () => {
     updateMeta({ links: [...meta.links, { label: "", url: "" }] });

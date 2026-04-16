@@ -1,6 +1,17 @@
 export interface CV {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  parentId: string | null;
   meta: CVMeta;
   sections: Section[];
+}
+
+export interface CVWorkspace {
+  cvs: Record<string, CV>;
+  order: string[];
+  activeCvId: string | null;
 }
 
 export interface CVMeta {

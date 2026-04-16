@@ -199,7 +199,7 @@ function SortableSectionCard({ section }: { section: Section }) {
 }
 
 export function SectionList() {
-  const sections = useCVStore((s) => s.cv.sections);
+  const sections = useCVStore((s) => s.activeCv()?.sections ?? []);
   const moveSection = useCVStore((s) => s.moveSection);
   const addSection = useCVStore((s) => s.addSection);
   const [showAddMenu, setShowAddMenu] = useState(false);

@@ -12,7 +12,7 @@ import { TailorToJob } from "../ai/TailorToJob";
 pdfMake.addVirtualFileSystem(pdfFonts);
 
 export function Toolbar() {
-  const cv = useCVStore((s) => s.cv);
+  const cv = useCVStore((s) => s.activeCv());
   const exportJson = useCVStore((s) => s.exportJson);
   const importJson = useCVStore((s) => s.importJson);
   const resetCV = useCVStore((s) => s.resetCV);
@@ -46,6 +46,7 @@ export function Toolbar() {
   };
 
   const handleDownloadPdf = () => {
+    if (!cv) return;
     const def = generatePdfDefinition(cv);
     pdfMake.createPdf(def).download("cv.pdf");
   };

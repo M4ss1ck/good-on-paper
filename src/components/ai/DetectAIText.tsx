@@ -9,12 +9,12 @@ interface DetectAITextProps {
 }
 
 export function DetectAIText({ open, onClose }: DetectAITextProps) {
-  const cv = useCVStore((s) => s.cv);
+  const cv = useCVStore((s) => s.activeCv());
   const setActiveSection = useUIStore((s) => s.setActiveSection);
   const [scanCount, setScanCount] = useState(0);
 
   const flags = useMemo(() => {
-    if (!open) return [];
+    if (!open || !cv) return [];
     return detectAIPhrases(cv);
   }, [open, cv, scanCount]); // eslint-disable-line react-hooks/exhaustive-deps
 

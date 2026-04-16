@@ -1,30 +1,76 @@
-import type { CV } from "../types/cv";
+import type { CVWorkspace } from "../types/cv";
+import { generateId } from "./id";
+import { createDefaultWorkspace } from "./defaults";
 
-const STORAGE_KEY = "gop-cv";
+const WORKSPACE_KEY = "gop-workspace";
+const OLD_CV_KEY = "gop-cv";
 
-export function loadCV(): CV | null {
+function migrateFromV1(): CVWorkspace | null {
+  const raw = localStorage.getItem(OLD_CV_KEY);
+  if (!raw) return null;
+
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    return JSON.parse(raw) as CV;
+    const oldCv = JSON.parse(raw);
+    const now = new Date().toISOString();
+    const id = generateId();
+
+    const migrated: CVWorkspace = {
+      cvs: {
+        [id]: {
+          ...oldCv,
+          id,
+          name: "My CV",
+          createdAt: now,
+          updatedAt: now,
+          parentId: null,
+        },
+      },
+      order: [id],
+      activeCvId: id,
+    };
+
+    localStorage.removeItem(OLD_CV_KEY);
+    return migrated;
   } catch {
     return null;
   }
 }
 
-export function saveCV(cv: CV): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(cv));
+export function loadWorkspace(): CVWorkspace {
+  // Try new key first
+  try {
+    const raw = localStorage.getItem(WORKSPACE_KEY);
+    if (raw) return JSON.parse(raw) as CVWorkspace;
+  } catch {
+    // fall through
+  }
+
+  // Try migrating from v1
+  const migrated = migrateFromV1();
+  if (migrated) {
+    saveWorkspace(migrated);
+    return migrated;
+  }
+
+  // Fresh workspace
+  const fresh = createDefaultWorkspace();
+  saveWorkspace(fresh);
+  return fresh;
+}
+
+export function saveWorkspace(workspace: CVWorkspace): void {
+  localStorage.setItem(WORKSPACE_KEY, JSON.stringify(workspace));
 }
 
 export function createDebouncedSave(
   delay: number,
   onSaved?: () => void,
-): (cv: CV) => void {
+): (workspace: CVWorkspace) => void {
   let timer: ReturnType<typeof setTimeout>;
-  return (cv: CV) => {
+  return (workspace: CVWorkspace) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      saveCV(cv);
+      saveWorkspace(workspace);
       onSaved?.();
     }, delay);
   };

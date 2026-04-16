@@ -3,7 +3,8 @@ import { PreviewMeta } from "./PreviewMeta";
 import { PreviewSection } from "./PreviewSection";
 
 export function CVPreview() {
-  const cv = useCVStore((s) => s.cv);
+  const cv = useCVStore((s) => s.activeCv());
+  if (!cv) return null;
   const visibleSections = cv.sections.filter((s) => s.visible);
 
   return (

@@ -12,13 +12,14 @@ interface GenerateSummaryProps {
 }
 
 export function GenerateSummary({ sectionId, itemId }: GenerateSummaryProps) {
-  const cv = useCVStore((s) => s.cv);
+  const cv = useCVStore((s) => s.activeCv());
   const updateItem = useCVStore((s) => s.updateItem);
   const hasProvider = useAIStore((s) => s.settings.provider !== null);
   const { run, state, error, reset } = useAIAction();
   const [suggestion, setSuggestion] = useState<string | null>(null);
 
   const handleGenerate = async () => {
+    if (!cv) return;
     setSuggestion(null);
     reset();
     const messages = generateSummaryPrompt(cv);

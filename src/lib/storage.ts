@@ -16,10 +16,16 @@ export function saveCV(cv: CV): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(cv));
 }
 
-export function createDebouncedSave(delay: number): (cv: CV) => void {
+export function createDebouncedSave(
+  delay: number,
+  onSaved?: () => void,
+): (cv: CV) => void {
   let timer: ReturnType<typeof setTimeout>;
   return (cv: CV) => {
     clearTimeout(timer);
-    timer = setTimeout(() => saveCV(cv), delay);
+    timer = setTimeout(() => {
+      saveCV(cv);
+      onSaved?.();
+    }, delay);
   };
 }

@@ -10,6 +10,7 @@ import type {
 import { createDefaultCV } from "../lib/defaults";
 import { generateId } from "../lib/id";
 import { loadCV, createDebouncedSave } from "../lib/storage";
+import { useUIStore } from "./uiStore";
 
 const defaultTitles: Record<SectionType, string> = {
   summary: "Summary",
@@ -86,9 +87,12 @@ interface CVStore {
   loadFromStorage: () => void;
   exportJson: () => string;
   importJson: (json: string) => void;
+  resetCV: () => void;
 }
 
-const debouncedSave = createDebouncedSave(500);
+const debouncedSave = createDebouncedSave(500, () => {
+  useUIStore.getState().setSaveStatus("saved");
+});
 
 export const useCVStore = create<CVStore>()(
   immer((set, get) => ({
@@ -220,10 +224,15 @@ export const useCVStore = create<CVStore>()(
         console.error("Failed to import CV from JSON");
       }
     },
+
+    resetCV: () => {
+      set({ cv: createDefaultCV() });
+    },
   })),
 );
 
 // Auto-save to localStorage on every change (debounced 500ms)
 useCVStore.subscribe((state) => {
+  useUIStore.getState().setSaveStatus("saving");
   debouncedSave(state.cv);
 });

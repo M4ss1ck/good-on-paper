@@ -2,10 +2,6 @@
 
 A free, private CV builder that runs entirely in your browser. No account, no cloud, no tracking.
 
-<!-- Replace with an actual screenshot -->
-
-![Screenshot](screenshot.png)
-
 ## Features
 
 - **Edit anything** — sections, bullets, skills, education. Drag to reorder, toggle visibility
@@ -26,7 +22,7 @@ A free, private CV builder that runs entirely in your browser. No account, no cl
 - [Lingui](https://lingui.dev) for i18n
 - [dnd-kit](https://dndkit.com) for drag-and-drop
 - [Vite](https://vite.dev) for build tooling
-- Deployed on [Cloudflare Pages](https://pages.cloudflare.com) with a Workers backend
+- Deployed on [Cloudflare](https://pages.cloudflare.com)
 
 ## Getting Started
 
@@ -36,20 +32,6 @@ npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173).
-
-## Deploying to Cloudflare Pages
-
-1. Fork this repository
-2. Connect it to [Cloudflare Pages](https://pages.cloudflare.com)
-3. Set the build command to `npm run build`
-4. Set the output directory to `dist`
-
-Or deploy via CLI:
-
-```bash
-npm run build
-npx wrangler pages deploy dist
-```
 
 ## License
 

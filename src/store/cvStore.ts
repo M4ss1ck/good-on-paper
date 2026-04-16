@@ -111,6 +111,9 @@ interface CVStore {
   exportJson: () => string;
   importJson: (json: string) => void;
   resetCV: () => void;
+
+  // Translation
+  applyTranslatedCV: (translatedCV: CV) => void;
 }
 
 const debouncedSave = createDebouncedSave(
@@ -441,6 +444,16 @@ export const useCVStore = create<CVStore>()(
         }
       });
     },
+
+    applyTranslatedCV: (translatedCV) =>
+      set((state) => {
+        const cv = getActive(state.workspace);
+        if (!cv) return;
+        cv.meta = translatedCV.meta;
+        cv.sections = translatedCV.sections;
+        if (translatedCV.settings) cv.settings = translatedCV.settings;
+        cv.updatedAt = new Date().toISOString();
+      }),
   })),
 );
 

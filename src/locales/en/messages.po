@@ -89,7 +89,7 @@ msgid "Against"
 msgstr "Against"
 
 #: src/components/ai/DetectAIText.tsx:63
-#: src/components/layout/Toolbar.tsx:173
+#: src/components/layout/Toolbar.tsx:177
 msgid "AI Phrase Check"
 msgstr "AI Phrase Check"
 
@@ -128,7 +128,7 @@ msgstr "Bullet points"
 #: src/components/ai/ProviderSettings.tsx:241
 #: src/components/diff/DiffPicker.tsx:96
 #: src/components/editor/SectionList.tsx:150
-#: src/components/layout/Toolbar.tsx:211
+#: src/components/layout/Toolbar.tsx:225
 #: src/components/workspace/CVListItem.tsx:174
 #: src/components/workspace/NewCVDialog.tsx:113
 msgid "Cancel"
@@ -152,7 +152,7 @@ msgid "Company"
 msgstr "Company"
 
 #: src/components/diff/DiffPicker.tsx:103
-#: src/components/layout/Toolbar.tsx:134
+#: src/components/layout/Toolbar.tsx:136
 msgid "Compare"
 msgstr "Compare"
 
@@ -172,7 +172,7 @@ msgstr "Configure AI to generate a summary"
 msgid "Configure AI to improve bullets"
 msgstr "Configure AI to improve bullets"
 
-#: src/components/layout/Toolbar.tsx:205
+#: src/components/layout/Toolbar.tsx:219
 msgid "Confirm Reset"
 msgstr "Confirm Reset"
 
@@ -192,9 +192,17 @@ msgstr "Conversational"
 msgid "Couldn't parse structured suggestions. Showing raw response:"
 msgstr "Couldn't parse structured suggestions. Showing raw response:"
 
+#: src/components/ai/TranslateCV.tsx:78
+msgid "Couldn't parse the AI response as JSON. Copy and apply manually."
+msgstr "Couldn't parse the AI response as JSON. Copy and apply manually."
+
 #: src/components/workspace/NewCVDialog.tsx:120
 msgid "Create"
 msgstr "Create"
+
+#: src/components/ai/TranslateCV.tsx:116
+msgid "Current language"
+msgstr "Current language"
 
 #: src/components/ai/TailorToJob.tsx:300
 msgid "Current:"
@@ -235,7 +243,7 @@ msgstr "Describe an achievement or responsibility..."
 msgid "Dismiss"
 msgstr "Dismiss"
 
-#: src/components/layout/Toolbar.tsx:131
+#: src/components/layout/Toolbar.tsx:133
 msgid "Download PDF"
 msgstr "Download PDF"
 
@@ -247,6 +255,7 @@ msgstr "Drag to reorder"
 msgid "Duplicate"
 msgstr "Duplicate"
 
+#: src/components/ai/TranslateCV.tsx:131
 #: src/components/editor/MetaEditor.tsx:84
 msgid "e.g. en, es, pt-BR"
 msgstr "e.g. en, es, pt-BR"
@@ -284,7 +293,7 @@ msgstr "Experience"
 msgid "Experience Entry"
 msgstr "Experience Entry"
 
-#: src/components/layout/Toolbar.tsx:137
+#: src/components/layout/Toolbar.tsx:139
 msgid "Export JSON"
 msgstr "Export JSON"
 
@@ -347,7 +356,7 @@ msgstr "Hide"
 msgid "Hide section"
 msgstr "Hide section"
 
-#: src/components/layout/Toolbar.tsx:143
+#: src/components/layout/Toolbar.tsx:145
 msgid "Import JSON"
 msgstr "Import JSON"
 
@@ -404,13 +413,17 @@ msgstr "My new CV"
 msgid "Native"
 msgstr "Native"
 
-#: src/components/layout/Toolbar.tsx:216
+#: src/components/layout/Toolbar.tsx:230
 msgid "New CV"
 msgstr "New CV"
 
 #: src/components/diff/SectionDiff.tsx:57
 msgid "New empty section"
 msgstr "New empty section"
+
+#: src/components/ai/TranslateCV.tsx:159
+msgid "No AI provider configured. Go to AI Settings first."
+msgstr "No AI provider configured. Go to AI Settings first."
 
 #: src/components/ai/DetectAIText.tsx:81
 msgid "No AI-sounding phrases detected."
@@ -472,7 +485,7 @@ msgstr "Personal Information"
 msgid "Phone"
 msgstr "Phone"
 
-#: src/components/layout/Toolbar.tsx:128
+#: src/components/layout/Toolbar.tsx:130
 msgid "Preview PDF"
 msgstr "Preview PDF"
 
@@ -483,6 +496,10 @@ msgstr "Professional"
 #: src/components/ai/ProviderSettings.tsx:140
 msgid "Provider"
 msgstr "Provider"
+
+#: src/components/ai/TranslateCV.tsx:176
+msgid "Raw AI response"
+msgstr "Raw AI response"
 
 #: src/components/ai/DetectAIText.tsx:134
 msgid "Re-scan"
@@ -528,11 +545,11 @@ msgstr "Role / Title"
 msgid "Save"
 msgstr "Save"
 
-#: src/components/layout/Toolbar.tsx:110
+#: src/components/layout/Toolbar.tsx:112
 msgid "Saved"
 msgstr "Saved"
 
-#: src/components/layout/Toolbar.tsx:108
+#: src/components/layout/Toolbar.tsx:110
 msgid "Saving..."
 msgstr "Saving..."
 
@@ -554,7 +571,7 @@ msgstr "Select level"
 msgid "Select two different CVs to compare."
 msgstr "Select two different CVs to compare."
 
-#: src/components/layout/Toolbar.tsx:193
+#: src/components/layout/Toolbar.tsx:207
 msgid "Settings"
 msgstr "Settings"
 
@@ -598,7 +615,7 @@ msgstr "Summary"
 msgid "Tailor my CV"
 msgstr "Tailor my CV"
 
-#: src/components/layout/Toolbar.tsx:183
+#: src/components/layout/Toolbar.tsx:187
 msgid "Tailor to Job"
 msgstr "Tailor to Job"
 
@@ -621,6 +638,36 @@ msgstr "Testing..."
 #: src/components/diff/DiffView.tsx:44
 msgid "These two CVs are identical."
 msgstr "These two CVs are identical."
+
+#: src/components/ai/TranslateCV.tsx:153
+#: src/components/layout/Toolbar.tsx:197
+msgid "Translate"
+msgstr "Translate"
+
+#: src/components/ai/TranslateCV.tsx:101
+msgid "Translate CV"
+msgstr "Translate CV"
+
+#: src/components/ai/TranslateCV.tsx:126
+msgid "Translate to"
+msgstr "Translate to"
+
+#: src/components/ai/TranslateCV.tsx:151
+msgid "Translating..."
+msgstr "Translating..."
+
+#. placeholder {0}: warnings.join("; ")
+#: src/components/ai/TranslateCV.tsx:66
+msgid "Translation complete with warnings: {0}. Review — AI translations may need adjustments."
+msgstr "Translation complete with warnings: {0}. Review — AI translations may need adjustments."
+
+#: src/components/ai/TranslateCV.tsx:70
+msgid "Translation complete. Review — AI translations may need adjustments."
+msgstr "Translation complete. Review — AI translations may need adjustments."
+
+#: src/components/ai/TranslateCV.tsx:82
+msgid "Unknown error"
+msgstr "Unknown error"
 
 #: src/components/workspace/CVSwitcher.tsx:15
 msgid "Untitled"

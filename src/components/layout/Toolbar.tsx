@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { Sparkles, Search, Target, Settings } from "lucide-react";
+import { Sparkles, Search, Target, Globe, Settings } from "lucide-react";
 import { Trans } from "@lingui/react/macro";
 import { t } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react";
@@ -12,6 +12,7 @@ import { generatePdfDefinition } from "../pdf/generatePdf";
 import { ProviderSettings } from "../ai/ProviderSettings";
 import { DetectAIText } from "../ai/DetectAIText";
 import { TailorToJob } from "../ai/TailorToJob";
+import { TranslateCV } from "../ai/TranslateCV";
 import { CVSwitcher } from "../workspace/CVSwitcher";
 import { DiffPicker } from "../diff/DiffPicker";
 import { loadCatalog, type AppLocale } from "../../i18n";
@@ -34,6 +35,7 @@ export function Toolbar() {
   const [aiDropdownOpen, setAiDropdownOpen] = useState(false);
   const [detectOpen, setDetectOpen] = useState(false);
   const [tailorOpen, setTailorOpen] = useState(false);
+  const [translateOpen, setTranslateOpen] = useState(false);
   const [diffPickerOpen, setDiffPickerOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -154,6 +156,8 @@ export function Toolbar() {
 
       <TailorToJob open={tailorOpen} onClose={() => setTailorOpen(false)} />
 
+      <TranslateCV open={translateOpen} onClose={() => setTranslateOpen(false)} />
+
       <div className="relative" ref={dropdownRef}>
         <button
           className={btnClass}
@@ -181,6 +185,16 @@ export function Toolbar() {
               }}
             >
               <Target size={14} className="inline mr-1.5" /><Trans>Tailor to Job</Trans>
+            </button>
+            <button
+              className="w-full text-left px-4 py-2 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 hover:bg-gray-50"
+              disabled={!hasProvider}
+              onClick={() => {
+                setTranslateOpen(true);
+                setAiDropdownOpen(false);
+              }}
+            >
+              <Globe size={14} className="inline mr-1.5" /><Trans>Translate</Trans>
             </button>
             <hr className="my-1 border-gray-100" />
             <button

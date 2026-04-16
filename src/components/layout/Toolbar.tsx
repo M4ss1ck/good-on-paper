@@ -9,6 +9,7 @@ import { ProviderSettings } from "../ai/ProviderSettings";
 import { DetectAIText } from "../ai/DetectAIText";
 import { TailorToJob } from "../ai/TailorToJob";
 import { CVSwitcher } from "../workspace/CVSwitcher";
+import { DiffPicker } from "../diff/DiffPicker";
 
 pdfMake.addVirtualFileSystem(pdfFonts);
 
@@ -28,6 +29,7 @@ export function Toolbar() {
   const [aiDropdownOpen, setAiDropdownOpen] = useState(false);
   const [detectOpen, setDetectOpen] = useState(false);
   const [tailorOpen, setTailorOpen] = useState(false);
+  const [diffPickerOpen, setDiffPickerOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown on outside click
@@ -115,6 +117,9 @@ export function Toolbar() {
       <button className={btnClass} onClick={handleDownloadPdf}>
         Download PDF
       </button>
+      <button className={btnClass} onClick={() => setDiffPickerOpen(true)}>
+        Compare
+      </button>
       <button className={btnClass} onClick={handleExportJson}>
         Export JSON
       </button>
@@ -199,6 +204,9 @@ export function Toolbar() {
         </button>
       )}
       <ProviderSettings />
+      {diffPickerOpen && (
+        <DiffPicker onClose={() => setDiffPickerOpen(false)} />
+      )}
     </div>
   );
 }

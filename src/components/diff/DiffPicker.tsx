@@ -1,0 +1,107 @@
+import { useState } from "react";
+import { useCVStore } from "../../store/cvStore";
+import { DiffView } from "./DiffView";
+
+interface DiffPickerProps {
+  onClose: () => void;
+  initialBaseId?: string;
+  initialAgainstId?: string;
+}
+
+export function DiffPicker({ onClose, initialBaseId, initialAgainstId }: DiffPickerProps) {
+  const workspace = useCVStore((s) => s.workspace);
+  const orderedCvs = workspace.order.map((id) => workspace.cvs[id]).filter(Boolean);
+
+  const [baseId, setBaseId] = useState(initialBaseId ?? "");
+  const [againstId, setAgainstId] = useState(initialAgainstId ?? "");
+  const [comparing, setComparing] = useState(
+    !!(initialBaseId && initialAgainstId),
+  );
+
+  const baseCv = baseId ? workspace.cvs[baseId] : undefined;
+  const againstCv = againstId ? workspace.cvs[againstId] : undefined;
+
+  if (comparing && baseCv && againstCv) {
+    return (
+      <DiffView
+        base={baseCv}
+        against={againstCv}
+        onClose={onClose}
+      />
+    );
+  }
+
+  const canCompare = baseId && againstId && baseId !== againstId;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-lg shadow-lg w-96 max-w-[90vw]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+          <span className="text-sm font-medium text-primary">Compare CVs</span>
+          <button
+            onClick={onClose}
+            className="text-light hover:text-muted transition-colors text-lg"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="p-5 space-y-4">
+          <div>
+            <label className="block text-xs font-medium text-muted mb-1">Base</label>
+            <select
+              className="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-accent transition-colors"
+              value={baseId}
+              onChange={(e) => setBaseId(e.target.value)}
+            >
+              <option value="" disabled>Select a CV…</option>
+              {orderedCvs.map((cv) => (
+                <option key={cv.id} value={cv.id}>{cv.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-xs font-medium text-muted mb-1">Against</label>
+            <select
+              className="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-accent transition-colors"
+              value={againstId}
+              onChange={(e) => setAgainstId(e.target.value)}
+            >
+              <option value="" disabled>Select a CV…</option>
+              {orderedCvs.map((cv) => (
+                <option key={cv.id} value={cv.id}>{cv.name}</option>
+              ))}
+            </select>
+          </div>
+
+          {baseId && againstId && baseId === againstId && (
+            <p className="text-xs text-amber-600">Select two different CVs to compare.</p>
+          )}
+
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={onClose}
+              className="px-3 py-1.5 text-sm rounded border border-gray-200 text-muted hover:text-primary transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              disabled={!canCompare}
+              onClick={() => setComparing(true)}
+              className="px-3 py-1.5 text-sm rounded bg-accent text-white hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Compare
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

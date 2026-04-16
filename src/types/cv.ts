@@ -5,6 +5,7 @@ export interface CV {
   updatedAt: string;
   parentId: string | null;
   meta: CVMeta;
+  settings: CVSettings;
   sections: Section[];
 }
 
@@ -87,3 +88,9 @@ export type SectionItem =
   | EducationItem
   | LanguageItem
   | CustomItem;
+
+export type FontFamily = "Roboto" | "Inter" | "Lora";
+
+export interface CVSettings {
+  fontFamily: FontFamily;
+}

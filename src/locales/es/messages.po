@@ -158,7 +158,7 @@ msgstr "Comparar"
 msgid "Compare CVs"
 msgstr "Comparar CVs"
 
-#: src/components/preview/CVPreview.tsx:36
+#: src/components/preview/CVPreview.tsx:62
 msgid "Compare with parent"
 msgstr "Comparar con el original"
 
@@ -290,6 +290,10 @@ msgstr "Exportar JSON"
 msgid "Field"
 msgstr "Campo"
 
+#: src/components/editor/CVEditor.tsx:25
+msgid "Font"
+msgstr ""
+
 #: src/components/workspace/CVListItem.tsx:128
 #: src/components/workspace/NewCVDialog.tsx:120
 msgid "Fork"
@@ -307,7 +311,7 @@ msgstr "Bifurcar existente"
 msgid "Fork name"
 msgstr "Nombre de la bifurcación"
 
-#: src/components/preview/CVPreview.tsx:30
+#: src/components/preview/CVPreview.tsx:56
 msgid "forked from {parentName}"
 msgstr "bifurcado de {parentName}"
 

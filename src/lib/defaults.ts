@@ -18,6 +18,9 @@ export function createDefaultCV(): CV {
       locale: "en",
       links: [],
     },
+    settings: {
+      fontFamily: "Roboto",
+    },
     sections: [
       {
         id: generateId(),

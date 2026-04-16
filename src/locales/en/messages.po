@@ -160,7 +160,7 @@ msgstr "Compare"
 msgid "Compare CVs"
 msgstr "Compare CVs"
 
-#: src/components/preview/CVPreview.tsx:36
+#: src/components/preview/CVPreview.tsx:62
 msgid "Compare with parent"
 msgstr "Compare with parent"
 
@@ -292,6 +292,10 @@ msgstr "Export JSON"
 msgid "Field"
 msgstr "Field"
 
+#: src/components/editor/CVEditor.tsx:25
+msgid "Font"
+msgstr "Font"
+
 #: src/components/workspace/CVListItem.tsx:128
 #: src/components/workspace/NewCVDialog.tsx:120
 msgid "Fork"
@@ -309,7 +313,7 @@ msgstr "Fork existing"
 msgid "Fork name"
 msgstr "Fork name"
 
-#: src/components/preview/CVPreview.tsx:30
+#: src/components/preview/CVPreview.tsx:56
 msgid "forked from {parentName}"
 msgstr "forked from {parentName}"
 

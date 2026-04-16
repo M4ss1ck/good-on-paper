@@ -3,6 +3,7 @@ import { immer } from "zustand/middleware/immer";
 import type {
   CV,
   CVMeta,
+  CVSettings,
   CVWorkspace,
   SectionType,
   SectionItem,
@@ -71,6 +72,9 @@ interface CVStore {
 
   // Meta
   updateMeta: (meta: Partial<CVMeta>) => void;
+
+  // Settings
+  updateSettings: (settings: Partial<CVSettings>) => void;
 
   // Sections
   addSection: (type: SectionType) => void;
@@ -236,6 +240,15 @@ export const useCVStore = create<CVStore>()(
         cv.updatedAt = new Date().toISOString();
       }),
 
+    updateSettings: (settings) =>
+      set((state) => {
+        const cv = getActive(state.workspace);
+        if (!cv) return;
+        if (!cv.settings) cv.settings = { fontFamily: "Roboto" };
+        Object.assign(cv.settings, settings);
+        cv.updatedAt = new Date().toISOString();
+      }),
+
     addSection: (type) =>
       set((state) => {
         const cv = getActive(state.workspace);
@@ -380,6 +393,10 @@ export const useCVStore = create<CVStore>()(
     // ── Persistence ───────────────────────────────────────
     loadFromStorage: () => {
       const workspace = loadWorkspace();
+      for (const cv of Object.values(workspace.cvs)) {
+        if (!cv.settings) cv.settings = { fontFamily: "Roboto" };
+        if (!cv.meta.locale) cv.meta.locale = "en";
+      }
       set({ workspace });
     },
 

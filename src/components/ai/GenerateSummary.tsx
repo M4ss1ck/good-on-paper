@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 import { useAIStore } from "../../store/aiStore";
 import { useAIAction } from "../../hooks/useAIAction";
@@ -44,14 +46,14 @@ export function GenerateSummary({ sectionId, itemId }: GenerateSummaryProps) {
           onClick={handleGenerate}
           state={state}
           error={error}
-          label="Generate from my experience"
+          label={t`Generate from my experience`}
         />
       ) : (
         <button
           onClick={() => useAIStore.getState().setSettingsOpen(true)}
           className="text-xs text-accent hover:underline"
         >
-          Configure AI to generate a summary <ArrowRight size={12} className="inline" />
+          <Trans>Configure AI to generate a summary</Trans> <ArrowRight size={12} className="inline" />
         </button>
       )}
       {suggestion && (

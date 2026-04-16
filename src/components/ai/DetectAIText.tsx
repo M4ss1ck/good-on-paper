@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { Search, CircleCheck, X } from "lucide-react";
+import { Trans } from "@lingui/react/macro";
 import { useCVStore } from "../../store/cvStore";
 import { useUIStore } from "../../store/uiStore";
 import { detectAIPhrases, type AIFlag } from "../../lib/ai/detectAI";
@@ -59,7 +60,7 @@ export function DetectAIText({ open, onClose }: DetectAITextProps) {
       <div className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 max-h-[80vh] flex flex-col">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-primary">
-            <Search size={18} className="inline mr-1.5" />AI Phrase Check
+            <Search size={18} className="inline mr-1.5" /><Trans>AI Phrase Check</Trans>
           </h2>
           <button
             onClick={handleClose}
@@ -74,17 +75,19 @@ export function DetectAIText({ open, onClose }: DetectAITextProps) {
             <div className="text-center py-8">
               <div className="flex justify-center text-green-500 mb-2"><CircleCheck size={28} /></div>
               <p className="text-sm font-medium text-primary">
-                Looks good!
+                <Trans>Looks good!</Trans>
               </p>
               <p className="text-xs text-muted mt-1">
-                No AI-sounding phrases detected.
+                <Trans>No AI-sounding phrases detected.</Trans>
               </p>
             </div>
           ) : (
             <div className="space-y-4">
               <p className="text-xs text-muted">
-                Found {flags.length} phrase{flags.length === 1 ? "" : "s"}{" "}
-                a recruiter might notice. Click a flag to jump to it.
+                <Trans>
+                  Found {flags.length} phrase{flags.length === 1 ? "" : "s"}{" "}
+                  a recruiter might notice. Click a flag to jump to it.
+                </Trans>
               </p>
               {Object.entries(grouped).map(([section, sectionFlags]) => (
                 <div key={section}>
@@ -128,13 +131,13 @@ export function DetectAIText({ open, onClose }: DetectAITextProps) {
             onClick={handleRun}
             className="px-3 py-1.5 text-xs rounded border border-gray-200 text-muted hover:text-primary hover:border-accent transition-colors"
           >
-            Re-scan
+            <Trans>Re-scan</Trans>
           </button>
           <button
             onClick={handleClose}
             className="px-4 py-2 text-sm rounded border border-gray-200 text-muted hover:text-primary transition-colors"
           >
-            Close
+            <Trans>Close</Trans>
           </button>
         </div>
       </div>

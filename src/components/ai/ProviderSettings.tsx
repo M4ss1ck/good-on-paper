@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Check, X } from "lucide-react";
+import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import type { AIProvider } from "../../types/ai";
 import { useAIStore } from "../../store/aiStore";
 import { callAI } from "../../lib/ai/provider";
@@ -123,7 +125,7 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
   return (
     <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-primary">AI Settings</h2>
+        <h2 className="text-lg font-semibold text-primary"><Trans>AI Settings</Trans></h2>
         <button
           onClick={onClose}
           className="text-gray-400 hover:text-gray-600 text-xl leading-none"
@@ -135,7 +137,7 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
       <div className="px-6 py-4 space-y-4">
         {/* Provider selector */}
         <fieldset>
-          <legend className={labelClass}>Provider</legend>
+          <legend className={labelClass}><Trans>Provider</Trans></legend>
           <div className="flex gap-4 mt-1">
             {(["openrouter", "cloudflare"] as const).map((id) => (
               <label key={id} className="flex items-center gap-2 text-sm">
@@ -155,7 +157,7 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
 
         {/* API Key */}
         <div>
-          <label className={labelClass}>API Key</label>
+          <label className={labelClass}><Trans>API Key</Trans></label>
           <div className="relative">
             <input
               type={showKey ? "text" : "password"}
@@ -169,7 +171,7 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
               onClick={() => setShowKey(!showKey)}
               className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-muted hover:text-primary"
             >
-              {showKey ? "Hide" : "Show"}
+              {showKey ? t`Hide` : t`Show`}
             </button>
           </div>
         </div>
@@ -177,7 +179,7 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
         {/* Account ID (Cloudflare only) */}
         {providerId === "cloudflare" && (
           <div>
-            <label className={labelClass}>Account ID</label>
+            <label className={labelClass}><Trans>Account ID</Trans></label>
             <input
               type="text"
               value={accountId}
@@ -190,7 +192,7 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
 
         {/* Model */}
         <div>
-          <label className={labelClass}>Model</label>
+          <label className={labelClass}><Trans>Model</Trans></label>
           <input
             type="text"
             value={model}
@@ -206,11 +208,11 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
             disabled={!canTest || testStatus === "testing"}
             className="px-3 py-1.5 text-sm rounded border border-gray-200 text-muted hover:text-primary hover:border-accent transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {testStatus === "testing" ? "Testing..." : "Test connection"}
+            {testStatus === "testing" ? t`Testing...` : t`Test connection`}
           </button>
           {testStatus === "success" && (
             <span className="ml-2 text-sm text-green-600 inline-flex items-center gap-1">
-              <Check size={14} /> Connection successful
+              <Check size={14} /> <Trans>Connection successful</Trans>
             </span>
           )}
           {testStatus === "error" && (
@@ -222,9 +224,11 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
 
         {/* Privacy notice */}
         <p className="text-xs text-gray-400 leading-relaxed">
-          Your API key is stored locally in your browser and sent only to the
-          AI provider you configure. It never passes through our servers — the
-          proxy only forwards your request.
+          <Trans>
+            Your API key is stored locally in your browser and sent only to the
+            AI provider you configure. It never passes through our servers — the
+            proxy only forwards your request.
+          </Trans>
         </p>
       </div>
 
@@ -234,14 +238,14 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
           onClick={onClose}
           className="px-4 py-2 text-sm rounded border border-gray-200 text-muted hover:text-primary transition-colors"
         >
-          Cancel
+          <Trans>Cancel</Trans>
         </button>
         <button
           onClick={handleSave}
           disabled={!canSave}
           className="px-4 py-2 text-sm rounded bg-accent text-white hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Save
+          <Trans>Save</Trans>
         </button>
       </div>
     </div>

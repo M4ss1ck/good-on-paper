@@ -1,3 +1,5 @@
+import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 import type { Section, EducationItem } from "../../types/cv";
 
@@ -14,7 +16,7 @@ export function EducationEditor({ section }: { section: Section }) {
     <div className="pt-3 space-y-3">
       {items.length === 0 && (
         <p className="text-xs text-light">
-          No education entries yet. Add one below.
+          <Trans>No education entries yet. Add one below.</Trans>
         </p>
       )}
 
@@ -22,20 +24,20 @@ export function EducationEditor({ section }: { section: Section }) {
         <div key={item.id} className="space-y-2 p-3 bg-gray-50 rounded">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-muted">
-              Education Entry
+              <Trans>Education Entry</Trans>
             </span>
             <button
               onClick={() => removeItem(section.id, item.id)}
               className="text-light hover:text-red-500 transition-colors text-xs"
             >
-              Remove
+              <Trans>Remove</Trans>
             </button>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <input
               className={inputClass + " bg-gray-50"}
-              placeholder="Degree / Certificate"
+              placeholder={t`Degree / Certificate`}
               value={item.degree}
               onChange={(e) =>
                 updateItem(section.id, item.id, { degree: e.target.value })
@@ -43,7 +45,7 @@ export function EducationEditor({ section }: { section: Section }) {
             />
             <input
               className={inputClass + " bg-gray-50"}
-              placeholder="Institution"
+              placeholder={t`Institution`}
               value={item.institution}
               onChange={(e) =>
                 updateItem(section.id, item.id, {
@@ -53,7 +55,7 @@ export function EducationEditor({ section }: { section: Section }) {
             />
             <input
               className={inputClass + " bg-gray-50"}
-              placeholder="Dates (e.g. 2018 – 2022)"
+              placeholder={t`Dates (e.g. 2018 – 2022)`}
               value={item.dates}
               onChange={(e) =>
                 updateItem(section.id, item.id, { dates: e.target.value })
@@ -61,7 +63,7 @@ export function EducationEditor({ section }: { section: Section }) {
             />
             <input
               className={inputClass + " bg-gray-50"}
-              placeholder="Notes (optional)"
+              placeholder={t`Notes (optional)`}
               value={item.notes ?? ""}
               onChange={(e) =>
                 updateItem(section.id, item.id, { notes: e.target.value })
@@ -75,7 +77,7 @@ export function EducationEditor({ section }: { section: Section }) {
         onClick={() => addItem(section.id)}
         className="text-xs text-accent hover:text-primary transition-colors"
       >
-        + Add education
+        <Trans>+ Add education</Trans>
       </button>
     </div>
   );

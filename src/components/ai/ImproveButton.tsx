@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Sparkles } from "lucide-react";
+import { t } from "@lingui/core/macro";
 import { useAIStore } from "../../store/aiStore";
 import { useAIAction } from "../../hooks/useAIAction";
 import { improveBulletPrompt } from "../../lib/ai/prompts";
@@ -48,7 +49,7 @@ export function ImproveButton({
       <button
         onClick={() => useAIStore.getState().setSettingsOpen(true)}
         className="text-xs text-accent hover:underline shrink-0"
-        title="Configure AI to improve bullets"
+        title={t`Configure AI to improve bullets`}
       >
         <Sparkles size={14} />
       </button>
@@ -62,8 +63,8 @@ export function ImproveButton({
         disabled={disabled || isLoading}
         title={
           !bullet.trim()
-            ? "Write a bullet first"
-            : "Improve this bullet"
+            ? t`Write a bullet first`
+            : t`Improve this bullet`
         }
         className="text-muted hover:text-accent transition-colors text-sm shrink-0 disabled:opacity-40 disabled:cursor-not-allowed"
       >

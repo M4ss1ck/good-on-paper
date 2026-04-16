@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { X } from "lucide-react";
+import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 import { DiffView } from "./DiffView";
 
@@ -44,7 +46,7 @@ export function DiffPicker({ onClose, initialBaseId, initialAgainstId }: DiffPic
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
-          <span className="text-sm font-medium text-primary">Compare CVs</span>
+          <span className="text-sm font-medium text-primary"><Trans>Compare CVs</Trans></span>
           <button
             onClick={onClose}
             className="text-light hover:text-muted transition-colors text-lg"
@@ -55,13 +57,13 @@ export function DiffPicker({ onClose, initialBaseId, initialAgainstId }: DiffPic
 
         <div className="p-5 space-y-4">
           <div>
-            <label className="block text-xs font-medium text-muted mb-1">Base</label>
+            <label className="block text-xs font-medium text-muted mb-1"><Trans>Base</Trans></label>
             <select
               className="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-accent transition-colors"
               value={baseId}
               onChange={(e) => setBaseId(e.target.value)}
             >
-              <option value="" disabled>Select a CV…</option>
+              <option value="" disabled>{t`Select a CV…`}</option>
               {orderedCvs.map((cv) => (
                 <option key={cv.id} value={cv.id}>{cv.name}</option>
               ))}
@@ -69,13 +71,13 @@ export function DiffPicker({ onClose, initialBaseId, initialAgainstId }: DiffPic
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-muted mb-1">Against</label>
+            <label className="block text-xs font-medium text-muted mb-1"><Trans>Against</Trans></label>
             <select
               className="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-accent transition-colors"
               value={againstId}
               onChange={(e) => setAgainstId(e.target.value)}
             >
-              <option value="" disabled>Select a CV…</option>
+              <option value="" disabled>{t`Select a CV…`}</option>
               {orderedCvs.map((cv) => (
                 <option key={cv.id} value={cv.id}>{cv.name}</option>
               ))}
@@ -83,7 +85,7 @@ export function DiffPicker({ onClose, initialBaseId, initialAgainstId }: DiffPic
           </div>
 
           {baseId && againstId && baseId === againstId && (
-            <p className="text-xs text-amber-600">Select two different CVs to compare.</p>
+            <p className="text-xs text-amber-600"><Trans>Select two different CVs to compare.</Trans></p>
           )}
 
           <div className="flex justify-end gap-2">
@@ -91,14 +93,14 @@ export function DiffPicker({ onClose, initialBaseId, initialAgainstId }: DiffPic
               onClick={onClose}
               className="px-3 py-1.5 text-sm rounded border border-gray-200 text-muted hover:text-primary transition-colors"
             >
-              Cancel
+              <Trans>Cancel</Trans>
             </button>
             <button
               disabled={!canCompare}
               onClick={() => setComparing(true)}
               className="px-3 py-1.5 text-sm rounded bg-accent text-white hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Compare
+              <Trans>Compare</Trans>
             </button>
           </div>
         </div>

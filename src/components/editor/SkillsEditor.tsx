@@ -1,4 +1,6 @@
 import { X } from "lucide-react";
+import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 import type { Section, SkillItem } from "../../types/cv";
 
@@ -15,7 +17,7 @@ export function SkillsEditor({ section }: { section: Section }) {
     <div className="pt-3 space-y-3">
       {items.length === 0 && (
         <p className="text-xs text-light">
-          No skill categories yet. Add one below.
+          <Trans>No skill categories yet. Add one below.</Trans>
         </p>
       )}
 
@@ -24,7 +26,7 @@ export function SkillsEditor({ section }: { section: Section }) {
           <div className="flex items-center gap-2">
             <input
               className={inputClass + " bg-gray-50"}
-              placeholder="Category (e.g. Frontend)"
+              placeholder={t`Category (e.g. Frontend)`}
               value={item.category}
               onChange={(e) =>
                 updateItem(section.id, item.id, { category: e.target.value })
@@ -33,14 +35,14 @@ export function SkillsEditor({ section }: { section: Section }) {
             <button
               onClick={() => removeItem(section.id, item.id)}
               className="text-light hover:text-red-500 transition-colors text-sm shrink-0"
-              title="Remove category"
+              title={t`Remove category`}
             >
               <X size={14} />
             </button>
           </div>
           <input
             className={inputClass + " bg-gray-50"}
-            placeholder="Skills (comma-separated, e.g. React, TypeScript, Node.js)"
+            placeholder={t`Skills (comma-separated, e.g. React, TypeScript, Node.js)`}
             value={item.items.join(", ")}
             onChange={(e) =>
               updateItem(section.id, item.id, {
@@ -55,7 +57,7 @@ export function SkillsEditor({ section }: { section: Section }) {
         onClick={() => addItem(section.id)}
         className="text-xs text-accent hover:text-primary transition-colors"
       >
-        + Add category
+        <Trans>+ Add category</Trans>
       </button>
     </div>
   );

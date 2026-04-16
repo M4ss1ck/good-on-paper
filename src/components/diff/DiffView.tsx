@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { X } from "lucide-react";
+import { Trans } from "@lingui/react/macro";
 import type { CV } from "../../types/cv";
 import { computeDiff } from "../../lib/diff/structuralDiff";
 import { MetaDiff } from "./MetaDiff";
@@ -40,7 +41,7 @@ export function DiffView({ base, against, onClose }: DiffViewProps) {
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {diff.unchanged ? (
             <p className="text-sm text-muted text-center py-8">
-              These two CVs are identical.
+              <Trans>These two CVs are identical.</Trans>
             </p>
           ) : (
             <>

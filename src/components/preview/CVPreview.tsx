@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CornerDownRight } from "lucide-react";
+import { Trans } from "@lingui/react/macro";
 import { useCVStore } from "../../store/cvStore";
 import { PreviewMeta } from "./PreviewMeta";
 import { PreviewSection } from "./PreviewSection";
@@ -26,13 +27,13 @@ export function CVPreview() {
               className="hover:text-accent transition-colors"
               onClick={() => setActiveCV(cv.parentId!)}
             >
-              <CornerDownRight size={12} className="inline mr-0.5" /> forked from {parentName}
+              <CornerDownRight size={12} className="inline mr-0.5" /> <Trans>forked from {parentName}</Trans>
             </button>
             <button
               className="text-accent hover:text-accent/80 transition-colors"
               onClick={() => setDiffOpen(true)}
             >
-              Compare with parent
+              <Trans>Compare with parent</Trans>
             </button>
           </>
         )}

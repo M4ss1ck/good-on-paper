@@ -1,3 +1,5 @@
+import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 import type { Section, SummaryItem } from "../../types/cv";
 import { GenerateSummary } from "../ai/GenerateSummary";
@@ -14,14 +16,14 @@ export function SummaryEditor({ section }: { section: Section }) {
           onClick={() => addItem(section.id)}
           className="text-xs text-accent hover:text-primary transition-colors"
         >
-          + Add summary
+          <Trans>+ Add summary</Trans>
         </button>
       ) : (
         items.map((item) => (
           <div key={item.id} className="space-y-2">
             <textarea
               className="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-accent transition-colors resize-y min-h-20 bg-transparent"
-              placeholder="Write a brief professional summary..."
+              placeholder={t`Write a brief professional summary...`}
               value={item.content}
               onChange={(e) =>
                 updateItem(section.id, item.id, { content: e.target.value })

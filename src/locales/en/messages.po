@@ -1,0 +1,629 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-04-16 13:39-0400\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#: src/components/ai/TailorToJob.tsx:269
+msgid "— Applied"
+msgstr "— Applied"
+
+#: src/components/ai/TailorToJob.tsx:281
+msgid "— Dismissed"
+msgstr "— Dismissed"
+
+#. placeholder {0}: suggestions.filter((s) => s.status === "pending").length
+#. placeholder {1}: suggestions.filter((s) => s.status === "pending").length === 1 ? "" : "s"
+#: src/components/ai/TailorToJob.tsx:218
+msgid "{0} suggestion{1} remaining"
+msgstr "{0} suggestion{1} remaining"
+
+#: src/components/editor/ExperienceEditor.tsx:137
+msgid "+ Add bullet"
+msgstr "+ Add bullet"
+
+#: src/components/editor/SkillsEditor.tsx:60
+msgid "+ Add category"
+msgstr "+ Add category"
+
+#: src/components/editor/EducationEditor.tsx:80
+msgid "+ Add education"
+msgstr "+ Add education"
+
+#: src/components/editor/CustomEditor.tsx:43
+msgid "+ Add entry"
+msgstr "+ Add entry"
+
+#: src/components/editor/ExperienceEditor.tsx:147
+msgid "+ Add experience"
+msgstr "+ Add experience"
+
+#: src/components/editor/LanguagesEditor.tsx:59
+msgid "+ Add language"
+msgstr "+ Add language"
+
+#: src/components/editor/MetaEditor.tsx:81
+msgid "+ Add link"
+msgstr "+ Add link"
+
+#: src/components/editor/SectionList.tsx:252
+msgid "+ Add section"
+msgstr "+ Add section"
+
+#: src/components/editor/SummaryEditor.tsx:19
+msgid "+ Add summary"
+msgstr "+ Add summary"
+
+#: src/components/workspace/CVList.tsx:53
+msgid "+ New blank CV"
+msgstr "+ New blank CV"
+
+#: src/components/ai/AISuggestion.tsx:42
+#: src/components/ai/TailorToJob.tsx:315
+msgid "Accept"
+msgstr "Accept"
+
+#: src/components/ai/ProviderSettings.tsx:182
+msgid "Account ID"
+msgstr "Account ID"
+
+#: src/components/workspace/CVListItem.tsx:88
+msgid "active"
+msgstr "active"
+
+#: src/components/diff/MetaDiff.tsx:20
+msgid "After"
+msgstr "After"
+
+#: src/components/diff/DiffPicker.tsx:74
+msgid "Against"
+msgstr "Against"
+
+#: src/components/ai/DetectAIText.tsx:63
+#: src/components/layout/Toolbar.tsx:173
+msgid "AI Phrase Check"
+msgstr "AI Phrase Check"
+
+#: src/components/ai/ProviderSettings.tsx:128
+msgid "AI Settings"
+msgstr "AI Settings"
+
+#: src/components/ai/AISuggestion.tsx:32
+msgid "AI Suggestion"
+msgstr "AI Suggestion"
+
+#: src/components/ai/ProviderSettings.tsx:160
+msgid "API Key"
+msgstr "API Key"
+
+#: src/components/diff/DiffPicker.tsx:60
+msgid "Base"
+msgstr "Base"
+
+#: src/components/editor/LanguagesEditor.tsx:43
+msgid "Basic"
+msgstr "Basic"
+
+#: src/components/diff/MetaDiff.tsx:19
+msgid "Before"
+msgstr "Before"
+
+#: src/components/workspace/NewCVDialog.tsx:56
+msgid "Blank CV"
+msgstr "Blank CV"
+
+#: src/components/editor/ExperienceEditor.tsx:91
+msgid "Bullet points"
+msgstr "Bullet points"
+
+#: src/components/ai/ProviderSettings.tsx:241
+#: src/components/diff/DiffPicker.tsx:96
+#: src/components/editor/SectionList.tsx:150
+#: src/components/layout/Toolbar.tsx:211
+#: src/components/workspace/CVListItem.tsx:174
+#: src/components/workspace/NewCVDialog.tsx:113
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/components/editor/SkillsEditor.tsx:29
+msgid "Category (e.g. Frontend)"
+msgstr "Category (e.g. Frontend)"
+
+#: src/components/ai/DetectAIText.tsx:140
+#: src/components/ai/TailorToJob.tsx:246
+msgid "Close"
+msgstr "Close"
+
+#: src/components/editor/SectionList.tsx:177
+msgid "Collapse"
+msgstr "Collapse"
+
+#: src/components/editor/ExperienceEditor.tsx:53
+msgid "Company"
+msgstr "Company"
+
+#: src/components/diff/DiffPicker.tsx:103
+#: src/components/layout/Toolbar.tsx:134
+msgid "Compare"
+msgstr "Compare"
+
+#: src/components/diff/DiffPicker.tsx:49
+msgid "Compare CVs"
+msgstr "Compare CVs"
+
+#: src/components/preview/CVPreview.tsx:36
+msgid "Compare with parent"
+msgstr "Compare with parent"
+
+#: src/components/ai/GenerateSummary.tsx:56
+msgid "Configure AI to generate a summary"
+msgstr "Configure AI to generate a summary"
+
+#: src/components/ai/ImproveButton.tsx:52
+msgid "Configure AI to improve bullets"
+msgstr "Configure AI to improve bullets"
+
+#: src/components/layout/Toolbar.tsx:205
+msgid "Confirm Reset"
+msgstr "Confirm Reset"
+
+#: src/components/ai/ProviderSettings.tsx:215
+msgid "Connection successful"
+msgstr "Connection successful"
+
+#: src/components/diff/MetaDiff.tsx:13
+msgid "Contact Info"
+msgstr "Contact Info"
+
+#: src/components/editor/LanguagesEditor.tsx:42
+msgid "Conversational"
+msgstr "Conversational"
+
+#: src/components/ai/TailorToJob.tsx:206
+msgid "Couldn't parse structured suggestions. Showing raw response:"
+msgstr "Couldn't parse structured suggestions. Showing raw response:"
+
+#: src/components/workspace/NewCVDialog.tsx:120
+msgid "Create"
+msgstr "Create"
+
+#: src/components/ai/TailorToJob.tsx:300
+msgid "Current:"
+msgstr "Current:"
+
+#: src/components/editor/SectionList.tsx:31
+msgid "Custom"
+msgstr "Custom"
+
+#: src/components/editor/EducationEditor.tsx:58
+msgid "Dates (e.g. 2018 – 2022)"
+msgstr "Dates (e.g. 2018 – 2022)"
+
+#: src/components/editor/EducationEditor.tsx:40
+msgid "Degree / Certificate"
+msgstr "Degree / Certificate"
+
+#: src/components/editor/SectionList.tsx:144
+#: src/components/workspace/CVListItem.tsx:139
+#: src/components/workspace/CVListItem.tsx:168
+msgid "Delete"
+msgstr "Delete"
+
+#: src/components/editor/SectionList.tsx:157
+msgid "Delete section"
+msgstr "Delete section"
+
+#: src/components/editor/ExperienceEditor.tsx:97
+msgid "Describe an achievement or responsibility..."
+msgstr "Describe an achievement or responsibility..."
+
+#: src/components/ai/AISuggestion.tsx:48
+#: src/components/ai/TailorToJob.tsx:321
+msgid "Dismiss"
+msgstr "Dismiss"
+
+#: src/components/layout/Toolbar.tsx:131
+msgid "Download PDF"
+msgstr "Download PDF"
+
+#: src/components/editor/SectionList.tsx:77
+msgid "Drag to reorder"
+msgstr "Drag to reorder"
+
+#: src/components/workspace/CVListItem.tsx:118
+msgid "Duplicate"
+msgstr "Duplicate"
+
+#: src/components/editor/SectionList.tsx:29
+msgid "Education"
+msgstr "Education"
+
+#: src/components/editor/EducationEditor.tsx:27
+msgid "Education Entry"
+msgstr "Education Entry"
+
+#: src/components/editor/MetaEditor.tsx:54
+msgid "Email"
+msgstr "Email"
+
+#: src/components/diff/MetaDiff.tsx:28
+#: src/components/diff/MetaDiff.tsx:31
+msgid "empty"
+msgstr "empty"
+
+#: src/components/editor/ExperienceEditor.tsx:80
+msgid "End date"
+msgstr "End date"
+
+#: src/components/editor/SectionList.tsx:177
+msgid "Expand"
+msgstr "Expand"
+
+#: src/components/editor/SectionList.tsx:28
+msgid "Experience"
+msgstr "Experience"
+
+#: src/components/editor/ExperienceEditor.tsx:32
+msgid "Experience Entry"
+msgstr "Experience Entry"
+
+#: src/components/layout/Toolbar.tsx:137
+msgid "Export JSON"
+msgstr "Export JSON"
+
+#: src/components/diff/MetaDiff.tsx:18
+msgid "Field"
+msgstr "Field"
+
+#: src/components/workspace/CVListItem.tsx:128
+#: src/components/workspace/NewCVDialog.tsx:120
+msgid "Fork"
+msgstr "Fork"
+
+#: src/components/workspace/CVList.tsx:63
+msgid "Fork active CV"
+msgstr "Fork active CV"
+
+#: src/components/workspace/NewCVDialog.tsx:59
+msgid "Fork existing"
+msgstr "Fork existing"
+
+#: src/components/workspace/NewCVDialog.tsx:98
+msgid "Fork name"
+msgstr "Fork name"
+
+#: src/components/preview/CVPreview.tsx:30
+msgid "forked from {parentName}"
+msgstr "forked from {parentName}"
+
+#. placeholder {0}: flags.length
+#. placeholder {1}: flags.length === 1 ? "" : "s"
+#: src/components/ai/DetectAIText.tsx:87
+msgid "Found {0} phrase{1} a recruiter might notice. Click a flag to jump to it."
+msgstr "Found {0} phrase{1} a recruiter might notice. Click a flag to jump to it."
+
+#: src/components/editor/CustomEditor.tsx:23
+msgid "Freeform content..."
+msgstr "Freeform content..."
+
+#: src/components/editor/MetaEditor.tsx:42
+msgid "Full Name"
+msgstr "Full Name"
+
+#: src/components/ai/GenerateSummary.tsx:49
+msgid "Generate from my experience"
+msgstr "Generate from my experience"
+
+#: src/components/pdf/PdfPreviewModal.tsx:67
+msgid "Generating PDF..."
+msgstr "Generating PDF..."
+
+#: src/components/ai/ProviderSettings.tsx:174
+msgid "Hide"
+msgstr "Hide"
+
+#: src/components/editor/SectionList.tsx:105
+msgid "Hide section"
+msgstr "Hide section"
+
+#: src/components/layout/Toolbar.tsx:143
+msgid "Import JSON"
+msgstr "Import JSON"
+
+#: src/components/ai/ImproveButton.tsx:67
+msgid "Improve this bullet"
+msgstr "Improve this bullet"
+
+#: src/components/editor/EducationEditor.tsx:48
+msgid "Institution"
+msgstr "Institution"
+
+#: src/components/editor/MetaEditor.tsx:48
+msgid "Job Title"
+msgstr "Job Title"
+
+#: src/components/editor/MetaEditor.tsx:88
+msgid "Label (e.g. LinkedIn)"
+msgstr "Label (e.g. LinkedIn)"
+
+#: src/components/editor/LanguagesEditor.tsx:26
+msgid "Language"
+msgstr "Language"
+
+#: src/components/editor/SectionList.tsx:30
+msgid "Languages"
+msgstr "Languages"
+
+#: src/components/editor/MetaEditor.tsx:76
+msgid "Links"
+msgstr "Links"
+
+#: src/components/diff/MetaDiff.tsx:39
+msgid "Links have been modified"
+msgstr "Links have been modified"
+
+#: src/components/editor/ExperienceEditor.tsx:61
+#: src/components/editor/MetaEditor.tsx:68
+msgid "Location"
+msgstr "Location"
+
+#: src/components/ai/DetectAIText.tsx:78
+msgid "Looks good!"
+msgstr "Looks good!"
+
+#: src/components/ai/ProviderSettings.tsx:195
+msgid "Model"
+msgstr "Model"
+
+#: src/components/workspace/NewCVDialog.tsx:98
+msgid "My new CV"
+msgstr "My new CV"
+
+#: src/components/editor/LanguagesEditor.tsx:40
+msgid "Native"
+msgstr "Native"
+
+#: src/components/layout/Toolbar.tsx:216
+msgid "New CV"
+msgstr "New CV"
+
+#: src/components/diff/SectionDiff.tsx:57
+msgid "New empty section"
+msgstr "New empty section"
+
+#: src/components/ai/DetectAIText.tsx:81
+msgid "No AI-sounding phrases detected."
+msgstr "No AI-sounding phrases detected."
+
+#: src/components/editor/CustomEditor.tsx:16
+msgid "No content yet. Add an entry below."
+msgstr "No content yet. Add an entry below."
+
+#: src/components/workspace/CVSwitcher.tsx:15
+msgid "No CV"
+msgstr "No CV"
+
+#: src/components/editor/EducationEditor.tsx:19
+msgid "No education entries yet. Add one below."
+msgstr "No education entries yet. Add one below."
+
+#: src/components/editor/ExperienceEditor.tsx:24
+msgid "No experience entries yet. Add one below."
+msgstr "No experience entries yet. Add one below."
+
+#: src/components/editor/LanguagesEditor.tsx:19
+msgid "No languages added yet."
+msgstr "No languages added yet."
+
+#: src/components/editor/SkillsEditor.tsx:20
+msgid "No skill categories yet. Add one below."
+msgstr "No skill categories yet. Add one below."
+
+#: src/components/ai/TailorToJob.tsx:235
+msgid "No suggestions generated. The CV may already be well-aligned."
+msgstr "No suggestions generated. The CV may already be well-aligned."
+
+#: src/components/editor/EducationEditor.tsx:66
+msgid "Notes (optional)"
+msgstr "Notes (optional)"
+
+#: src/App.tsx:34
+msgid "OK"
+msgstr "OK"
+
+#: src/components/ai/TailorToJob.tsx:174
+msgid "Paste the full job description here..."
+msgstr "Paste the full job description here..."
+
+#: src/components/ai/TailorToJob.tsx:168
+msgid "Paste the job description"
+msgstr "Paste the job description"
+
+#: src/components/pdf/PdfPreviewModal.tsx:50
+msgid "PDF Preview"
+msgstr "PDF Preview"
+
+#: src/components/editor/MetaEditor.tsx:37
+msgid "Personal Information"
+msgstr "Personal Information"
+
+#: src/components/editor/MetaEditor.tsx:61
+msgid "Phone"
+msgstr "Phone"
+
+#: src/components/layout/Toolbar.tsx:128
+msgid "Preview PDF"
+msgstr "Preview PDF"
+
+#: src/components/editor/LanguagesEditor.tsx:41
+msgid "Professional"
+msgstr "Professional"
+
+#: src/components/ai/ProviderSettings.tsx:140
+msgid "Provider"
+msgstr "Provider"
+
+#: src/components/ai/DetectAIText.tsx:134
+msgid "Re-scan"
+msgstr "Re-scan"
+
+#: src/components/editor/EducationEditor.tsx:33
+msgid "Remove"
+msgstr "Remove"
+
+#: src/components/editor/ExperienceEditor.tsx:127
+msgid "Remove bullet"
+msgstr "Remove bullet"
+
+#: src/components/editor/SkillsEditor.tsx:38
+msgid "Remove category"
+msgstr "Remove category"
+
+#: src/components/editor/CustomEditor.tsx:32
+msgid "Remove entry"
+msgstr "Remove entry"
+
+#: src/components/editor/LanguagesEditor.tsx:48
+msgid "Remove language"
+msgstr "Remove language"
+
+#: src/components/editor/MetaEditor.tsx:101
+msgid "Remove link"
+msgstr "Remove link"
+
+#: src/components/diff/SectionDiff.tsx:60
+msgid "Removed empty section"
+msgstr "Removed empty section"
+
+#: src/components/workspace/CVListItem.tsx:108
+msgid "Rename"
+msgstr "Rename"
+
+#: src/components/editor/ExperienceEditor.tsx:45
+msgid "Role / Title"
+msgstr "Role / Title"
+
+#: src/components/ai/ProviderSettings.tsx:248
+msgid "Save"
+msgstr "Save"
+
+#: src/components/layout/Toolbar.tsx:110
+msgid "Saved"
+msgstr "Saved"
+
+#: src/components/layout/Toolbar.tsx:108
+msgid "Saving..."
+msgstr "Saving..."
+
+#: src/components/editor/SectionList.tsx:228
+msgid "Sections"
+msgstr "Sections"
+
+#: src/components/diff/DiffPicker.tsx:66
+#: src/components/diff/DiffPicker.tsx:80
+#: src/components/workspace/NewCVDialog.tsx:81
+msgid "Select a CV…"
+msgstr "Select a CV…"
+
+#: src/components/editor/LanguagesEditor.tsx:39
+msgid "Select level"
+msgstr "Select level"
+
+#: src/components/diff/DiffPicker.tsx:88
+msgid "Select two different CVs to compare."
+msgstr "Select two different CVs to compare."
+
+#: src/components/layout/Toolbar.tsx:193
+msgid "Settings"
+msgstr "Settings"
+
+#: src/components/ai/ProviderSettings.tsx:174
+msgid "Show"
+msgstr "Show"
+
+#: src/components/editor/SectionList.tsx:105
+msgid "Show section"
+msgstr "Show section"
+
+#: src/components/editor/SectionList.tsx:27
+msgid "Skills"
+msgstr "Skills"
+
+#: src/components/editor/SkillsEditor.tsx:45
+msgid "Skills (comma-separated, e.g. React, TypeScript, Node.js)"
+msgstr "Skills (comma-separated, e.g. React, TypeScript, Node.js)"
+
+#: src/components/workspace/NewCVDialog.tsx:67
+msgid "Source CV"
+msgstr "Source CV"
+
+#: src/components/editor/ExperienceEditor.tsx:70
+msgid "Start date"
+msgstr "Start date"
+
+#: src/App.tsx:28
+msgid "Storage Error"
+msgstr "Storage Error"
+
+#: src/components/ai/TailorToJob.tsx:306
+msgid "Suggested:"
+msgstr "Suggested:"
+
+#: src/components/editor/SectionList.tsx:26
+msgid "Summary"
+msgstr "Summary"
+
+#: src/components/ai/TailorToJob.tsx:191
+msgid "Tailor my CV"
+msgstr "Tailor my CV"
+
+#: src/components/layout/Toolbar.tsx:183
+msgid "Tailor to Job"
+msgstr "Tailor to Job"
+
+#: src/components/ai/TailorToJob.tsx:153
+msgid "Tailor to Job Description"
+msgstr "Tailor to Job Description"
+
+#: src/components/ai/TailorToJob.tsx:188
+msgid "Tailoring..."
+msgstr "Tailoring..."
+
+#: src/components/ai/ProviderSettings.tsx:211
+msgid "Test connection"
+msgstr "Test connection"
+
+#: src/components/ai/ProviderSettings.tsx:211
+msgid "Testing..."
+msgstr "Testing..."
+
+#: src/components/diff/DiffView.tsx:44
+msgid "These two CVs are identical."
+msgstr "These two CVs are identical."
+
+#: src/components/workspace/CVSwitcher.tsx:15
+msgid "Untitled"
+msgstr "Untitled"
+
+#: src/components/editor/MetaEditor.tsx:94
+msgid "URL"
+msgstr "URL"
+
+#: src/components/editor/SummaryEditor.tsx:26
+msgid "Write a brief professional summary..."
+msgstr "Write a brief professional summary..."
+
+#: src/components/ai/ImproveButton.tsx:66
+msgid "Write a bullet first"
+msgstr "Write a bullet first"
+
+#: src/components/workspace/CVList.tsx:31
+msgid "You have a lot of saved CVs. Consider deleting old ones to keep things fast."
+msgstr "You have a lot of saved CVs. Consider deleting old ones to keep things fast."
+
+#: src/components/ai/ProviderSettings.tsx:227
+msgid "Your API key is stored locally in your browser and sent only to the AI provider you configure. It never passes through our servers — the proxy only forwards your request."
+msgstr "Your API key is stored locally in your browser and sent only to the AI provider you configure. It never passes through our servers — the proxy only forwards your request."

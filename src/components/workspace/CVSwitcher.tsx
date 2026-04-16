@@ -1,15 +1,18 @@
 import { useState, useRef, useEffect } from "react";
+import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 import { CVList } from "./CVList";
 import { NewCVDialog } from "./NewCVDialog";
 
 export function CVSwitcher() {
-  const activeCvName = useCVStore(
+  const activeCvRawName = useCVStore(
     (s) =>
       s.workspace.activeCvId
-        ? s.workspace.cvs[s.workspace.activeCvId]?.name ?? "Untitled"
-        : "No CV",
+        ? s.workspace.cvs[s.workspace.activeCvId]?.name ?? null
+        : null,
   );
+  const hasActiveCv = useCVStore((s) => !!s.workspace.activeCvId);
+  const activeCvName = activeCvRawName ?? (hasActiveCv ? t`Untitled` : t`No CV`);
 
   const [listOpen, setListOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);

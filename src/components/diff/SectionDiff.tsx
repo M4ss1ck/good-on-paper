@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/react/macro";
 import type { SectionDiff as SectionDiffType, ItemDiff, BulletChange } from "../../types/diff";
 import { TextDiff } from "./TextDiff";
 
@@ -53,10 +54,10 @@ export function SectionDiff({ diff }: SectionDiffProps) {
         )}
 
         {diff.type === "added" && diff.items.length === 0 && (
-          <p className="text-xs text-green-600 italic">New empty section</p>
+          <p className="text-xs text-green-600 italic"><Trans>New empty section</Trans></p>
         )}
         {diff.type === "removed" && diff.items.length === 0 && (
-          <p className="text-xs text-red-600 italic">Removed empty section</p>
+          <p className="text-xs text-red-600 italic"><Trans>Removed empty section</Trans></p>
         )}
       </div>
     </details>

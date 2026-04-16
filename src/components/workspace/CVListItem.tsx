@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Pencil, Copy, GitFork, Trash2 } from "lucide-react";
+import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 import { relativeTime } from "../../lib/relativeTime";
 import type { CV } from "../../types/cv";
@@ -83,7 +85,7 @@ export function CVListItem({ cv, isActive, onSelect, onClose }: CVListItemProps)
               {cv.name}
               {isActive && (
                 <span className="ml-1.5 text-[10px] font-normal text-accent">
-                  active
+                  <Trans>active</Trans>
                 </span>
               )}
             </div>
@@ -103,7 +105,7 @@ export function CVListItem({ cv, isActive, onSelect, onClose }: CVListItemProps)
         >
           <button
             className="p-1 text-xs text-light hover:text-primary transition-colors"
-            title="Rename"
+            title={t`Rename`}
             onClick={() => {
               setEditName(cv.name);
               setEditing(true);
@@ -113,7 +115,7 @@ export function CVListItem({ cv, isActive, onSelect, onClose }: CVListItemProps)
           </button>
           <button
             className="p-1 text-xs text-light hover:text-primary transition-colors"
-            title="Duplicate"
+            title={t`Duplicate`}
             onClick={() => {
               duplicateCV(cv.id, `${cv.name} (copy)`);
               onClose();
@@ -123,7 +125,7 @@ export function CVListItem({ cv, isActive, onSelect, onClose }: CVListItemProps)
           </button>
           <button
             className="p-1 text-xs text-light hover:text-primary transition-colors"
-            title="Fork"
+            title={t`Fork`}
             onClick={() => {
               forkCV(cv.id, `${cv.name} (fork)`);
               onClose();
@@ -134,7 +136,7 @@ export function CVListItem({ cv, isActive, onSelect, onClose }: CVListItemProps)
           {!isLastCV && (
             <button
               className="p-1 text-xs text-light hover:text-red-500 transition-colors"
-              title="Delete"
+              title={t`Delete`}
               onClick={handleDelete}
             >
               <Trash2 size={14} />
@@ -163,13 +165,13 @@ export function CVListItem({ cv, isActive, onSelect, onClose }: CVListItemProps)
               className="px-2 py-0.5 rounded bg-red-500 text-white hover:bg-red-600 transition-colors"
               onClick={handleDelete}
             >
-              Delete
+              <Trans>Delete</Trans>
             </button>
             <button
               className="px-2 py-0.5 rounded border border-gray-200 text-muted hover:text-primary transition-colors"
               onClick={() => setConfirmDelete(false)}
             >
-              Cancel
+              <Trans>Cancel</Trans>
             </button>
           </div>
         </div>

@@ -1,5 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import { Sparkles, Search, Target, Settings } from "lucide-react";
+import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { useCVStore } from "../../store/cvStore";
@@ -11,6 +14,7 @@ import { DetectAIText } from "../ai/DetectAIText";
 import { TailorToJob } from "../ai/TailorToJob";
 import { CVSwitcher } from "../workspace/CVSwitcher";
 import { DiffPicker } from "../diff/DiffPicker";
+import { loadCatalog, type AppLocale } from "../../i18n";
 
 pdfMake.addVirtualFileSystem(pdfFonts);
 
@@ -32,6 +36,14 @@ export function Toolbar() {
   const [tailorOpen, setTailorOpen] = useState(false);
   const [diffPickerOpen, setDiffPickerOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Locale toggle
+  const { i18n } = useLingui();
+  const currentLocale = i18n.locale as AppLocale;
+  const toggleLocale = () => {
+    const next: AppLocale = currentLocale === "en" ? "es" : "en";
+    loadCatalog(next);
+  };
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -93,9 +105,9 @@ export function Toolbar() {
 
   const saveLabel =
     saveStatus === "saving"
-      ? "Saving..."
+      ? t`Saving...`
       : saveStatus === "saved"
-        ? "Saved"
+        ? t`Saved`
         : "";
 
   return (
@@ -113,22 +125,22 @@ export function Toolbar() {
       )}
 
       <button className={btnClass} onClick={handlePreviewPdf}>
-        Preview PDF
+        <Trans>Preview PDF</Trans>
       </button>
       <button className={btnClass} onClick={handleDownloadPdf}>
-        Download PDF
+        <Trans>Download PDF</Trans>
       </button>
       <button className={btnClass} onClick={() => setDiffPickerOpen(true)}>
-        Compare
+        <Trans>Compare</Trans>
       </button>
       <button className={btnClass} onClick={handleExportJson}>
-        Export JSON
+        <Trans>Export JSON</Trans>
       </button>
       <button
         className={btnClass}
         onClick={() => fileInputRef.current?.click()}
       >
-        Import JSON
+        <Trans>Import JSON</Trans>
       </button>
       <input
         ref={fileInputRef}
@@ -158,7 +170,7 @@ export function Toolbar() {
                 setAiDropdownOpen(false);
               }}
             >
-              <Search size={14} className="inline mr-1.5" />AI Phrase Check
+              <Search size={14} className="inline mr-1.5" /><Trans>AI Phrase Check</Trans>
             </button>
             <button
               className="w-full text-left px-4 py-2 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 hover:bg-gray-50"
@@ -168,7 +180,7 @@ export function Toolbar() {
                 setAiDropdownOpen(false);
               }}
             >
-              <Target size={14} className="inline mr-1.5" />Tailor to Job
+              <Target size={14} className="inline mr-1.5" /><Trans>Tailor to Job</Trans>
             </button>
             <hr className="my-1 border-gray-100" />
             <button
@@ -178,7 +190,7 @@ export function Toolbar() {
                 setAiDropdownOpen(false);
               }}
             >
-              <Settings size={14} className="inline mr-1.5" />Settings
+              <Settings size={14} className="inline mr-1.5" /><Trans>Settings</Trans>
             </button>
           </div>
         )}
@@ -190,20 +202,28 @@ export function Toolbar() {
             onClick={handleReset}
             className="px-2 py-1 rounded bg-red-500 text-white hover:bg-red-600 transition-colors"
           >
-            Confirm Reset
+            <Trans>Confirm Reset</Trans>
           </button>
           <button
             onClick={() => setConfirmReset(false)}
             className="px-2 py-1 rounded border border-gray-200 text-muted hover:text-primary transition-colors"
           >
-            Cancel
+            <Trans>Cancel</Trans>
           </button>
         </span>
       ) : (
         <button className={btnClass} onClick={handleReset}>
-          New CV
+          <Trans>New CV</Trans>
         </button>
       )}
+
+      <button
+        className="px-2 py-1.5 text-xs font-medium rounded border border-gray-200 text-muted hover:text-primary hover:border-accent transition-colors"
+        onClick={toggleLocale}
+      >
+        {currentLocale === "en" ? "ES" : "EN"}
+      </button>
+
       <ProviderSettings />
       {diffPickerOpen && (
         <DiffPicker onClose={() => setDiffPickerOpen(false)} />

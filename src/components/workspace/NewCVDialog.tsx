@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 
 interface NewCVDialogProps {
@@ -51,10 +53,10 @@ export function NewCVDialog({ onClose }: NewCVDialogProps) {
         {/* Tabs */}
         <div className="flex border-b border-gray-200">
           <button className={tabClass("blank")} onClick={() => setTab("blank")}>
-            Blank CV
+            <Trans>Blank CV</Trans>
           </button>
           <button className={tabClass("fork")} onClick={() => setTab("fork")}>
-            Fork existing
+            <Trans>Fork existing</Trans>
           </button>
         </div>
 
@@ -62,7 +64,7 @@ export function NewCVDialog({ onClose }: NewCVDialogProps) {
           {tab === "fork" && (
             <div>
               <label className="block text-xs font-medium text-muted mb-1">
-                Source CV
+                <Trans>Source CV</Trans>
               </label>
               <select
                 className="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-accent transition-colors"
@@ -76,7 +78,7 @@ export function NewCVDialog({ onClose }: NewCVDialogProps) {
                 }}
               >
                 <option value="" disabled>
-                  Select a CV…
+                  {t`Select a CV…`}
                 </option>
                 {orderedCvs.map((cv) => (
                   <option key={cv.id} value={cv.id}>
@@ -93,7 +95,7 @@ export function NewCVDialog({ onClose }: NewCVDialogProps) {
             </label>
             <input
               className="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-accent transition-colors"
-              placeholder={tab === "blank" ? "My new CV" : "Fork name"}
+              placeholder={tab === "blank" ? t`My new CV` : t`Fork name`}
               value={name}
               onChange={(e) => setName(e.target.value)}
               onKeyDown={(e) => {
@@ -108,14 +110,14 @@ export function NewCVDialog({ onClose }: NewCVDialogProps) {
               className="px-3 py-1.5 text-sm rounded border border-gray-200 text-muted hover:text-primary transition-colors"
               onClick={onClose}
             >
-              Cancel
+              <Trans>Cancel</Trans>
             </button>
             <button
               className="px-3 py-1.5 text-sm rounded bg-accent text-white hover:bg-primary transition-colors disabled:opacity-50"
               disabled={!name.trim() || (tab === "fork" && !sourceId)}
               onClick={handleCreate}
             >
-              {tab === "blank" ? "Create" : "Fork"}
+              {tab === "blank" ? <Trans>Create</Trans> : <Trans>Fork</Trans>}
             </button>
           </div>
         </div>

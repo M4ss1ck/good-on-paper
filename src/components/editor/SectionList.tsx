@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import {
   DndContext,
   closestCenter,
@@ -20,13 +22,13 @@ import { useUIStore } from "../../store/uiStore";
 import { SectionEditor } from "./SectionEditor";
 import type { Section, SectionType } from "../../types/cv";
 
-const sectionTypeLabels: Record<SectionType, string> = {
-  summary: "Summary",
-  skills: "Skills",
-  experience: "Experience",
-  education: "Education",
-  languages: "Languages",
-  custom: "Custom",
+const sectionTypeLabels: Record<SectionType, () => string> = {
+  summary: () => t`Summary`,
+  skills: () => t`Skills`,
+  experience: () => t`Experience`,
+  education: () => t`Education`,
+  languages: () => t`Languages`,
+  custom: () => t`Custom`,
 };
 
 function SortableSectionCard({ section }: { section: Section }) {
@@ -72,7 +74,7 @@ function SortableSectionCard({ section }: { section: Section }) {
           className="cursor-grab text-light hover:text-muted touch-none"
           {...attributes}
           {...listeners}
-          title="Drag to reorder"
+          title={t`Drag to reorder`}
         >
           <svg
             width="16"
@@ -100,7 +102,7 @@ function SortableSectionCard({ section }: { section: Section }) {
         <button
           onClick={() => toggleVisibility(section.id)}
           className="text-light hover:text-muted transition-colors"
-          title={section.visible ? "Hide section" : "Show section"}
+          title={section.visible ? t`Hide section` : t`Show section`}
         >
           {section.visible ? (
             <svg
@@ -139,20 +141,20 @@ function SortableSectionCard({ section }: { section: Section }) {
               }}
               className="text-red-500 hover:text-red-700 font-medium"
             >
-              Delete
+              <Trans>Delete</Trans>
             </button>
             <button
               onClick={() => setConfirmDelete(false)}
               className="text-muted hover:text-primary"
             >
-              Cancel
+              <Trans>Cancel</Trans>
             </button>
           </span>
         ) : (
           <button
             onClick={() => setConfirmDelete(true)}
             className="text-light hover:text-red-500 transition-colors"
-            title="Delete section"
+            title={t`Delete section`}
           >
             <svg
               width="16"
@@ -172,7 +174,7 @@ function SortableSectionCard({ section }: { section: Section }) {
         <button
           onClick={() => setCollapsed(!collapsed)}
           className="text-light hover:text-muted transition-colors"
-          title={collapsed ? "Expand" : "Collapse"}
+          title={collapsed ? t`Expand` : t`Collapse`}
         >
           <svg
             width="16"
@@ -223,7 +225,7 @@ export function SectionList() {
   return (
     <div className="space-y-2">
       <h2 className="text-sm font-semibold text-primary uppercase tracking-wide">
-        Sections
+        <Trans>Sections</Trans>
       </h2>
 
       <DndContext
@@ -247,7 +249,7 @@ export function SectionList() {
           onClick={() => setShowAddMenu(!showAddMenu)}
           className="w-full py-2 text-sm text-accent hover:text-primary border border-dashed border-gray-300 rounded-lg hover:border-accent transition-colors"
         >
-          + Add section
+          <Trans>+ Add section</Trans>
         </button>
         {showAddMenu && (
           <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-sm z-10">
@@ -260,7 +262,7 @@ export function SectionList() {
                 }}
                 className="block w-full text-left px-4 py-2 text-sm text-muted hover:bg-gray-50 hover:text-primary transition-colors first:rounded-t-lg last:rounded-b-lg"
               >
-                {sectionTypeLabels[type]}
+                {sectionTypeLabels[type]()}
               </button>
             ))}
           </div>

@@ -1,4 +1,6 @@
 import { X } from "lucide-react";
+import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 import type { Section, ExperienceItem } from "../../types/cv";
 import { ImproveButton } from "../ai/ImproveButton";
@@ -19,7 +21,7 @@ export function ExperienceEditor({ section }: { section: Section }) {
     <div className="pt-3 space-y-4">
       {items.length === 0 && (
         <p className="text-xs text-light">
-          No experience entries yet. Add one below.
+          <Trans>No experience entries yet. Add one below.</Trans>
         </p>
       )}
 
@@ -27,7 +29,7 @@ export function ExperienceEditor({ section }: { section: Section }) {
         <div key={item.id} className="space-y-2 p-3 bg-gray-50 rounded">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-muted">
-              Experience Entry
+              <Trans>Experience Entry</Trans>
             </span>
             <button
               onClick={() => removeItem(section.id, item.id)}
@@ -40,7 +42,7 @@ export function ExperienceEditor({ section }: { section: Section }) {
           <div className="grid grid-cols-2 gap-2">
             <input
               className={inputClass + " bg-gray-50"}
-              placeholder="Role / Title"
+              placeholder={t`Role / Title`}
               value={item.role}
               onChange={(e) =>
                 updateItem(section.id, item.id, { role: e.target.value })
@@ -48,7 +50,7 @@ export function ExperienceEditor({ section }: { section: Section }) {
             />
             <input
               className={inputClass + " bg-gray-50"}
-              placeholder="Company"
+              placeholder={t`Company`}
               value={item.company}
               onChange={(e) =>
                 updateItem(section.id, item.id, { company: e.target.value })
@@ -56,7 +58,7 @@ export function ExperienceEditor({ section }: { section: Section }) {
             />
             <input
               className={inputClass + " bg-gray-50"}
-              placeholder="Location"
+              placeholder={t`Location`}
               value={item.location}
               onChange={(e) =>
                 updateItem(section.id, item.id, { location: e.target.value })
@@ -65,7 +67,7 @@ export function ExperienceEditor({ section }: { section: Section }) {
             <div className="flex gap-2">
               <input
                 className={inputClass + " bg-gray-50"}
-                placeholder="Start date"
+                placeholder={t`Start date`}
                 value={item.startDate}
                 onChange={(e) =>
                   updateItem(section.id, item.id, {
@@ -75,7 +77,7 @@ export function ExperienceEditor({ section }: { section: Section }) {
               />
               <input
                 className={inputClass + " bg-gray-50"}
-                placeholder="End date"
+                placeholder={t`End date`}
                 value={item.endDate}
                 onChange={(e) =>
                   updateItem(section.id, item.id, { endDate: e.target.value })
@@ -86,13 +88,13 @@ export function ExperienceEditor({ section }: { section: Section }) {
 
           {/* Bullets */}
           <div className="space-y-1.5 pl-2">
-            <span className="text-xs text-muted">Bullet points</span>
+            <span className="text-xs text-muted"><Trans>Bullet points</Trans></span>
             {item.bullets.map((bullet, bulletIndex) => (
               <div key={bulletIndex} className="flex items-center gap-1.5">
                 <span className="text-light text-xs">•</span>
                 <input
                   className={inputClass + " bg-gray-50"}
-                  placeholder="Describe an achievement or responsibility..."
+                  placeholder={t`Describe an achievement or responsibility...`}
                   value={bullet}
                   onChange={(e) =>
                     updateBullet(
@@ -122,7 +124,7 @@ export function ExperienceEditor({ section }: { section: Section }) {
                     removeBullet(section.id, item.id, bulletIndex)
                   }
                   className="text-light hover:text-red-500 transition-colors text-sm shrink-0"
-                  title="Remove bullet"
+                  title={t`Remove bullet`}
                 >
                   <X size={14} />
                 </button>
@@ -132,7 +134,7 @@ export function ExperienceEditor({ section }: { section: Section }) {
               onClick={() => addBullet(section.id, item.id)}
               className="text-xs text-accent hover:text-primary transition-colors"
             >
-              + Add bullet
+              <Trans>+ Add bullet</Trans>
             </button>
           </div>
         </div>
@@ -142,7 +144,7 @@ export function ExperienceEditor({ section }: { section: Section }) {
         onClick={() => addItem(section.id)}
         className="text-xs text-accent hover:text-primary transition-colors"
       >
-        + Add experience
+        <Trans>+ Add experience</Trans>
       </button>
     </div>
   );

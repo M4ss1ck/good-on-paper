@@ -1,4 +1,6 @@
 import { X } from "lucide-react";
+import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 
 export function MetaEditor() {
@@ -32,38 +34,38 @@ export function MetaEditor() {
   return (
     <div className="space-y-3">
       <h2 className="text-sm font-semibold text-primary uppercase tracking-wide">
-        Personal Information
+        <Trans>Personal Information</Trans>
       </h2>
       <div className="grid grid-cols-2 gap-3">
         <input
           className={inputClass}
-          placeholder="Full Name"
+          placeholder={t`Full Name`}
           value={meta.name}
           onChange={(e) => updateMeta({ name: e.target.value })}
         />
         <input
           className={inputClass}
-          placeholder="Job Title"
+          placeholder={t`Job Title`}
           value={meta.title}
           onChange={(e) => updateMeta({ title: e.target.value })}
         />
         <input
           className={inputClass}
-          placeholder="Email"
+          placeholder={t`Email`}
           type="email"
           value={meta.email}
           onChange={(e) => updateMeta({ email: e.target.value })}
         />
         <input
           className={inputClass}
-          placeholder="Phone"
+          placeholder={t`Phone`}
           type="tel"
           value={meta.phone}
           onChange={(e) => updateMeta({ phone: e.target.value })}
         />
         <input
           className={inputClass + " col-span-2"}
-          placeholder="Location"
+          placeholder={t`Location`}
           value={meta.location}
           onChange={(e) => updateMeta({ location: e.target.value })}
         />
@@ -71,32 +73,32 @@ export function MetaEditor() {
 
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-medium text-muted">Links</span>
+          <span className="text-xs font-medium text-muted"><Trans>Links</Trans></span>
           <button
             onClick={addLink}
             className="text-xs text-accent hover:text-primary transition-colors"
           >
-            + Add link
+            <Trans>+ Add link</Trans>
           </button>
         </div>
         {meta.links.map((link, index) => (
           <div key={index} className="flex items-center gap-2">
             <input
               className={inputClass}
-              placeholder="Label (e.g. LinkedIn)"
+              placeholder={t`Label (e.g. LinkedIn)`}
               value={link.label}
               onChange={(e) => updateLink(index, "label", e.target.value)}
             />
             <input
               className={inputClass}
-              placeholder="URL"
+              placeholder={t`URL`}
               value={link.url}
               onChange={(e) => updateLink(index, "url", e.target.value)}
             />
             <button
               onClick={() => removeLink(index)}
               className="text-light hover:text-red-500 transition-colors text-sm shrink-0"
-              title="Remove link"
+              title={t`Remove link`}
             >
               <X size={14} />
             </button>

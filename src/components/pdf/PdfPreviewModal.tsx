@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
+import { Trans } from "@lingui/react/macro";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { useUIStore } from "../../store/uiStore";
@@ -46,7 +47,7 @@ export function PdfPreviewModal() {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
-          <span className="text-sm font-medium text-primary">PDF Preview</span>
+          <span className="text-sm font-medium text-primary"><Trans>PDF Preview</Trans></span>
           <button
             onClick={() => close(false)}
             className="text-light hover:text-muted transition-colors text-lg"
@@ -63,7 +64,7 @@ export function PdfPreviewModal() {
             />
           ) : (
             <div className="flex items-center justify-center h-full text-sm text-light">
-              Generating PDF...
+              <Trans>Generating PDF...</Trans>
             </div>
           )}
         </div>

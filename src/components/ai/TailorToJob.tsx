@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Target, Check, X } from "lucide-react";
+import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 import { useAIAction } from "../../hooks/useAIAction";
 import {
@@ -148,7 +150,7 @@ export function TailorToJob({ open, onClose }: TailorToJobProps) {
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-primary">
-            <Target size={18} className="inline mr-1.5" />Tailor to Job Description
+            <Target size={18} className="inline mr-1.5" /><Trans>Tailor to Job Description</Trans>
           </h2>
           <button
             onClick={handleClose}
@@ -163,13 +165,13 @@ export function TailorToJob({ open, onClose }: TailorToJobProps) {
           {/* Job description input */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Paste the job description
+              <Trans>Paste the job description</Trans>
             </label>
             <textarea
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
               disabled={state === "loading"}
-              placeholder="Paste the full job description here..."
+              placeholder={t`Paste the full job description here...`}
               className="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent resize-y min-h-32 disabled:opacity-60 disabled:bg-gray-50"
               rows={6}
             />
@@ -183,10 +185,10 @@ export function TailorToJob({ open, onClose }: TailorToJobProps) {
             {state === "loading" ? (
               <>
                 <span className="inline-block w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                Tailoring...
+                <Trans>Tailoring...</Trans>
               </>
             ) : (
-              "Tailor my CV"
+              <Trans>Tailor my CV</Trans>
             )}
           </button>
 
@@ -201,7 +203,7 @@ export function TailorToJob({ open, onClose }: TailorToJobProps) {
           {rawFallback && (
             <div className="space-y-2">
               <p className="text-xs text-amber-600 font-medium">
-                Couldn't parse structured suggestions. Showing raw response:
+                <Trans>Couldn't parse structured suggestions. Showing raw response:</Trans>
               </p>
               <div className="p-3 text-sm text-primary bg-gray-50 border border-gray-200 rounded whitespace-pre-wrap">
                 {rawFallback}
@@ -213,8 +215,9 @@ export function TailorToJob({ open, onClose }: TailorToJobProps) {
           {suggestions && suggestions.length > 0 && (
             <div className="space-y-3">
               <p className="text-xs text-muted">
-                {suggestions.filter((s) => s.status === "pending").length} suggestion
-                {suggestions.filter((s) => s.status === "pending").length === 1 ? "" : "s"} remaining
+                <Trans>
+                  {suggestions.filter((s) => s.status === "pending").length} suggestion{suggestions.filter((s) => s.status === "pending").length === 1 ? "" : "s"} remaining
+                </Trans>
               </p>
               {suggestions.map((s, i) => (
                 <SuggestionCard
@@ -229,7 +232,7 @@ export function TailorToJob({ open, onClose }: TailorToJobProps) {
 
           {suggestions && suggestions.length === 0 && (
             <p className="text-sm text-muted py-4 text-center">
-              No suggestions generated. The CV may already be well-aligned.
+              <Trans>No suggestions generated. The CV may already be well-aligned.</Trans>
             </p>
           )}
         </div>
@@ -240,7 +243,7 @@ export function TailorToJob({ open, onClose }: TailorToJobProps) {
             onClick={handleClose}
             className="px-4 py-2 text-sm rounded border border-gray-200 text-muted hover:text-primary transition-colors"
           >
-            Close
+            <Trans>Close</Trans>
           </button>
         </div>
       </div>
@@ -263,7 +266,7 @@ function SuggestionCard({
         <div className="flex items-center gap-2 text-xs text-green-700">
           <Check size={14} />
           <span className="font-medium capitalize">{suggestion.section}</span>
-          <span>— Applied</span>
+          <span><Trans>— Applied</Trans></span>
         </div>
       </div>
     );
@@ -275,7 +278,7 @@ function SuggestionCard({
         <div className="flex items-center gap-2 text-xs text-muted">
           <X size={14} />
           <span className="font-medium capitalize">{suggestion.section}</span>
-          <span>— Dismissed</span>
+          <span><Trans>— Dismissed</Trans></span>
         </div>
       </div>
     );
@@ -294,13 +297,13 @@ function SuggestionCard({
 
       {suggestion.current && (
         <div className="text-sm">
-          <p className="text-xs font-medium text-gray-500 mb-0.5">Current:</p>
+          <p className="text-xs font-medium text-gray-500 mb-0.5"><Trans>Current:</Trans></p>
           <p className="text-primary/60 line-through">{suggestion.current}</p>
         </div>
       )}
 
       <div className="text-sm">
-        <p className="text-xs font-medium text-gray-500 mb-0.5">Suggested:</p>
+        <p className="text-xs font-medium text-gray-500 mb-0.5"><Trans>Suggested:</Trans></p>
         <p className="text-primary">{suggestion.suggested}</p>
       </div>
 
@@ -309,13 +312,13 @@ function SuggestionCard({
           onClick={onAccept}
           className="px-3 py-1 text-xs rounded bg-accent text-white hover:bg-accent/90 transition-colors"
         >
-          Accept
+          <Trans>Accept</Trans>
         </button>
         <button
           onClick={onDismiss}
           className="px-3 py-1 text-xs rounded border border-gray-200 text-muted hover:text-primary transition-colors"
         >
-          Dismiss
+          <Trans>Dismiss</Trans>
         </button>
       </div>
     </div>

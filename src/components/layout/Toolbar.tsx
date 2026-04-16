@@ -3,7 +3,9 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { useCVStore } from "../../store/cvStore";
 import { useUIStore } from "../../store/uiStore";
+import { useAIStore } from "../../store/aiStore";
 import { generatePdfDefinition } from "../pdf/generatePdf";
+import { ProviderSettings } from "../ai/ProviderSettings";
 
 pdfMake.addVirtualFileSystem(pdfFonts);
 
@@ -14,6 +16,7 @@ export function Toolbar() {
   const resetCV = useCVStore((s) => s.resetCV);
   const openModal = useUIStore((s) => s.setPdfModalOpen);
   const saveStatus = useUIStore((s) => s.saveStatus);
+  const setSettingsOpen = useAIStore((s) => s.setSettingsOpen);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [confirmReset, setConfirmReset] = useState(false);
 
@@ -102,6 +105,14 @@ export function Toolbar() {
         onChange={handleImportJson}
       />
 
+      <button
+        className={btnClass}
+        onClick={() => setSettingsOpen(true)}
+        title="AI Settings"
+      >
+        ⚙️ AI
+      </button>
+
       {confirmReset ? (
         <span className="flex items-center gap-1 text-xs">
           <button
@@ -122,6 +133,7 @@ export function Toolbar() {
           New CV
         </button>
       )}
+      <ProviderSettings />
     </div>
   );
 }

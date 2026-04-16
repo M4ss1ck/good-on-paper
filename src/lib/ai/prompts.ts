@@ -8,6 +8,11 @@ import type {
   LanguageItem,
   CustomItem,
 } from "../../types/cv";
+import { localeToLanguageName } from "../localeToLanguageName";
+
+function localeInstruction(cv: CV): string {
+  return `The CV is written in ${localeToLanguageName(cv.meta.locale ?? "en")}. Respond in the same language.`;
+}
 
 function getSectionsByType(cv: CV, type: string): Section[] {
   return cv.sections.filter((s) => s.type === type && s.visible);
@@ -37,7 +42,7 @@ export function generateSummaryPrompt(
   return [
     {
       role: "system",
-      content: `You are a professional CV writer. Write a concise professional summary (3-4 sentences) for a CV based on the candidate's experience, skills, and education. Write in first person. Be specific, not generic. Avoid cliches like "passionate", "results-driven", "leveraging". Do not use em dashes. The summary should sound like a real person wrote it, not an AI.`,
+      content: `You are a professional CV writer. Write a concise professional summary (3-4 sentences) for a CV based on the candidate's experience, skills, and education. Write in first person. Be specific, not generic. Avoid cliches like "passionate", "results-driven", "leveraging". Do not use em dashes. The summary should sound like a real person wrote it, not an AI. ${localeInstruction(cv)}`,
     },
     {
       role: "user",
@@ -149,7 +154,7 @@ Respond in JSON format:
   ]
 }
 
-Keep suggestions practical. Don't invent experience the candidate doesn't have. Focus on keyword alignment, emphasis shifts, and phrasing that matches the JD's language. Do not use AI-sounding phrases like "leveraging", "passionate", "results-driven". Write like a human. No em dashes.`,
+Keep suggestions practical. Don't invent experience the candidate doesn't have. Focus on keyword alignment, emphasis shifts, and phrasing that matches the JD's language. Do not use AI-sounding phrases like "leveraging", "passionate", "results-driven". Write like a human. No em dashes. ${localeInstruction(cv)}`,
     },
     {
       role: "user",
@@ -162,11 +167,13 @@ export function improveBulletPrompt(
   bullet: string,
   role: string,
   company: string,
+  locale?: string,
 ): { role: string; content: string }[] {
+  const lang = localeToLanguageName(locale ?? "en");
   return [
     {
       role: "system",
-      content: `You are a CV writing expert. Rewrite the following bullet point to be more impactful and specific. Use active verbs. Quantify results where possible. Keep it to one sentence, two at most. Do not use buzzwords, em dashes, or AI-sounding language. Write like a real person describing their work to a colleague.`,
+      content: `You are a CV writing expert. Rewrite the following bullet point to be more impactful and specific. Use active verbs. Quantify results where possible. Keep it to one sentence, two at most. Do not use buzzwords, em dashes, or AI-sounding language. Write like a real person describing their work to a colleague. The CV is written in ${lang}. Respond in the same language.`,
     },
     {
       role: "user",

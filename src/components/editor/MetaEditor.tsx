@@ -2,6 +2,9 @@ import { X } from "lucide-react";
 import { Trans } from "@lingui/react/macro";
 import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
+import { localeToLanguageName } from "../../lib/localeToLanguageName";
+
+const LOCALE_OPTIONS = ["en", "es", "pt", "fr", "de", "it"];
 
 export function MetaEditor() {
   const meta = useCVStore((s) => s.activeCv()?.meta);
@@ -69,6 +72,26 @@ export function MetaEditor() {
           value={meta.location}
           onChange={(e) => updateMeta({ location: e.target.value })}
         />
+      </div>
+
+      <div>
+        <label className="text-xs font-medium text-muted block mb-1">
+          <Trans>CV Language</Trans>
+        </label>
+        <input
+          list="locale-options"
+          className={inputClass}
+          placeholder={t`e.g. en, es, pt-BR`}
+          value={meta.locale ?? "en"}
+          onChange={(e) => updateMeta({ locale: e.target.value })}
+        />
+        <datalist id="locale-options">
+          {LOCALE_OPTIONS.map((code) => (
+            <option key={code} value={code}>
+              {localeToLanguageName(code)}
+            </option>
+          ))}
+        </datalist>
       </div>
 
       <div className="space-y-2">

@@ -51,7 +51,7 @@ msgstr "+ Add experience"
 msgid "+ Add language"
 msgstr "+ Add language"
 
-#: src/components/editor/MetaEditor.tsx:81
+#: src/components/editor/MetaEditor.tsx:104
 msgid "+ Add link"
 msgstr "+ Add link"
 
@@ -168,7 +168,7 @@ msgstr "Compare with parent"
 msgid "Configure AI to generate a summary"
 msgstr "Configure AI to generate a summary"
 
-#: src/components/ai/ImproveButton.tsx:52
+#: src/components/ai/ImproveButton.tsx:54
 msgid "Configure AI to improve bullets"
 msgstr "Configure AI to improve bullets"
 
@@ -203,6 +203,10 @@ msgstr "Current:"
 #: src/components/editor/SectionList.tsx:31
 msgid "Custom"
 msgstr "Custom"
+
+#: src/components/editor/MetaEditor.tsx:79
+msgid "CV Language"
+msgstr "CV Language"
 
 #: src/components/editor/EducationEditor.tsx:58
 msgid "Dates (e.g. 2018 – 2022)"
@@ -243,6 +247,10 @@ msgstr "Drag to reorder"
 msgid "Duplicate"
 msgstr "Duplicate"
 
+#: src/components/editor/MetaEditor.tsx:84
+msgid "e.g. en, es, pt-BR"
+msgstr "e.g. en, es, pt-BR"
+
 #: src/components/editor/SectionList.tsx:29
 msgid "Education"
 msgstr "Education"
@@ -251,7 +259,7 @@ msgstr "Education"
 msgid "Education Entry"
 msgstr "Education Entry"
 
-#: src/components/editor/MetaEditor.tsx:54
+#: src/components/editor/MetaEditor.tsx:57
 msgid "Email"
 msgstr "Email"
 
@@ -315,7 +323,7 @@ msgstr "Found {0} phrase{1} a recruiter might notice. Click a flag to jump to it
 msgid "Freeform content..."
 msgstr "Freeform content..."
 
-#: src/components/editor/MetaEditor.tsx:42
+#: src/components/editor/MetaEditor.tsx:45
 msgid "Full Name"
 msgstr "Full Name"
 
@@ -339,7 +347,7 @@ msgstr "Hide section"
 msgid "Import JSON"
 msgstr "Import JSON"
 
-#: src/components/ai/ImproveButton.tsx:67
+#: src/components/ai/ImproveButton.tsx:69
 msgid "Improve this bullet"
 msgstr "Improve this bullet"
 
@@ -347,11 +355,11 @@ msgstr "Improve this bullet"
 msgid "Institution"
 msgstr "Institution"
 
-#: src/components/editor/MetaEditor.tsx:48
+#: src/components/editor/MetaEditor.tsx:51
 msgid "Job Title"
 msgstr "Job Title"
 
-#: src/components/editor/MetaEditor.tsx:88
+#: src/components/editor/MetaEditor.tsx:111
 msgid "Label (e.g. LinkedIn)"
 msgstr "Label (e.g. LinkedIn)"
 
@@ -363,7 +371,7 @@ msgstr "Language"
 msgid "Languages"
 msgstr "Languages"
 
-#: src/components/editor/MetaEditor.tsx:76
+#: src/components/editor/MetaEditor.tsx:99
 msgid "Links"
 msgstr "Links"
 
@@ -372,7 +380,7 @@ msgid "Links have been modified"
 msgstr "Links have been modified"
 
 #: src/components/editor/ExperienceEditor.tsx:61
-#: src/components/editor/MetaEditor.tsx:68
+#: src/components/editor/MetaEditor.tsx:71
 msgid "Location"
 msgstr "Location"
 
@@ -452,11 +460,11 @@ msgstr "Paste the job description"
 msgid "PDF Preview"
 msgstr "PDF Preview"
 
-#: src/components/editor/MetaEditor.tsx:37
+#: src/components/editor/MetaEditor.tsx:40
 msgid "Personal Information"
 msgstr "Personal Information"
 
-#: src/components/editor/MetaEditor.tsx:61
+#: src/components/editor/MetaEditor.tsx:64
 msgid "Phone"
 msgstr "Phone"
 
@@ -496,7 +504,7 @@ msgstr "Remove entry"
 msgid "Remove language"
 msgstr "Remove language"
 
-#: src/components/editor/MetaEditor.tsx:101
+#: src/components/editor/MetaEditor.tsx:124
 msgid "Remove link"
 msgstr "Remove link"
 
@@ -614,7 +622,7 @@ msgstr "These two CVs are identical."
 msgid "Untitled"
 msgstr "Untitled"
 
-#: src/components/editor/MetaEditor.tsx:94
+#: src/components/editor/MetaEditor.tsx:117
 msgid "URL"
 msgstr "URL"
 
@@ -622,7 +630,7 @@ msgstr "URL"
 msgid "Write a brief professional summary..."
 msgstr "Write a brief professional summary..."
 
-#: src/components/ai/ImproveButton.tsx:66
+#: src/components/ai/ImproveButton.tsx:68
 msgid "Write a bullet first"
 msgstr "Write a bullet first"
 

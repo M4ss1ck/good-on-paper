@@ -49,7 +49,7 @@ msgstr "+ Añadir experiencia"
 msgid "+ Add language"
 msgstr "+ Añadir idioma"
 
-#: src/components/editor/MetaEditor.tsx:81
+#: src/components/editor/MetaEditor.tsx:104
 msgid "+ Add link"
 msgstr "+ Añadir enlace"
 
@@ -166,7 +166,7 @@ msgstr "Comparar con el original"
 msgid "Configure AI to generate a summary"
 msgstr "Configurar IA para generar un resumen"
 
-#: src/components/ai/ImproveButton.tsx:52
+#: src/components/ai/ImproveButton.tsx:54
 msgid "Configure AI to improve bullets"
 msgstr "Configurar IA para mejorar viñetas"
 
@@ -201,6 +201,10 @@ msgstr "Actual:"
 #: src/components/editor/SectionList.tsx:31
 msgid "Custom"
 msgstr "Personalizado"
+
+#: src/components/editor/MetaEditor.tsx:79
+msgid "CV Language"
+msgstr ""
 
 #: src/components/editor/EducationEditor.tsx:58
 msgid "Dates (e.g. 2018 – 2022)"
@@ -241,6 +245,10 @@ msgstr "Arrastra para reordenar"
 msgid "Duplicate"
 msgstr "Duplicar"
 
+#: src/components/editor/MetaEditor.tsx:84
+msgid "e.g. en, es, pt-BR"
+msgstr ""
+
 #: src/components/editor/SectionList.tsx:29
 msgid "Education"
 msgstr "Educación"
@@ -249,7 +257,7 @@ msgstr "Educación"
 msgid "Education Entry"
 msgstr "Entrada de educación"
 
-#: src/components/editor/MetaEditor.tsx:54
+#: src/components/editor/MetaEditor.tsx:57
 msgid "Email"
 msgstr "Correo electrónico"
 
@@ -313,7 +321,7 @@ msgstr "Se encontraron {0} frase{1} que un reclutador podría notar. Haz clic en
 msgid "Freeform content..."
 msgstr "Contenido libre..."
 
-#: src/components/editor/MetaEditor.tsx:42
+#: src/components/editor/MetaEditor.tsx:45
 msgid "Full Name"
 msgstr "Nombre completo"
 
@@ -337,7 +345,7 @@ msgstr "Ocultar sección"
 msgid "Import JSON"
 msgstr "Importar JSON"
 
-#: src/components/ai/ImproveButton.tsx:67
+#: src/components/ai/ImproveButton.tsx:69
 msgid "Improve this bullet"
 msgstr "Mejorar esta viñeta"
 
@@ -345,11 +353,11 @@ msgstr "Mejorar esta viñeta"
 msgid "Institution"
 msgstr "Institución"
 
-#: src/components/editor/MetaEditor.tsx:48
+#: src/components/editor/MetaEditor.tsx:51
 msgid "Job Title"
 msgstr "Cargo"
 
-#: src/components/editor/MetaEditor.tsx:88
+#: src/components/editor/MetaEditor.tsx:111
 msgid "Label (e.g. LinkedIn)"
 msgstr "Etiqueta (ej. LinkedIn)"
 
@@ -361,7 +369,7 @@ msgstr "Idioma"
 msgid "Languages"
 msgstr "Idiomas"
 
-#: src/components/editor/MetaEditor.tsx:76
+#: src/components/editor/MetaEditor.tsx:99
 msgid "Links"
 msgstr "Enlaces"
 
@@ -370,7 +378,7 @@ msgid "Links have been modified"
 msgstr "Los enlaces han sido modificados"
 
 #: src/components/editor/ExperienceEditor.tsx:61
-#: src/components/editor/MetaEditor.tsx:68
+#: src/components/editor/MetaEditor.tsx:71
 msgid "Location"
 msgstr "Ubicación"
 
@@ -450,11 +458,11 @@ msgstr "Pega la descripción del puesto"
 msgid "PDF Preview"
 msgstr "Vista previa del PDF"
 
-#: src/components/editor/MetaEditor.tsx:37
+#: src/components/editor/MetaEditor.tsx:40
 msgid "Personal Information"
 msgstr "Información personal"
 
-#: src/components/editor/MetaEditor.tsx:61
+#: src/components/editor/MetaEditor.tsx:64
 msgid "Phone"
 msgstr "Teléfono"
 
@@ -494,7 +502,7 @@ msgstr "Eliminar entrada"
 msgid "Remove language"
 msgstr "Eliminar idioma"
 
-#: src/components/editor/MetaEditor.tsx:101
+#: src/components/editor/MetaEditor.tsx:124
 msgid "Remove link"
 msgstr "Eliminar enlace"
 
@@ -612,7 +620,7 @@ msgstr "Estos dos CVs son idénticos."
 msgid "Untitled"
 msgstr "Sin título"
 
-#: src/components/editor/MetaEditor.tsx:94
+#: src/components/editor/MetaEditor.tsx:117
 msgid "URL"
 msgstr "URL"
 
@@ -620,7 +628,7 @@ msgstr "URL"
 msgid "Write a brief professional summary..."
 msgstr "Escribe un breve resumen profesional..."
 
-#: src/components/ai/ImproveButton.tsx:66
+#: src/components/ai/ImproveButton.tsx:68
 msgid "Write a bullet first"
 msgstr "Escribe una viñeta primero"
 

@@ -258,5 +258,6 @@ export function generatePdfDefinition(cv: CV): TDocumentDefinitions {
     defaultStyle: { font: "Roboto", fontSize: 10, color: "#333333" },
     pageSize: "LETTER",
     pageMargins: [50, 40, 50, 40],
+    info: { lang: cv.meta.locale ?? "en" } as Record<string, string>,
   };
 }

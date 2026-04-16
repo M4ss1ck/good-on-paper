@@ -20,6 +20,7 @@ export interface CVMeta {
   email: string;
   phone: string;
   location: string;
+  locale: string;
   links: { label: string; url: string }[];
 }
 

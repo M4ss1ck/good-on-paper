@@ -15,6 +15,7 @@ export function createDefaultCV(): CV {
       email: "",
       phone: "",
       location: "",
+      locale: "en",
       links: [],
     },
     sections: [

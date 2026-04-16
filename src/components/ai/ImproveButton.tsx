@@ -4,6 +4,7 @@ import { t } from "@lingui/core/macro";
 import { useAIStore } from "../../store/aiStore";
 import { useAIAction } from "../../hooks/useAIAction";
 import { improveBulletPrompt } from "../../lib/ai/prompts";
+import { useCVStore } from "../../store/cvStore";
 import { AISuggestion } from "./AISuggestion";
 
 interface ImproveButtonProps {
@@ -20,6 +21,7 @@ export function ImproveButton({
   onAccept,
 }: ImproveButtonProps) {
   const hasProvider = useAIStore((s) => s.settings.provider !== null);
+  const locale = useCVStore((s) => s.activeCv()?.meta.locale);
   const { run, state, error, reset } = useAIAction();
   const [suggestion, setSuggestion] = useState<string | null>(null);
 
@@ -27,7 +29,7 @@ export function ImproveButton({
     if (!bullet.trim()) return;
     setSuggestion(null);
     reset();
-    const messages = improveBulletPrompt(bullet, role, company);
+    const messages = improveBulletPrompt(bullet, role, company, locale);
     const result = await run(messages);
     if (result) setSuggestion(result);
   };

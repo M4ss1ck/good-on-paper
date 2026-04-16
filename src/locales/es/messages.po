@@ -192,7 +192,7 @@ msgstr "No se pudieron analizar las sugerencias estructuradas. Mostrando respues
 
 #: src/components/ai/TranslateCV.tsx:78
 msgid "Couldn't parse the AI response as JSON. Copy and apply manually."
-msgstr ""
+msgstr "No se pudo interpretar la respuesta de la IA como JSON. Copia y aplica manualmente."
 
 #: src/components/workspace/NewCVDialog.tsx:120
 msgid "Create"
@@ -200,7 +200,7 @@ msgstr "Crear"
 
 #: src/components/ai/TranslateCV.tsx:116
 msgid "Current language"
-msgstr ""
+msgstr "Idioma actual"
 
 #: src/components/ai/TailorToJob.tsx:300
 msgid "Current:"
@@ -212,7 +212,7 @@ msgstr "Personalizado"
 
 #: src/components/editor/MetaEditor.tsx:79
 msgid "CV Language"
-msgstr ""
+msgstr "Idioma del CV"
 
 #: src/components/editor/EducationEditor.tsx:58
 msgid "Dates (e.g. 2018 – 2022)"
@@ -256,7 +256,7 @@ msgstr "Duplicar"
 #: src/components/ai/TranslateCV.tsx:131
 #: src/components/editor/MetaEditor.tsx:84
 msgid "e.g. en, es, pt-BR"
-msgstr ""
+msgstr "ej. en, es, pt-BR"
 
 #: src/components/editor/SectionList.tsx:29
 msgid "Education"
@@ -301,7 +301,7 @@ msgstr "Campo"
 
 #: src/components/editor/CVEditor.tsx:25
 msgid "Font"
-msgstr ""
+msgstr "Fuente"
 
 #: src/components/workspace/CVListItem.tsx:128
 #: src/components/workspace/NewCVDialog.tsx:120
@@ -421,7 +421,7 @@ msgstr "Nueva sección vacía"
 
 #: src/components/ai/TranslateCV.tsx:159
 msgid "No AI provider configured. Go to AI Settings first."
-msgstr ""
+msgstr "No hay proveedor de IA configurado. Ve a Configuración de IA primero."
 
 #: src/components/ai/DetectAIText.tsx:81
 msgid "No AI-sounding phrases detected."
@@ -497,7 +497,7 @@ msgstr "Proveedor"
 
 #: src/components/ai/TranslateCV.tsx:176
 msgid "Raw AI response"
-msgstr ""
+msgstr "Respuesta cruda de la IA"
 
 #: src/components/ai/DetectAIText.tsx:134
 msgid "Re-scan"
@@ -640,32 +640,32 @@ msgstr "Estos dos CVs son idénticos."
 #: src/components/ai/TranslateCV.tsx:153
 #: src/components/layout/Toolbar.tsx:197
 msgid "Translate"
-msgstr ""
+msgstr "Traducir"
 
 #: src/components/ai/TranslateCV.tsx:101
 msgid "Translate CV"
-msgstr ""
+msgstr "Traducir CV"
 
 #: src/components/ai/TranslateCV.tsx:126
 msgid "Translate to"
-msgstr ""
+msgstr "Traducir a"
 
 #: src/components/ai/TranslateCV.tsx:151
 msgid "Translating..."
-msgstr ""
+msgstr "Traduciendo..."
 
 #. placeholder {0}: warnings.join("; ")
 #: src/components/ai/TranslateCV.tsx:66
 msgid "Translation complete with warnings: {0}. Review — AI translations may need adjustments."
-msgstr ""
+msgstr "Traducción completada con advertencias: {0}. Revisa — las traducciones de IA pueden necesitar ajustes."
 
 #: src/components/ai/TranslateCV.tsx:70
 msgid "Translation complete. Review — AI translations may need adjustments."
-msgstr ""
+msgstr "Traducción completada. Revisa — las traducciones de IA pueden necesitar ajustes."
 
 #: src/components/ai/TranslateCV.tsx:82
 msgid "Unknown error"
-msgstr ""
+msgstr "Error desconocido"
 
 #: src/components/workspace/CVSwitcher.tsx:15
 msgid "Untitled"

@@ -109,9 +109,17 @@ interface CVStore {
   resetCV: () => void;
 }
 
-const debouncedSave = createDebouncedSave(500, () => {
-  useUIStore.getState().setSaveStatus("saved");
-});
+const debouncedSave = createDebouncedSave(
+  500,
+  () => {
+    useUIStore.getState().setSaveStatus("saved");
+    useUIStore.getState().setStorageError(null);
+  },
+  (error) => {
+    useUIStore.getState().setSaveStatus("idle");
+    useUIStore.getState().setStorageError(error);
+  },
+);
 
 export const useCVStore = create<CVStore>()(
   immer((set, get) => ({

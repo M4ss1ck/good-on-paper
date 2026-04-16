@@ -1,10 +1,13 @@
 import { useCVStore } from "../../store/cvStore";
+import { getWorkspaceSize } from "../../lib/storage";
 import { CVListItem } from "./CVListItem";
 
 interface CVListProps {
   onClose: () => void;
   onNewCV: () => void;
 }
+
+const TWO_MB = 2 * 1024 * 1024;
 
 export function CVList({ onClose, onNewCV }: CVListProps) {
   const workspace = useCVStore((s) => s.workspace);
@@ -17,9 +20,15 @@ export function CVList({ onClose, onNewCV }: CVListProps) {
 
   const activeCvId = workspace.activeCvId;
   const activeCvName = activeCvId ? workspace.cvs[activeCvId]?.name : null;
+  const isLarge = getWorkspaceSize() > TWO_MB;
 
   return (
     <div className="absolute left-0 top-full mt-1 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+      {isLarge && (
+        <div className="px-3 py-1.5 bg-amber-50 border-b border-amber-200 text-xs text-amber-700">
+          You have a lot of saved CVs. Consider deleting old ones to keep things fast.
+        </div>
+      )}
       <div className="max-h-80 overflow-y-auto divide-y divide-gray-100">
         {orderedCvs.map((cv) => (
           <CVListItem

@@ -58,20 +58,38 @@ export function loadWorkspace(): CVWorkspace {
   return fresh;
 }
 
-export function saveWorkspace(workspace: CVWorkspace): void {
-  localStorage.setItem(WORKSPACE_KEY, JSON.stringify(workspace));
+export function saveWorkspace(workspace: CVWorkspace): { ok: boolean; error?: string } {
+  try {
+    localStorage.setItem(WORKSPACE_KEY, JSON.stringify(workspace));
+    return { ok: true };
+  } catch (e) {
+    if (e instanceof DOMException && e.name === "QuotaExceededError") {
+      return { ok: false, error: "Storage is full. Delete some CVs to continue." };
+    }
+    return { ok: false, error: "Failed to save workspace." };
+  }
+}
+
+export function getWorkspaceSize(): number {
+  const raw = localStorage.getItem(WORKSPACE_KEY);
+  return raw ? new Blob([raw]).size : 0;
 }
 
 export function createDebouncedSave(
   delay: number,
   onSaved?: () => void,
+  onError?: (error: string) => void,
 ): (workspace: CVWorkspace) => void {
   let timer: ReturnType<typeof setTimeout>;
   return (workspace: CVWorkspace) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      saveWorkspace(workspace);
-      onSaved?.();
+      const result = saveWorkspace(workspace);
+      if (result.ok) {
+        onSaved?.();
+      } else {
+        onError?.(result.error!);
+      }
     }, delay);
   };
 }

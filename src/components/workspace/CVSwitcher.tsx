@@ -30,6 +30,18 @@ export function CVSwitcher() {
     return () => document.removeEventListener("mousedown", handle);
   }, [listOpen]);
 
+  // Cmd/Ctrl+K toggles CV switcher
+  useEffect(() => {
+    const handle = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setListOpen((v) => !v);
+      }
+    };
+    document.addEventListener("keydown", handle);
+    return () => document.removeEventListener("keydown", handle);
+  }, []);
+
   return (
     <>
       <div className="relative" ref={containerRef}>

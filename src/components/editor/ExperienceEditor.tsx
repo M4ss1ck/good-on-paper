@@ -1,5 +1,6 @@
 import { useCVStore } from "../../store/cvStore";
 import type { Section, ExperienceItem } from "../../types/cv";
+import { ImproveButton } from "../ai/ImproveButton";
 
 export function ExperienceEditor({ section }: { section: Section }) {
   const addItem = useCVStore((s) => s.addItem);
@@ -106,6 +107,14 @@ export function ExperienceEditor({ section }: { section: Section }) {
                       addBullet(section.id, item.id);
                     }
                   }}
+                />
+                <ImproveButton
+                  bullet={bullet}
+                  role={item.role}
+                  company={item.company}
+                  onAccept={(text) =>
+                    updateBullet(section.id, item.id, bulletIndex, text)
+                  }
                 />
                 <button
                   onClick={() =>

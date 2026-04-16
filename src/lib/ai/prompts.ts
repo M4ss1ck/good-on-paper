@@ -157,3 +157,20 @@ Keep suggestions practical. Don't invent experience the candidate doesn't have. 
     },
   ];
 }
+
+export function improveBulletPrompt(
+  bullet: string,
+  role: string,
+  company: string,
+): { role: string; content: string }[] {
+  return [
+    {
+      role: "system",
+      content: `You are a CV writing expert. Rewrite the following bullet point to be more impactful and specific. Use active verbs. Quantify results where possible. Keep it to one sentence, two at most. Do not use buzzwords, em dashes, or AI-sounding language. Write like a real person describing their work to a colleague.`,
+    },
+    {
+      role: "user",
+      content: `Role: ${role} at ${company}\nOriginal bullet: "${bullet}"\n\nRewrite this bullet.`,
+    },
+  ];
+}

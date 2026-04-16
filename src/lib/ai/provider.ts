@@ -10,6 +10,15 @@ interface AIRequestBody {
   max_tokens?: number;
 }
 
+function friendlyError(status: number, message: string): string {
+  if (status === 429) return "Rate limited — try again in a minute";
+  if (status === 401 || status === 403)
+    return "Invalid API key — check your settings";
+  if (status === 502 || status === 503)
+    return "Couldn't reach the AI provider";
+  return message || `Provider returned ${status}`;
+}
+
 export async function callAI(
   provider: AIProvider,
   messages: { role: string; content: string }[],
@@ -22,18 +31,22 @@ export async function callAI(
     messages,
   };
 
-  const res = await fetch("/api/ai", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+  let res: Response;
+  try {
+    res = await fetch("/api/ai", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  } catch {
+    throw new Error("Couldn't reach the AI provider");
+  }
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(
-      (err as { error?: { message?: string } }).error?.message ||
-      `Provider returned ${res.status}`,
-    );
+    const raw =
+      (err as { error?: { message?: string } }).error?.message || "";
+    throw new Error(friendlyError(res.status, raw));
   }
 
   const data = await res.json();
@@ -41,7 +54,8 @@ export async function callAI(
     data as { choices?: { message?: { content?: string } }[] }
   ).choices?.[0]?.message?.content?.trim();
 
-  if (!content) throw new Error("Empty response from provider");
+  if (!content)
+    throw new Error("The AI returned an empty response — try again");
 
   return content;
 }

@@ -37,14 +37,21 @@ export function GenerateSummary({ sectionId, itemId }: GenerateSummaryProps) {
 
   return (
     <div>
-      <AIActionButton
-        onClick={handleGenerate}
-        state={state}
-        error={error}
-        label="Generate from my experience"
-        disabled={!hasProvider}
-        disabledTitle="Configure AI in settings first"
-      />
+      {hasProvider ? (
+        <AIActionButton
+          onClick={handleGenerate}
+          state={state}
+          error={error}
+          label="Generate from my experience"
+        />
+      ) : (
+        <button
+          onClick={() => useAIStore.getState().setSettingsOpen(true)}
+          className="text-xs text-accent hover:underline"
+        >
+          Configure AI to generate a summary →
+        </button>
+      )}
       {suggestion && (
         <AISuggestion
           suggestion={suggestion}

@@ -40,7 +40,19 @@ export function ImproveButton({
   };
 
   const isLoading = state === "loading";
-  const disabled = !hasProvider || !bullet.trim();
+  const disabled = !bullet.trim();
+
+  if (!hasProvider) {
+    return (
+      <button
+        onClick={() => useAIStore.getState().setSettingsOpen(true)}
+        className="text-xs text-accent hover:underline shrink-0"
+        title="Configure AI to improve bullets"
+      >
+        ✨
+      </button>
+    );
+  }
 
   return (
     <div className="relative">
@@ -48,11 +60,9 @@ export function ImproveButton({
         onClick={handleClick}
         disabled={disabled || isLoading}
         title={
-          !hasProvider
-            ? "Configure AI in settings first"
-            : !bullet.trim()
-              ? "Write a bullet first"
-              : "Improve this bullet"
+          !bullet.trim()
+            ? "Write a bullet first"
+            : "Improve this bullet"
         }
         className="text-muted hover:text-accent transition-colors text-sm shrink-0 disabled:opacity-40 disabled:cursor-not-allowed"
       >

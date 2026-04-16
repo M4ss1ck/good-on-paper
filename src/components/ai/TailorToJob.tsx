@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useCVStore } from "../../store/cvStore";
-import { useAIStore } from "../../store/aiStore";
 import { useAIAction } from "../../hooks/useAIAction";
 import {
   tailorToJobPrompt,
@@ -15,6 +14,11 @@ type SuggestionStatus = "pending" | "accepted" | "dismissed";
 
 interface TrackedSuggestion extends TailorSuggestion {
   status: SuggestionStatus;
+}
+
+interface TailorToJobProps {
+  open: boolean;
+  onClose: () => void;
 }
 
 function stripMarkdownFences(text: string): string {
@@ -34,20 +38,18 @@ function parseSuggestions(raw: string): TrackedSuggestion[] | null {
   }
 }
 
-export function TailorToJob() {
+export function TailorToJob({ open, onClose }: TailorToJobProps) {
   const cv = useCVStore((s) => s.cv);
   const updateItem = useCVStore((s) => s.updateItem);
   const updateBullet = useCVStore((s) => s.updateBullet);
-  const hasProvider = useAIStore((s) => s.settings.provider !== null);
   const { run, state, error, reset } = useAIAction();
 
-  const [open, setOpen] = useState(false);
   const [jobDescription, setJobDescription] = useState("");
   const [suggestions, setSuggestions] = useState<TrackedSuggestion[] | null>(null);
   const [rawFallback, setRawFallback] = useState<string | null>(null);
 
   const handleClose = () => {
-    setOpen(false);
+    onClose();
   };
 
   const handleTailor = async () => {
@@ -127,132 +129,119 @@ export function TailorToJob() {
     );
   };
 
-  const btnClass =
-    "px-3 py-1.5 text-sm rounded border border-gray-200 text-muted hover:text-primary hover:border-accent transition-colors disabled:opacity-50 disabled:cursor-not-allowed";
+  if (!open) return null;
 
   return (
-    <>
-      <button
-        className={btnClass}
-        onClick={() => setOpen(true)}
-        disabled={!hasProvider}
-        title={hasProvider ? "Tailor CV to a job description" : "Configure AI in settings first"}
-      >
-        🎯 Tailor to job
-      </button>
-
-      {open && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) handleClose();
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Escape") handleClose();
-          }}
-        >
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[85vh] flex flex-col">
-            {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-primary">
-                🎯 Tailor to Job Description
-              </h2>
-              <button
-                onClick={handleClose}
-                className="text-gray-400 hover:text-gray-600 text-xl leading-none"
-              >
-                ×
-              </button>
-            </div>
-
-            {/* Body */}
-            <div className="px-6 py-4 overflow-y-auto flex-1 space-y-4">
-              {/* Job description input */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Paste the job description
-                </label>
-                <textarea
-                  value={jobDescription}
-                  onChange={(e) => setJobDescription(e.target.value)}
-                  placeholder="Paste the full job description here..."
-                  className="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent resize-y min-h-32"
-                  rows={6}
-                />
-              </div>
-
-              <button
-                onClick={handleTailor}
-                disabled={!jobDescription.trim() || state === "loading"}
-                className="px-4 py-2 text-sm rounded bg-accent text-white hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-2"
-              >
-                {state === "loading" ? (
-                  <>
-                    <span className="inline-block w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                    Tailoring...
-                  </>
-                ) : (
-                  "Tailor my CV"
-                )}
-              </button>
-
-              {/* Error */}
-              {state === "error" && error && (
-                <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded">
-                  {error}
-                </div>
-              )}
-
-              {/* Raw fallback */}
-              {rawFallback && (
-                <div className="space-y-2">
-                  <p className="text-xs text-amber-600 font-medium">
-                    Couldn't parse structured suggestions. Showing raw response:
-                  </p>
-                  <div className="p-3 text-sm text-primary bg-gray-50 border border-gray-200 rounded whitespace-pre-wrap">
-                    {rawFallback}
-                  </div>
-                </div>
-              )}
-
-              {/* Parsed suggestions */}
-              {suggestions && suggestions.length > 0 && (
-                <div className="space-y-3">
-                  <p className="text-xs text-muted">
-                    {suggestions.filter((s) => s.status === "pending").length} suggestion
-                    {suggestions.filter((s) => s.status === "pending").length === 1 ? "" : "s"} remaining
-                  </p>
-                  {suggestions.map((s, i) => (
-                    <SuggestionCard
-                      key={i}
-                      suggestion={s}
-                      onAccept={() => handleAccept(i)}
-                      onDismiss={() => handleDismiss(i)}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {suggestions && suggestions.length === 0 && (
-                <p className="text-sm text-muted py-4 text-center">
-                  No suggestions generated. The CV may already be well-aligned.
-                </p>
-              )}
-            </div>
-
-            {/* Footer */}
-            <div className="flex justify-end px-6 py-3 border-t border-gray-200">
-              <button
-                onClick={handleClose}
-                className="px-4 py-2 text-sm rounded border border-gray-200 text-muted hover:text-primary transition-colors"
-              >
-                Close
-              </button>
-            </div>
-          </div>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) handleClose();
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") handleClose();
+      }}
+    >
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[85vh] flex flex-col">
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+          <h2 className="text-lg font-semibold text-primary">
+            🎯 Tailor to Job Description
+          </h2>
+          <button
+            onClick={handleClose}
+            className="text-gray-400 hover:text-gray-600 text-xl leading-none"
+          >
+            ×
+          </button>
         </div>
-      )}
-    </>
+
+        {/* Body */}
+        <div className="px-6 py-4 overflow-y-auto flex-1 space-y-4">
+          {/* Job description input */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Paste the job description
+            </label>
+            <textarea
+              value={jobDescription}
+              onChange={(e) => setJobDescription(e.target.value)}
+              disabled={state === "loading"}
+              placeholder="Paste the full job description here..."
+              className="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent resize-y min-h-32 disabled:opacity-60 disabled:bg-gray-50"
+              rows={6}
+            />
+          </div>
+
+          <button
+            onClick={handleTailor}
+            disabled={!jobDescription.trim() || state === "loading"}
+            className="px-4 py-2 text-sm rounded bg-accent text-white hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-2"
+          >
+            {state === "loading" ? (
+              <>
+                <span className="inline-block w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                Tailoring...
+              </>
+            ) : (
+              "Tailor my CV"
+            )}
+          </button>
+
+          {/* Error */}
+          {state === "error" && error && (
+            <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded">
+              {error}
+            </div>
+          )}
+
+          {/* Raw fallback */}
+          {rawFallback && (
+            <div className="space-y-2">
+              <p className="text-xs text-amber-600 font-medium">
+                Couldn't parse structured suggestions. Showing raw response:
+              </p>
+              <div className="p-3 text-sm text-primary bg-gray-50 border border-gray-200 rounded whitespace-pre-wrap">
+                {rawFallback}
+              </div>
+            </div>
+          )}
+
+          {/* Parsed suggestions */}
+          {suggestions && suggestions.length > 0 && (
+            <div className="space-y-3">
+              <p className="text-xs text-muted">
+                {suggestions.filter((s) => s.status === "pending").length} suggestion
+                {suggestions.filter((s) => s.status === "pending").length === 1 ? "" : "s"} remaining
+              </p>
+              {suggestions.map((s, i) => (
+                <SuggestionCard
+                  key={i}
+                  suggestion={s}
+                  onAccept={() => handleAccept(i)}
+                  onDismiss={() => handleDismiss(i)}
+                />
+              ))}
+            </div>
+          )}
+
+          {suggestions && suggestions.length === 0 && (
+            <p className="text-sm text-muted py-4 text-center">
+              No suggestions generated. The CV may already be well-aligned.
+            </p>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="flex justify-end px-6 py-3 border-t border-gray-200">
+          <button
+            onClick={handleClose}
+            className="px-4 py-2 text-sm rounded border border-gray-200 text-muted hover:text-primary transition-colors"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 

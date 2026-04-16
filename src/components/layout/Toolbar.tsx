@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { useCVStore } from "../../store/cvStore";
@@ -19,8 +19,27 @@ export function Toolbar() {
   const openModal = useUIStore((s) => s.setPdfModalOpen);
   const saveStatus = useUIStore((s) => s.saveStatus);
   const setSettingsOpen = useAIStore((s) => s.setSettingsOpen);
+  const hasProvider = useAIStore((s) => s.settings.provider !== null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [confirmReset, setConfirmReset] = useState(false);
+
+  // AI dropdown state
+  const [aiDropdownOpen, setAiDropdownOpen] = useState(false);
+  const [detectOpen, setDetectOpen] = useState(false);
+  const [tailorOpen, setTailorOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    if (!aiDropdownOpen) return;
+    const handle = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setAiDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handle);
+    return () => document.removeEventListener("mousedown", handle);
+  }, [aiDropdownOpen]);
 
   const handlePreviewPdf = () => {
     openModal(true);
@@ -107,17 +126,51 @@ export function Toolbar() {
         onChange={handleImportJson}
       />
 
-      <DetectAIText />
+      <DetectAIText open={detectOpen} onClose={() => setDetectOpen(false)} />
 
-      <TailorToJob />
+      <TailorToJob open={tailorOpen} onClose={() => setTailorOpen(false)} />
 
-      <button
-        className={btnClass}
-        onClick={() => setSettingsOpen(true)}
-        title="AI Settings"
-      >
-        ⚙️ AI
-      </button>
+      <div className="relative" ref={dropdownRef}>
+        <button
+          className={btnClass}
+          onClick={() => setAiDropdownOpen((v) => !v)}
+        >
+          ✨ AI
+        </button>
+        {aiDropdownOpen && (
+          <div className="absolute right-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-40 py-1">
+            <button
+              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+              onClick={() => {
+                setDetectOpen(true);
+                setAiDropdownOpen(false);
+              }}
+            >
+              🔍 AI Phrase Check
+            </button>
+            <button
+              className="w-full text-left px-4 py-2 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 hover:bg-gray-50"
+              disabled={!hasProvider}
+              onClick={() => {
+                setTailorOpen(true);
+                setAiDropdownOpen(false);
+              }}
+            >
+              🎯 Tailor to Job
+            </button>
+            <hr className="my-1 border-gray-100" />
+            <button
+              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+              onClick={() => {
+                setSettingsOpen(true);
+                setAiDropdownOpen(false);
+              }}
+            >
+              ⚙️ Settings
+            </button>
+          </div>
+        )}
+      </div>
 
       {confirmReset ? (
         <span className="flex items-center gap-1 text-xs">

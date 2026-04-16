@@ -1,0 +1,6 @@
+#!/bin/sh
+# Extract lingui translation keys and stage updated catalogs
+npx lingui extract --clean 2>&1
+
+# Stage any changed .po files
+git add src/locales/*/messages.po

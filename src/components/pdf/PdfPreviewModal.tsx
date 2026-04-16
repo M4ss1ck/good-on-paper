@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { X } from "lucide-react";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { useUIStore } from "../../store/uiStore";
@@ -50,7 +51,7 @@ export function PdfPreviewModal() {
             onClick={() => close(false)}
             className="text-light hover:text-muted transition-colors text-lg"
           >
-            ✕
+            <X size={18} />
           </button>
         </div>
         <div className="flex-1 p-2">

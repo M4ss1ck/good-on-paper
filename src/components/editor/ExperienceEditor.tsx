@@ -1,3 +1,4 @@
+import { X } from "lucide-react";
 import { useCVStore } from "../../store/cvStore";
 import type { Section, ExperienceItem } from "../../types/cv";
 import { ImproveButton } from "../ai/ImproveButton";
@@ -123,7 +124,7 @@ export function ExperienceEditor({ section }: { section: Section }) {
                   className="text-light hover:text-red-500 transition-colors text-sm shrink-0"
                   title="Remove bullet"
                 >
-                  ✕
+                  <X size={14} />
                 </button>
               </div>
             ))}

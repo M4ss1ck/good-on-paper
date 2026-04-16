@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { Pencil, Copy, GitFork, Trash2 } from "lucide-react";
 import { useCVStore } from "../../store/cvStore";
 import { relativeTime } from "../../lib/relativeTime";
 import type { CV } from "../../types/cv";
@@ -108,7 +109,7 @@ export function CVListItem({ cv, isActive, onSelect, onClose }: CVListItemProps)
               setEditing(true);
             }}
           >
-            ✏️
+            <Pencil size={14} />
           </button>
           <button
             className="p-1 text-xs text-light hover:text-primary transition-colors"
@@ -118,7 +119,7 @@ export function CVListItem({ cv, isActive, onSelect, onClose }: CVListItemProps)
               onClose();
             }}
           >
-            📋
+            <Copy size={14} />
           </button>
           <button
             className="p-1 text-xs text-light hover:text-primary transition-colors"
@@ -128,7 +129,7 @@ export function CVListItem({ cv, isActive, onSelect, onClose }: CVListItemProps)
               onClose();
             }}
           >
-            ⎇
+            <GitFork size={14} />
           </button>
           {!isLastCV && (
             <button
@@ -136,7 +137,7 @@ export function CVListItem({ cv, isActive, onSelect, onClose }: CVListItemProps)
               title="Delete"
               onClick={handleDelete}
             >
-              🗑️
+              <Trash2 size={14} />
             </button>
           )}
         </div>

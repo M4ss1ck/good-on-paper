@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { X } from "lucide-react";
 import type { CV } from "../../types/cv";
 import { computeDiff } from "../../lib/diff/structuralDiff";
 import { MetaDiff } from "./MetaDiff";
@@ -31,7 +32,7 @@ export function DiffView({ base, against, onClose }: DiffViewProps) {
             onClick={onClose}
             className="text-light hover:text-muted transition-colors text-lg"
           >
-            ✕
+            <X size={18} />
           </button>
         </div>
 

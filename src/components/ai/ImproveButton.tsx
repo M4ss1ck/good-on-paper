@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Sparkles } from "lucide-react";
 import { useAIStore } from "../../store/aiStore";
 import { useAIAction } from "../../hooks/useAIAction";
 import { improveBulletPrompt } from "../../lib/ai/prompts";
@@ -49,7 +50,7 @@ export function ImproveButton({
         className="text-xs text-accent hover:underline shrink-0"
         title="Configure AI to improve bullets"
       >
-        ✨
+        <Sparkles size={14} />
       </button>
     );
   }
@@ -69,7 +70,7 @@ export function ImproveButton({
         {isLoading ? (
           <span className="inline-block w-3.5 h-3.5 border-2 border-gray-300 border-t-accent rounded-full animate-spin" />
         ) : (
-          <span>✨</span>
+          <Sparkles size={14} />
         )}
       </button>
       {state === "error" && error && (

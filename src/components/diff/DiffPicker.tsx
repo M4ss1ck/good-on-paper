@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { X } from "lucide-react";
 import { useCVStore } from "../../store/cvStore";
 import { DiffView } from "./DiffView";
 
@@ -48,7 +49,7 @@ export function DiffPicker({ onClose, initialBaseId, initialAgainstId }: DiffPic
             onClick={onClose}
             className="text-light hover:text-muted transition-colors text-lg"
           >
-            ✕
+            <X size={18} />
           </button>
         </div>
 

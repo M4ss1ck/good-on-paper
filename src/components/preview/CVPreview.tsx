@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { CornerDownRight } from "lucide-react";
 import { useCVStore } from "../../store/cvStore";
 import { PreviewMeta } from "./PreviewMeta";
 import { PreviewSection } from "./PreviewSection";
@@ -25,7 +26,7 @@ export function CVPreview() {
               className="hover:text-accent transition-colors"
               onClick={() => setActiveCV(cv.parentId!)}
             >
-              ↳ forked from {parentName}
+              <CornerDownRight size={12} className="inline mr-0.5" /> forked from {parentName}
             </button>
             <button
               className="text-accent hover:text-accent/80 transition-colors"

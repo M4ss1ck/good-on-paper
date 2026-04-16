@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { Sparkles, Search, Target, Settings } from "lucide-react";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { useCVStore } from "../../store/cvStore";
@@ -88,7 +89,7 @@ export function Toolbar() {
   };
 
   const btnClass =
-    "px-3 py-1.5 text-sm rounded border border-gray-200 text-muted hover:text-primary hover:border-accent transition-colors";
+    "px-3 py-1.5 text-sm rounded border border-gray-200 text-muted hover:text-primary hover:border-accent transition-colors flex flex-row items-center gap-1";
 
   const saveLabel =
     saveStatus === "saving"
@@ -146,7 +147,7 @@ export function Toolbar() {
           className={btnClass}
           onClick={() => setAiDropdownOpen((v) => !v)}
         >
-          ✨ AI
+          <Sparkles size={14} /> AI
         </button>
         {aiDropdownOpen && (
           <div className="absolute right-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-40 py-1">
@@ -157,7 +158,7 @@ export function Toolbar() {
                 setAiDropdownOpen(false);
               }}
             >
-              🔍 AI Phrase Check
+              <Search size={14} className="inline mr-1.5" />AI Phrase Check
             </button>
             <button
               className="w-full text-left px-4 py-2 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 hover:bg-gray-50"
@@ -167,7 +168,7 @@ export function Toolbar() {
                 setAiDropdownOpen(false);
               }}
             >
-              🎯 Tailor to Job
+              <Target size={14} className="inline mr-1.5" />Tailor to Job
             </button>
             <hr className="my-1 border-gray-100" />
             <button
@@ -177,7 +178,7 @@ export function Toolbar() {
                 setAiDropdownOpen(false);
               }}
             >
-              ⚙️ Settings
+              <Settings size={14} className="inline mr-1.5" />Settings
             </button>
           </div>
         )}

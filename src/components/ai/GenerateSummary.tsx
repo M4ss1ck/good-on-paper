@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ArrowRight } from "lucide-react";
 import { useCVStore } from "../../store/cvStore";
 import { useAIStore } from "../../store/aiStore";
 import { useAIAction } from "../../hooks/useAIAction";
@@ -50,7 +51,7 @@ export function GenerateSummary({ sectionId, itemId }: GenerateSummaryProps) {
           onClick={() => useAIStore.getState().setSettingsOpen(true)}
           className="text-xs text-accent hover:underline"
         >
-          Configure AI to generate a summary →
+          Configure AI to generate a summary <ArrowRight size={12} className="inline" />
         </button>
       )}
       {suggestion && (

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Target, Check, X } from "lucide-react";
 import { useCVStore } from "../../store/cvStore";
 import { useAIAction } from "../../hooks/useAIAction";
 import {
@@ -147,13 +148,13 @@ export function TailorToJob({ open, onClose }: TailorToJobProps) {
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-primary">
-            🎯 Tailor to Job Description
+            <Target size={18} className="inline mr-1.5" />Tailor to Job Description
           </h2>
           <button
             onClick={handleClose}
             className="text-gray-400 hover:text-gray-600 text-xl leading-none"
           >
-            ×
+            <X size={18} />
           </button>
         </div>
 
@@ -260,7 +261,7 @@ function SuggestionCard({
     return (
       <div className="p-3 rounded border border-green-200 bg-green-50/50 opacity-70">
         <div className="flex items-center gap-2 text-xs text-green-700">
-          <span>✓</span>
+          <Check size={14} />
           <span className="font-medium capitalize">{suggestion.section}</span>
           <span>— Applied</span>
         </div>
@@ -272,7 +273,7 @@ function SuggestionCard({
     return (
       <div className="p-3 rounded border border-gray-200 bg-gray-50 opacity-50">
         <div className="flex items-center gap-2 text-xs text-muted">
-          <span>✗</span>
+          <X size={14} />
           <span className="font-medium capitalize">{suggestion.section}</span>
           <span>— Dismissed</span>
         </div>

@@ -1,3 +1,4 @@
+import { GitFork } from "lucide-react";
 import { useCVStore } from "../../store/cvStore";
 import { getWorkspaceSize } from "../../lib/storage";
 import { CVListItem } from "./CVListItem";
@@ -58,7 +59,7 @@ export function CVList({ onClose, onNewCV }: CVListProps) {
               onClose();
             }}
           >
-            ⎇ Fork active CV
+            <GitFork size={12} className="inline mr-0.5" /> Fork active CV
           </button>
         )}
       </div>

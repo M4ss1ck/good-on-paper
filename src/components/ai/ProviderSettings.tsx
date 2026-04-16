@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Check, X } from "lucide-react";
 import type { AIProvider } from "../../types/ai";
 import { useAIStore } from "../../store/aiStore";
 import { callAI } from "../../lib/ai/provider";
@@ -127,7 +128,7 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
           onClick={onClose}
           className="text-gray-400 hover:text-gray-600 text-xl leading-none"
         >
-          ×
+          <X size={18} />
         </button>
       </div>
 
@@ -208,13 +209,13 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
             {testStatus === "testing" ? "Testing..." : "Test connection"}
           </button>
           {testStatus === "success" && (
-            <span className="ml-2 text-sm text-green-600">
-              ✓ Connection successful
+            <span className="ml-2 text-sm text-green-600 inline-flex items-center gap-1">
+              <Check size={14} /> Connection successful
             </span>
           )}
           {testStatus === "error" && (
-            <span className="ml-2 text-sm text-red-500">
-              ✗ {testError}
+            <span className="ml-2 text-sm text-red-500 inline-flex items-center gap-1">
+              <X size={14} /> {testError}
             </span>
           )}
         </div>

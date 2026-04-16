@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Sparkles } from "lucide-react";
 
 interface AISuggestionProps {
   suggestion: string;
@@ -27,7 +28,7 @@ export function AISuggestion({
       className="mt-2 p-3 border border-accent/30 bg-accent/5 rounded-lg"
     >
       <div className="flex items-center gap-1.5 text-xs font-medium text-accent mb-2">
-        <span>✨</span> AI Suggestion
+        <Sparkles size={14} /> AI Suggestion
       </div>
       <p className="text-sm text-primary whitespace-pre-wrap mb-3">
         {suggestion}

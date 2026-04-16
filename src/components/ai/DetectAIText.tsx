@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { Search, CircleCheck, X } from "lucide-react";
 import { useCVStore } from "../../store/cvStore";
 import { useUIStore } from "../../store/uiStore";
 import { detectAIPhrases, type AIFlag } from "../../lib/ai/detectAI";
@@ -58,20 +59,20 @@ export function DetectAIText({ open, onClose }: DetectAITextProps) {
       <div className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 max-h-[80vh] flex flex-col">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-primary">
-            🔍 AI Phrase Check
+            <Search size={18} className="inline mr-1.5" />AI Phrase Check
           </h2>
           <button
             onClick={handleClose}
             className="text-gray-400 hover:text-gray-600 text-xl leading-none"
           >
-            ×
+            <X size={18} />
           </button>
         </div>
 
         <div className="px-6 py-4 overflow-y-auto flex-1">
           {flags.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-2xl mb-2">✅</p>
+              <div className="flex justify-center text-green-500 mb-2"><CircleCheck size={28} /></div>
               <p className="text-sm font-medium text-primary">
                 Looks good!
               </p>

@@ -1,3 +1,4 @@
+import { X } from "lucide-react";
 import { useCVStore } from "../../store/cvStore";
 import type { Section, LanguageItem } from "../../types/cv";
 
@@ -44,7 +45,7 @@ export function LanguagesEditor({ section }: { section: Section }) {
             className="text-light hover:text-red-500 transition-colors text-sm shrink-0"
             title="Remove language"
           >
-            ✕
+            <X size={14} />
           </button>
         </div>
       ))}

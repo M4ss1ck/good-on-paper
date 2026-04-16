@@ -1,3 +1,4 @@
+import { X } from "lucide-react";
 import { useCVStore } from "../../store/cvStore";
 
 export function MetaEditor() {
@@ -97,7 +98,7 @@ export function MetaEditor() {
               className="text-light hover:text-red-500 transition-colors text-sm shrink-0"
               title="Remove link"
             >
-              ✕
+              <X size={14} />
             </button>
           </div>
         ))}

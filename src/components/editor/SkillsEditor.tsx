@@ -1,3 +1,4 @@
+import { X } from "lucide-react";
 import { useCVStore } from "../../store/cvStore";
 import type { Section, SkillItem } from "../../types/cv";
 
@@ -34,7 +35,7 @@ export function SkillsEditor({ section }: { section: Section }) {
               className="text-light hover:text-red-500 transition-colors text-sm shrink-0"
               title="Remove category"
             >
-              ✕
+              <X size={14} />
             </button>
           </div>
           <input

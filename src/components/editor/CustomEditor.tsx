@@ -1,3 +1,4 @@
+import { X } from "lucide-react";
 import { useCVStore } from "../../store/cvStore";
 import type { Section, CustomItem } from "../../types/cv";
 
@@ -28,7 +29,7 @@ export function CustomEditor({ section }: { section: Section }) {
             className="absolute top-2 right-2 text-light hover:text-red-500 transition-colors text-sm"
             title="Remove entry"
           >
-            ✕
+            <X size={14} />
           </button>
         </div>
       ))}

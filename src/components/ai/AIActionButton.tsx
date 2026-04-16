@@ -1,3 +1,4 @@
+import { Sparkles } from "lucide-react";
 import type { AIActionState } from "../../types/ai";
 
 interface AIActionButtonProps {
@@ -31,7 +32,7 @@ export function AIActionButton({
         {isLoading ? (
           <span className="inline-block w-3.5 h-3.5 border-2 border-gray-300 border-t-accent rounded-full animate-spin" />
         ) : (
-          <span className="text-sm">✨</span>
+          <Sparkles size={14} />
         )}
         {label}
       </button>

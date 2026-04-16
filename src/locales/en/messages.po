@@ -72,7 +72,7 @@ msgstr "+ New blank CV"
 msgid "Accept"
 msgstr "Accept"
 
-#: src/components/ai/ProviderSettings.tsx:182
+#: src/components/ai/ProviderSettings.tsx:183
 msgid "Account ID"
 msgstr "Account ID"
 
@@ -88,7 +88,7 @@ msgstr "Add your experience, skills, and education."
 msgid "After"
 msgstr "After"
 
-#: src/components/diff/DiffPicker.tsx:74
+#: src/components/diff/DiffPicker.tsx:81
 msgid "Against"
 msgstr "Against"
 
@@ -96,7 +96,7 @@ msgstr "Against"
 msgid "AI assist (BYOK)"
 msgstr "AI assist (BYOK)"
 
-#: src/components/ai/DetectAIText.tsx:63
+#: src/components/ai/DetectAIText.tsx:77
 #: src/components/layout/Toolbar.tsx:182
 msgid "AI Phrase Check"
 msgstr "AI Phrase Check"
@@ -109,11 +109,11 @@ msgstr "AI Settings"
 msgid "AI Suggestion"
 msgstr "AI Suggestion"
 
-#: src/components/ai/ProviderSettings.tsx:160
+#: src/components/ai/ProviderSettings.tsx:161
 msgid "API Key"
 msgstr "API Key"
 
-#: src/components/diff/DiffPicker.tsx:60
+#: src/components/diff/DiffPicker.tsx:67
 msgid "Base"
 msgstr "Base"
 
@@ -125,7 +125,7 @@ msgstr "Basic"
 msgid "Before"
 msgstr "Before"
 
-#: src/components/workspace/NewCVDialog.tsx:56
+#: src/components/workspace/NewCVDialog.tsx:64
 msgid "Blank CV"
 msgstr "Blank CV"
 
@@ -133,12 +133,12 @@ msgstr "Blank CV"
 msgid "Bullet points"
 msgstr "Bullet points"
 
-#: src/components/ai/ProviderSettings.tsx:241
-#: src/components/diff/DiffPicker.tsx:96
+#: src/components/ai/ProviderSettings.tsx:242
+#: src/components/diff/DiffPicker.tsx:103
 #: src/components/editor/SectionList.tsx:150
 #: src/components/layout/Toolbar.tsx:230
 #: src/components/workspace/CVListItem.tsx:174
-#: src/components/workspace/NewCVDialog.tsx:113
+#: src/components/workspace/NewCVDialog.tsx:121
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -146,8 +146,15 @@ msgstr "Cancel"
 msgid "Category (e.g. Frontend)"
 msgstr "Category (e.g. Frontend)"
 
-#: src/components/ai/DetectAIText.tsx:140
+#: src/components/ai/DetectAIText.tsx:81
+#: src/components/ai/DetectAIText.tsx:155
+#: src/components/ai/ProviderSettings.tsx:131
+#: src/components/ai/TailorToJob.tsx:156
 #: src/components/ai/TailorToJob.tsx:246
+#: src/components/ai/TranslateCV.tsx:111
+#: src/components/diff/DiffPicker.tsx:58
+#: src/components/diff/DiffView.tsx:41
+#: src/components/pdf/PdfPreviewModal.tsx:62
 msgid "Close"
 msgstr "Close"
 
@@ -159,12 +166,12 @@ msgstr "Collapse"
 msgid "Company"
 msgstr "Company"
 
-#: src/components/diff/DiffPicker.tsx:103
+#: src/components/diff/DiffPicker.tsx:110
 #: src/components/layout/Toolbar.tsx:141
 msgid "Compare"
 msgstr "Compare"
 
-#: src/components/diff/DiffPicker.tsx:49
+#: src/components/diff/DiffPicker.tsx:55
 msgid "Compare CVs"
 msgstr "Compare CVs"
 
@@ -184,7 +191,7 @@ msgstr "Configure AI to improve bullets"
 msgid "Confirm Reset"
 msgstr "Confirm Reset"
 
-#: src/components/ai/ProviderSettings.tsx:215
+#: src/components/ai/ProviderSettings.tsx:216
 msgid "Connection successful"
 msgstr "Connection successful"
 
@@ -200,11 +207,11 @@ msgstr "Conversational"
 msgid "Couldn't parse structured suggestions. Showing raw response:"
 msgstr "Couldn't parse structured suggestions. Showing raw response:"
 
-#: src/components/ai/TranslateCV.tsx:78
+#: src/components/ai/TranslateCV.tsx:80
 msgid "Couldn't parse the AI response as JSON. Copy and apply manually."
 msgstr "Couldn't parse the AI response as JSON. Copy and apply manually."
 
-#: src/components/workspace/NewCVDialog.tsx:120
+#: src/components/workspace/NewCVDialog.tsx:128
 msgid "Create"
 msgstr "Create"
 
@@ -212,7 +219,7 @@ msgstr "Create"
 msgid "Create variants for different roles. Compare versions side by side with visual diffs."
 msgstr "Create variants for different roles. Compare versions side by side with visual diffs."
 
-#: src/components/ai/TranslateCV.tsx:116
+#: src/components/ai/TranslateCV.tsx:123
 msgid "Current language"
 msgstr "Current language"
 
@@ -271,7 +278,7 @@ msgstr "Drag to reorder"
 msgid "Duplicate"
 msgstr "Duplicate"
 
-#: src/components/ai/TranslateCV.tsx:131
+#: src/components/ai/TranslateCV.tsx:138
 #: src/components/editor/MetaEditor.tsx:84
 msgid "e.g. en, es, pt-BR"
 msgstr "e.g. en, es, pt-BR"
@@ -338,7 +345,7 @@ msgid "Font"
 msgstr "Font"
 
 #: src/components/workspace/CVListItem.tsx:128
-#: src/components/workspace/NewCVDialog.tsx:120
+#: src/components/workspace/NewCVDialog.tsx:128
 msgid "Fork"
 msgstr "Fork"
 
@@ -350,11 +357,11 @@ msgstr "Fork & compare"
 msgid "Fork active CV"
 msgstr "Fork active CV"
 
-#: src/components/workspace/NewCVDialog.tsx:59
+#: src/components/workspace/NewCVDialog.tsx:67
 msgid "Fork existing"
 msgstr "Fork existing"
 
-#: src/components/workspace/NewCVDialog.tsx:98
+#: src/components/workspace/NewCVDialog.tsx:106
 msgid "Fork name"
 msgstr "Fork name"
 
@@ -364,7 +371,7 @@ msgstr "forked from {parentName}"
 
 #. placeholder {0}: flags.length
 #. placeholder {1}: flags.length === 1 ? "" : "s"
-#: src/components/ai/DetectAIText.tsx:87
+#: src/components/ai/DetectAIText.tsx:102
 msgid "Found {0} phrase{1} a recruiter might notice. Click a flag to jump to it."
 msgstr "Found {0} phrase{1} a recruiter might notice. Click a flag to jump to it."
 
@@ -388,11 +395,11 @@ msgstr "Generate from my experience"
 msgid "Generate summaries, improve bullets, tailor to job descriptions. Bring your own API key."
 msgstr "Generate summaries, improve bullets, tailor to job descriptions. Bring your own API key."
 
-#: src/components/pdf/PdfPreviewModal.tsx:67
+#: src/components/pdf/PdfPreviewModal.tsx:77
 msgid "Generating PDF..."
 msgstr "Generating PDF..."
 
-#: src/components/ai/ProviderSettings.tsx:174
+#: src/components/ai/ProviderSettings.tsx:175
 msgid "Hide"
 msgstr "Hide"
 
@@ -445,15 +452,15 @@ msgstr "Links have been modified"
 msgid "Location"
 msgstr "Location"
 
-#: src/components/ai/DetectAIText.tsx:78
+#: src/components/ai/DetectAIText.tsx:93
 msgid "Looks good!"
 msgstr "Looks good!"
 
-#: src/components/ai/ProviderSettings.tsx:195
+#: src/components/ai/ProviderSettings.tsx:196
 msgid "Model"
 msgstr "Model"
 
-#: src/components/workspace/NewCVDialog.tsx:98
+#: src/components/workspace/NewCVDialog.tsx:106
 msgid "My new CV"
 msgstr "My new CV"
 
@@ -462,6 +469,7 @@ msgid "Native"
 msgstr "Native"
 
 #: src/components/layout/Toolbar.tsx:235
+#: src/components/workspace/NewCVDialog.tsx:60
 msgid "New CV"
 msgstr "New CV"
 
@@ -469,11 +477,11 @@ msgstr "New CV"
 msgid "New empty section"
 msgstr "New empty section"
 
-#: src/components/ai/TranslateCV.tsx:159
+#: src/components/ai/TranslateCV.tsx:166
 msgid "No AI provider configured. Go to AI Settings first."
 msgstr "No AI provider configured. Go to AI Settings first."
 
-#: src/components/ai/DetectAIText.tsx:81
+#: src/components/ai/DetectAIText.tsx:96
 msgid "No AI-sounding phrases detected."
 msgstr "No AI-sounding phrases detected."
 
@@ -509,7 +517,7 @@ msgstr "No suggestions generated. The CV may already be well-aligned."
 msgid "Notes (optional)"
 msgstr "Notes (optional)"
 
-#: src/App.tsx:39
+#: src/App.tsx:43
 msgid "OK"
 msgstr "OK"
 
@@ -521,7 +529,7 @@ msgstr "Paste the full job description here..."
 msgid "Paste the job description"
 msgstr "Paste the job description"
 
-#: src/components/pdf/PdfPreviewModal.tsx:50
+#: src/components/pdf/PdfPreviewModal.tsx:59
 msgid "PDF Preview"
 msgstr "PDF Preview"
 
@@ -545,15 +553,15 @@ msgstr "Preview PDF"
 msgid "Professional"
 msgstr "Professional"
 
-#: src/components/ai/ProviderSettings.tsx:140
+#: src/components/ai/ProviderSettings.tsx:141
 msgid "Provider"
 msgstr "Provider"
 
-#: src/components/ai/TranslateCV.tsx:176
+#: src/components/ai/TranslateCV.tsx:183
 msgid "Raw AI response"
 msgstr "Raw AI response"
 
-#: src/components/ai/DetectAIText.tsx:134
+#: src/components/ai/DetectAIText.tsx:149
 msgid "Re-scan"
 msgstr "Re-scan"
 
@@ -593,7 +601,7 @@ msgstr "Rename"
 msgid "Role / Title"
 msgstr "Role / Title"
 
-#: src/components/ai/ProviderSettings.tsx:248
+#: src/components/ai/ProviderSettings.tsx:249
 msgid "Save"
 msgstr "Save"
 
@@ -617,9 +625,9 @@ msgstr "Sections, bullets, skills, education. Drag to reorder. Toggle visibility
 msgid "See your CV rendered in real time."
 msgstr "See your CV rendered in real time."
 
-#: src/components/diff/DiffPicker.tsx:66
-#: src/components/diff/DiffPicker.tsx:80
-#: src/components/workspace/NewCVDialog.tsx:81
+#: src/components/diff/DiffPicker.tsx:73
+#: src/components/diff/DiffPicker.tsx:87
+#: src/components/workspace/NewCVDialog.tsx:89
 msgid "Select a CV…"
 msgstr "Select a CV…"
 
@@ -627,7 +635,7 @@ msgstr "Select a CV…"
 msgid "Select level"
 msgstr "Select level"
 
-#: src/components/diff/DiffPicker.tsx:88
+#: src/components/diff/DiffPicker.tsx:95
 msgid "Select two different CVs to compare."
 msgstr "Select two different CVs to compare."
 
@@ -635,7 +643,7 @@ msgstr "Select two different CVs to compare."
 msgid "Settings"
 msgstr "Settings"
 
-#: src/components/ai/ProviderSettings.tsx:174
+#: src/components/ai/ProviderSettings.tsx:175
 msgid "Show"
 msgstr "Show"
 
@@ -651,7 +659,7 @@ msgstr "Skills"
 msgid "Skills (comma-separated, e.g. React, TypeScript, Node.js)"
 msgstr "Skills (comma-separated, e.g. React, TypeScript, Node.js)"
 
-#: src/components/workspace/NewCVDialog.tsx:67
+#: src/components/workspace/NewCVDialog.tsx:75
 msgid "Source CV"
 msgstr "Source CV"
 
@@ -663,7 +671,7 @@ msgstr "Start building"
 msgid "Start date"
 msgstr "Start date"
 
-#: src/App.tsx:33
+#: src/App.tsx:37
 msgid "Storage Error"
 msgstr "Storage Error"
 
@@ -683,7 +691,7 @@ msgstr "Tailor my CV"
 msgid "Tailor to Job"
 msgstr "Tailor to Job"
 
-#: src/components/ai/TailorToJob.tsx:153
+#: src/components/ai/TailorToJob.tsx:152
 msgid "Tailor to Job Description"
 msgstr "Tailor to Job Description"
 
@@ -691,11 +699,11 @@ msgstr "Tailor to Job Description"
 msgid "Tailoring..."
 msgstr "Tailoring..."
 
-#: src/components/ai/ProviderSettings.tsx:211
+#: src/components/ai/ProviderSettings.tsx:212
 msgid "Test connection"
 msgstr "Test connection"
 
-#: src/components/ai/ProviderSettings.tsx:211
+#: src/components/ai/ProviderSettings.tsx:212
 msgid "Testing..."
 msgstr "Testing..."
 
@@ -703,37 +711,37 @@ msgstr "Testing..."
 msgid "The CV builder that gets out of your way."
 msgstr "The CV builder that gets out of your way."
 
-#: src/components/diff/DiffView.tsx:44
+#: src/components/diff/DiffView.tsx:52
 msgid "These two CVs are identical."
 msgstr "These two CVs are identical."
 
-#: src/components/ai/TranslateCV.tsx:153
+#: src/components/ai/TranslateCV.tsx:160
 #: src/components/layout/Toolbar.tsx:202
 msgid "Translate"
 msgstr "Translate"
 
-#: src/components/ai/TranslateCV.tsx:101
+#: src/components/ai/TranslateCV.tsx:107
 msgid "Translate CV"
 msgstr "Translate CV"
 
-#: src/components/ai/TranslateCV.tsx:126
+#: src/components/ai/TranslateCV.tsx:133
 msgid "Translate to"
 msgstr "Translate to"
 
-#: src/components/ai/TranslateCV.tsx:151
+#: src/components/ai/TranslateCV.tsx:158
 msgid "Translating..."
 msgstr "Translating..."
 
 #. placeholder {0}: warnings.join("; ")
-#: src/components/ai/TranslateCV.tsx:66
+#: src/components/ai/TranslateCV.tsx:68
 msgid "Translation complete with warnings: {0}. Review: AI translations may need adjustments."
 msgstr "Translation complete with warnings: {0}. Review: AI translations may need adjustments."
 
-#: src/components/ai/TranslateCV.tsx:70
+#: src/components/ai/TranslateCV.tsx:72
 msgid "Translation complete. Review: AI translations may need adjustments."
 msgstr "Translation complete. Review: AI translations may need adjustments."
 
-#: src/components/ai/TranslateCV.tsx:82
+#: src/components/ai/TranslateCV.tsx:84
 msgid "Unknown error"
 msgstr "Unknown error"
 
@@ -757,7 +765,7 @@ msgstr "Write a bullet first"
 msgid "You have a lot of saved CVs. Consider deleting old ones to keep things fast."
 msgstr "You have a lot of saved CVs. Consider deleting old ones to keep things fast."
 
-#: src/components/ai/ProviderSettings.tsx:227
+#: src/components/ai/ProviderSettings.tsx:228
 msgid "Your API key is stored locally in your browser and sent only to the AI provider you configure. It never passes through our servers. The proxy only forwards your request."
 msgstr "Your API key is stored locally in your browser and sent only to the AI provider you configure. It never passes through our servers. The proxy only forwards your request."
 

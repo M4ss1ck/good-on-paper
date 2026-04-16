@@ -7,6 +7,7 @@ import { useAIStore } from "../../store/aiStore";
 import { useAIAction } from "../../hooks/useAIAction";
 import { translateCVPrompt, deserializeTranslation } from "../../lib/ai/prompts";
 import { localeToLanguageName } from "../../lib/localeToLanguageName";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
 
 const LOCALE_OPTIONS = ["en", "es", "pt", "fr", "de", "it"];
 
@@ -29,6 +30,7 @@ export function TranslateCV({ open, onClose }: TranslateCVProps) {
   );
   const [resultMessage, setResultMessage] = useState<string | null>(null);
   const [rawResponse, setRawResponse] = useState<string | null>(null);
+  const trapRef = useFocusTrap<HTMLDivElement>(onClose);
 
   if (!open || !cv) return null;
 
@@ -91,17 +93,22 @@ export function TranslateCV({ open, onClose }: TranslateCVProps) {
       onClick={onClose}
     >
       <div
+        ref={trapRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="translate-cv-title"
         className="bg-white rounded-lg shadow-lg w-full max-w-md flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
-          <span className="text-sm font-medium text-primary flex items-center gap-1.5">
+          <h2 id="translate-cv-title" className="text-sm font-medium text-primary flex items-center gap-1.5">
             <Globe size={14} />
             <Trans>Translate CV</Trans>
-          </span>
+          </h2>
           <button
             onClick={onClose}
+            aria-label={t`Close`}
             className="text-light hover:text-muted transition-colors"
           >
             <X size={18} />

@@ -1,10 +1,12 @@
 import { useMemo } from "react";
 import { X } from "lucide-react";
 import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import type { CV } from "../../types/cv";
 import { computeDiff } from "../../lib/diff/structuralDiff";
 import { MetaDiff } from "./MetaDiff";
 import { SectionDiff } from "./SectionDiff";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
 
 interface DiffViewProps {
   base: CV;
@@ -14,6 +16,7 @@ interface DiffViewProps {
 
 export function DiffView({ base, against, onClose }: DiffViewProps) {
   const diff = useMemo(() => computeDiff(base, against), [base, against]);
+  const trapRef = useFocusTrap<HTMLDivElement>(onClose);
 
   return (
     <div
@@ -21,16 +24,21 @@ export function DiffView({ base, against, onClose }: DiffViewProps) {
       onClick={onClose}
     >
       <div
+        ref={trapRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="diff-view-title"
         className="bg-white rounded-lg shadow-lg w-[90vw] max-w-3xl max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
-          <span className="text-sm font-medium text-primary">
+          <h2 id="diff-view-title" className="text-sm font-medium text-primary">
             {base.name} → {against.name}
-          </span>
+          </h2>
           <button
             onClick={onClose}
+            aria-label={t`Close`}
             className="text-light hover:text-muted transition-colors text-lg"
           >
             <X size={18} />

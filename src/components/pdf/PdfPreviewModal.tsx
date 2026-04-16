@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { useUIStore } from "../../store/uiStore";
 import { useCVStore } from "../../store/cvStore";
 import { generatePdfDefinition } from "./generatePdf";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
 
 pdfMake.addVirtualFileSystem(pdfFonts);
 
@@ -35,21 +37,29 @@ export function PdfPreviewModal() {
     };
   }, [open, cv]);
 
+  const handleClose = () => close(false);
+  const trapRef = useFocusTrap<HTMLDivElement>(handleClose);
+
   if (!open) return null;
 
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-      onClick={() => close(false)}
+      onClick={handleClose}
     >
       <div
+        ref={trapRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="pdf-preview-title"
         className="bg-white rounded-lg shadow-lg w-[90vw] h-[90vh] max-w-225 flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
-          <span className="text-sm font-medium text-primary"><Trans>PDF Preview</Trans></span>
+          <h2 id="pdf-preview-title" className="text-sm font-medium text-primary"><Trans>PDF Preview</Trans></h2>
           <button
-            onClick={() => close(false)}
+            onClick={handleClose}
+            aria-label={t`Close`}
             className="text-light hover:text-muted transition-colors text-lg"
           >
             <X size={18} />

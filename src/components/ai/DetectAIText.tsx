@@ -1,9 +1,11 @@
 import { useState, useMemo } from "react";
 import { Search, CircleCheck, X } from "lucide-react";
 import { Trans } from "@lingui/react/macro";
+import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 import { useUIStore } from "../../store/uiStore";
 import { detectAIPhrases, type AIFlag } from "../../lib/ai/detectAI";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
 
 interface DetectAITextProps {
   open: boolean;
@@ -53,93 +55,105 @@ export function DetectAIText({ open, onClose }: DetectAITextProps) {
       onClick={(e) => {
         if (e.target === e.currentTarget) handleClose();
       }}
-      onKeyDown={(e) => {
-        if (e.key === "Escape") handleClose();
-      }}
     >
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 max-h-[80vh] flex flex-col">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-primary">
-            <Search size={18} className="inline mr-1.5" /><Trans>AI Phrase Check</Trans>
-          </h2>
-          <button
-            onClick={handleClose}
-            className="text-gray-400 hover:text-gray-600 text-xl leading-none"
-          >
-            <X size={18} />
-          </button>
-        </div>
+      <DetectAIPanel onClose={handleClose} flags={flags} grouped={grouped} onRun={handleRun} onFlagClick={handleFlagClick} />
+    </div>
+  );
+}
 
-        <div className="px-6 py-4 overflow-y-auto flex-1">
-          {flags.length === 0 ? (
-            <div className="text-center py-8">
-              <div className="flex justify-center text-green-500 mb-2"><CircleCheck size={28} /></div>
-              <p className="text-sm font-medium text-primary">
-                <Trans>Looks good!</Trans>
-              </p>
-              <p className="text-xs text-muted mt-1">
-                <Trans>No AI-sounding phrases detected.</Trans>
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              <p className="text-xs text-muted">
-                <Trans>
-                  Found {flags.length} phrase{flags.length === 1 ? "" : "s"}{" "}
-                  a recruiter might notice. Click a flag to jump to it.
-                </Trans>
-              </p>
-              {Object.entries(grouped).map(([section, sectionFlags]) => (
-                <div key={section}>
-                  <h3 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wide">
-                    {section}
-                  </h3>
-                  <ul className="space-y-2">
-                    {sectionFlags.map((flag, i) => (
-                      <li
-                        key={`${flag.location}-${flag.phrase}-${i}`}
-                        className="p-2.5 rounded border border-amber-200 bg-amber-50/50 cursor-pointer hover:border-amber-300 transition-colors"
-                        onClick={() => handleFlagClick(flag)}
-                      >
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-sm font-medium text-amber-700">
-                            "{flag.phrase}"
-                          </span>
-                        </div>
-                        <p className="text-xs text-muted mt-0.5">
-                          {flag.location}
-                        </p>
-                        <p className="text-xs text-amber-600 mt-1">
-                          {flag.reason}
-                        </p>
-                        {flag.suggestion && (
-                          <p className="text-xs text-gray-500 mt-0.5">
-                            Try: {flag.suggestion}
-                          </p>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+function DetectAIPanel({ onClose, flags, grouped, onRun, onFlagClick }: {
+  onClose: () => void;
+  flags: AIFlag[];
+  grouped: Record<string, AIFlag[]>;
+  onRun: () => void;
+  onFlagClick: (flag: AIFlag) => void;
+}) {
+  const trapRef = useFocusTrap<HTMLDivElement>(onClose);
 
-        <div className="flex justify-between items-center px-6 py-3 border-t border-gray-200">
-          <button
-            onClick={handleRun}
-            className="px-3 py-1.5 text-xs rounded border border-gray-200 text-muted hover:text-primary hover:border-accent transition-colors"
-          >
-            <Trans>Re-scan</Trans>
-          </button>
-          <button
-            onClick={handleClose}
-            className="px-4 py-2 text-sm rounded border border-gray-200 text-muted hover:text-primary transition-colors"
-          >
-            <Trans>Close</Trans>
-          </button>
-        </div>
+  return (
+    <div ref={trapRef} role="dialog" aria-modal="true" aria-labelledby="detect-ai-title" className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 max-h-[80vh] flex flex-col">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+        <h2 id="detect-ai-title" className="text-lg font-semibold text-primary">
+          <Search size={18} className="inline mr-1.5" /><Trans>AI Phrase Check</Trans>
+        </h2>
+        <button
+          onClick={onClose}
+          aria-label={t`Close`}
+          className="text-gray-400 hover:text-gray-600 text-xl leading-none"
+        >
+          <X size={18} />
+        </button>
+      </div>
+
+      <div className="px-6 py-4 overflow-y-auto flex-1">
+        {flags.length === 0 ? (
+          <div className="text-center py-8">
+            <div className="flex justify-center text-green-500 mb-2"><CircleCheck size={28} /></div>
+            <p className="text-sm font-medium text-primary">
+              <Trans>Looks good!</Trans>
+            </p>
+            <p className="text-xs text-muted mt-1">
+              <Trans>No AI-sounding phrases detected.</Trans>
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <p className="text-xs text-muted">
+              <Trans>
+                Found {flags.length} phrase{flags.length === 1 ? "" : "s"}{" "}
+                a recruiter might notice. Click a flag to jump to it.
+              </Trans>
+            </p>
+            {Object.entries(grouped).map(([section, sectionFlags]) => (
+              <div key={section}>
+                <h3 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wide">
+                  {section}
+                </h3>
+                <ul className="space-y-2">
+                  {sectionFlags.map((flag, i) => (
+                    <li
+                      key={`${flag.location}-${flag.phrase}-${i}`}
+                      className="p-2.5 rounded border border-amber-200 bg-amber-50/50 cursor-pointer hover:border-amber-300 transition-colors"
+                      onClick={() => onFlagClick(flag)}
+                    >
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-sm font-medium text-amber-700">
+                          "{flag.phrase}"
+                        </span>
+                      </div>
+                      <p className="text-xs text-muted mt-0.5">
+                        {flag.location}
+                      </p>
+                      <p className="text-xs text-amber-600 mt-1">
+                        {flag.reason}
+                      </p>
+                      {flag.suggestion && (
+                        <p className="text-xs text-gray-500 mt-0.5">
+                          Try: {flag.suggestion}
+                        </p>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="flex justify-between items-center px-6 py-3 border-t border-gray-200">
+        <button
+          onClick={onRun}
+          className="px-3 py-1.5 text-xs rounded border border-gray-200 text-muted hover:text-primary hover:border-accent transition-colors"
+        >
+          <Trans>Re-scan</Trans>
+        </button>
+        <button
+          onClick={onClose}
+          className="px-4 py-2 text-sm rounded border border-gray-200 text-muted hover:text-primary transition-colors"
+        >
+          <Trans>Close</Trans>
+        </button>
       </div>
     </div>
   );

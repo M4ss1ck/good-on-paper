@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Trans } from "@lingui/react/macro";
 import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
 
 interface NewCVDialogProps {
   onClose: () => void;
@@ -41,21 +42,28 @@ export function NewCVDialog({ onClose }: NewCVDialogProps) {
       : "text-light hover:text-muted"
     }`;
 
+  const trapRef = useFocusTrap<HTMLDivElement>(onClose);
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
       onClick={onClose}
     >
       <div
+        ref={trapRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="new-cv-title"
         className="bg-white rounded-lg shadow-lg w-96 max-w-[90vw]"
         onClick={(e) => e.stopPropagation()}
       >
+        <h2 id="new-cv-title" className="sr-only"><Trans>New CV</Trans></h2>
         {/* Tabs */}
-        <div className="flex border-b border-gray-200">
-          <button className={tabClass("blank")} onClick={() => setTab("blank")}>
+        <div className="flex border-b border-gray-200" role="tablist" aria-label="New CV options">
+          <button role="tab" aria-selected={tab === "blank"} className={tabClass("blank")} onClick={() => setTab("blank")}>
             <Trans>Blank CV</Trans>
           </button>
-          <button className={tabClass("fork")} onClick={() => setTab("fork")}>
+          <button className={tabClass("fork")} role="tab" aria-selected={tab === "fork"} onClick={() => setTab("fork")}>
             <Trans>Fork existing</Trans>
           </button>
         </div>

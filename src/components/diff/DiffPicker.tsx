@@ -4,6 +4,7 @@ import { Trans } from "@lingui/react/macro";
 import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 import { DiffView } from "./DiffView";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
 
 interface DiffPickerProps {
   onClose: () => void;
@@ -35,6 +36,7 @@ export function DiffPicker({ onClose, initialBaseId, initialAgainstId }: DiffPic
   }
 
   const canCompare = baseId && againstId && baseId !== againstId;
+  const trapRef = useFocusTrap<HTMLDivElement>(onClose);
 
   return (
     <div
@@ -42,13 +44,18 @@ export function DiffPicker({ onClose, initialBaseId, initialAgainstId }: DiffPic
       onClick={onClose}
     >
       <div
+        ref={trapRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="diff-picker-title"
         className="bg-white rounded-lg shadow-lg w-96 max-w-[90vw]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
-          <span className="text-sm font-medium text-primary"><Trans>Compare CVs</Trans></span>
+          <h2 id="diff-picker-title" className="text-sm font-medium text-primary"><Trans>Compare CVs</Trans></h2>
           <button
             onClick={onClose}
+            aria-label={t`Close`}
             className="text-light hover:text-muted transition-colors text-lg"
           >
             <X size={18} />

@@ -5,6 +5,7 @@ import { t } from "@lingui/core/macro";
 import type { AIProvider } from "../../types/ai";
 import { useAIStore } from "../../store/aiStore";
 import { callAI } from "../../lib/ai/provider";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
 
 const OPENROUTER_BASE = "https://openrouter.ai/api/v1";
 const CLOUDFLARE_BASE_TEMPLATE =
@@ -39,9 +40,6 @@ export function ProviderSettings() {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
       onClick={(e) => {
         if (e.target === e.currentTarget) setSettingsOpen(false);
-      }}
-      onKeyDown={(e) => {
-        if (e.key === "Escape") setSettingsOpen(false);
       }}
     >
       <SettingsForm onClose={() => setSettingsOpen(false)} />
@@ -122,12 +120,15 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
   const inputClass =
     "w-full px-3 py-2 text-sm border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent";
 
+  const trapRef = useFocusTrap<HTMLDivElement>(onClose);
+
   return (
-    <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
+    <div ref={trapRef} role="dialog" aria-modal="true" aria-labelledby="ai-settings-title" className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-primary"><Trans>AI Settings</Trans></h2>
+        <h2 id="ai-settings-title" className="text-lg font-semibold text-primary"><Trans>AI Settings</Trans></h2>
         <button
           onClick={onClose}
+          aria-label={t`Close`}
           className="text-gray-400 hover:text-gray-600 text-xl leading-none"
         >
           <X size={18} />

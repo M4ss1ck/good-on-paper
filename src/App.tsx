@@ -25,12 +25,16 @@ function EditorRoute() {
         <div
           className="fixed inset-0 z-100 flex items-center justify-center bg-black/50"
           onClick={() => setStorageError(null)}
+          onKeyDown={(e) => { if (e.key === "Escape") setStorageError(null); }}
         >
           <div
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="storage-error-title"
             className="bg-white rounded-lg shadow-lg w-96 max-w-[90vw] p-5 space-y-3"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-sm font-semibold text-red-600"><Trans>Storage Error</Trans></h2>
+            <h2 id="storage-error-title" className="text-sm font-semibold text-red-600"><Trans>Storage Error</Trans></h2>
             <p className="text-sm text-muted">{storageError}</p>
             <button
               onClick={() => setStorageError(null)}

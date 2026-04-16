@@ -4,6 +4,7 @@ import { Trans } from "@lingui/react/macro";
 import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 import { useAIAction } from "../../hooks/useAIAction";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
 import {
   tailorToJobPrompt,
   type TailorSuggestion,
@@ -50,6 +51,7 @@ export function TailorToJob({ open, onClose }: TailorToJobProps) {
   const [jobDescription, setJobDescription] = useState("");
   const [suggestions, setSuggestions] = useState<TrackedSuggestion[] | null>(null);
   const [rawFallback, setRawFallback] = useState<string | null>(null);
+  const trapRef = useFocusTrap<HTMLDivElement>(onClose);
 
   const handleClose = () => {
     onClose();
@@ -142,18 +144,16 @@ export function TailorToJob({ open, onClose }: TailorToJobProps) {
       onClick={(e) => {
         if (e.target === e.currentTarget) handleClose();
       }}
-      onKeyDown={(e) => {
-        if (e.key === "Escape") handleClose();
-      }}
     >
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[85vh] flex flex-col">
+      <div ref={trapRef} role="dialog" aria-modal="true" aria-labelledby="tailor-title" className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[85vh] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-primary">
+          <h2 id="tailor-title" className="text-lg font-semibold text-primary">
             <Target size={18} className="inline mr-1.5" /><Trans>Tailor to Job Description</Trans>
           </h2>
           <button
             onClick={handleClose}
+            aria-label={t`Close`}
             className="text-gray-400 hover:text-gray-600 text-xl leading-none"
           >
             <X size={18} />

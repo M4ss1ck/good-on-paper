@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   DndContext,
   closestCenter,
@@ -16,6 +16,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useCVStore } from "../../store/cvStore";
+import { useUIStore } from "../../store/uiStore";
 import { SectionEditor } from "./SectionEditor";
 import type { Section, SectionType } from "../../types/cv";
 
@@ -35,6 +36,20 @@ function SortableSectionCard({ section }: { section: Section }) {
   const toggleVisibility = useCVStore((s) => s.toggleSectionVisibility);
   const updateTitle = useCVStore((s) => s.updateSectionTitle);
 
+  // Subscribe to activeSection outside React render to auto-expand
+  useEffect(() => {
+    const unsub = useUIStore.subscribe((state, prev) => {
+      if (
+        state.activeSection === section.id &&
+        prev.activeSection !== section.id
+      ) {
+        setCollapsed(false);
+        state.setActiveSection(null);
+      }
+    });
+    return unsub;
+  }, [section.id]);
+
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: section.id });
 
@@ -47,6 +62,7 @@ function SortableSectionCard({ section }: { section: Section }) {
     <div
       ref={setNodeRef}
       style={style}
+      data-section-id={section.id}
       className={`border border-gray-200 rounded-lg bg-white mb-2 ${!section.visible ? "opacity-60" : ""
         }`}
     >

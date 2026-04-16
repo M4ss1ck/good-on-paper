@@ -6,6 +6,7 @@ import { useUIStore } from "../../store/uiStore";
 import { useAIStore } from "../../store/aiStore";
 import { generatePdfDefinition } from "../pdf/generatePdf";
 import { ProviderSettings } from "../ai/ProviderSettings";
+import { DetectAIText } from "../ai/DetectAIText";
 
 pdfMake.addVirtualFileSystem(pdfFonts);
 
@@ -104,6 +105,8 @@ export function Toolbar() {
         className="hidden"
         onChange={handleImportJson}
       />
+
+      <DetectAIText />
 
       <button
         className={btnClass}

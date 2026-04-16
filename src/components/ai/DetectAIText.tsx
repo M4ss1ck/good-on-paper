@@ -1,0 +1,153 @@
+import { useState } from "react";
+import { useCVStore } from "../../store/cvStore";
+import { useUIStore } from "../../store/uiStore";
+import { detectAIPhrases, type AIFlag } from "../../lib/ai/detectAI";
+
+export function DetectAIText() {
+  const cv = useCVStore((s) => s.cv);
+  const setActiveSection = useUIStore((s) => s.setActiveSection);
+  const [open, setOpen] = useState(false);
+  const [flags, setFlags] = useState<AIFlag[]>([]);
+  const [hasRun, setHasRun] = useState(false);
+
+  const handleRun = () => {
+    const results = detectAIPhrases(cv);
+    setFlags(results);
+    setHasRun(true);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleFlagClick = (flag: AIFlag) => {
+    setActiveSection(flag.sectionId);
+    // Small delay to let the section expand, then scroll to it
+    setTimeout(() => {
+      const el = document.querySelector(
+        `[data-section-id="${flag.sectionId}"]`,
+      );
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 100);
+  };
+
+  // Group flags by section title (first segment of location)
+  const grouped = flags.reduce<Record<string, AIFlag[]>>((acc, flag) => {
+    const section = flag.location.split(" > ")[0];
+    if (!acc[section]) acc[section] = [];
+    acc[section].push(flag);
+    return acc;
+  }, {});
+
+  return (
+    <>
+      <button
+        onClick={handleRun}
+        className="px-3 py-1.5 text-sm rounded border border-gray-200 text-muted hover:text-primary hover:border-accent transition-colors"
+        title="Check for AI-sounding phrases"
+      >
+        🔍 AI Check
+      </button>
+
+      {open && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) handleClose();
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") handleClose();
+          }}
+        >
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 max-h-[80vh] flex flex-col">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+              <h2 className="text-lg font-semibold text-primary">
+                🔍 AI Phrase Check
+              </h2>
+              <button
+                onClick={handleClose}
+                className="text-gray-400 hover:text-gray-600 text-xl leading-none"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="px-6 py-4 overflow-y-auto flex-1">
+              {!hasRun ? (
+                <p className="text-sm text-muted">
+                  Click the button to scan your CV.
+                </p>
+              ) : flags.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-2xl mb-2">✅</p>
+                  <p className="text-sm font-medium text-primary">
+                    Looks good!
+                  </p>
+                  <p className="text-xs text-muted mt-1">
+                    No AI-sounding phrases detected.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <p className="text-xs text-muted">
+                    Found {flags.length} phrase{flags.length === 1 ? "" : "s"}{" "}
+                    a recruiter might notice. Click a flag to jump to it.
+                  </p>
+                  {Object.entries(grouped).map(([section, sectionFlags]) => (
+                    <div key={section}>
+                      <h3 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wide">
+                        {section}
+                      </h3>
+                      <ul className="space-y-2">
+                        {sectionFlags.map((flag, i) => (
+                          <li
+                            key={`${flag.location}-${flag.phrase}-${i}`}
+                            className="p-2.5 rounded border border-amber-200 bg-amber-50/50 cursor-pointer hover:border-amber-300 transition-colors"
+                            onClick={() => handleFlagClick(flag)}
+                          >
+                            <div className="flex items-baseline gap-2">
+                              <span className="text-sm font-medium text-amber-700">
+                                "{flag.phrase}"
+                              </span>
+                            </div>
+                            <p className="text-xs text-muted mt-0.5">
+                              {flag.location}
+                            </p>
+                            <p className="text-xs text-amber-600 mt-1">
+                              {flag.reason}
+                            </p>
+                            {flag.suggestion && (
+                              <p className="text-xs text-gray-500 mt-0.5">
+                                Try: {flag.suggestion}
+                              </p>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="flex justify-between items-center px-6 py-3 border-t border-gray-200">
+              <button
+                onClick={handleRun}
+                className="px-3 py-1.5 text-xs rounded border border-gray-200 text-muted hover:text-primary hover:border-accent transition-colors"
+              >
+                Re-scan
+              </button>
+              <button
+                onClick={handleClose}
+                className="px-4 py-2 text-sm rounded border border-gray-200 text-muted hover:text-primary transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

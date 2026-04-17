@@ -567,7 +567,11 @@ msgid "Phone"
 msgstr "Phone"
 
 #: src/components/landing/LandingPage.tsx:238
+msgid "Preview"
+msgstr "Preview"
+
 #: src/components/layout/AppLayout.tsx:27
+msgctxt "tab"
 msgid "Preview"
 msgstr "Preview"
 

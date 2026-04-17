@@ -76,7 +76,7 @@ msgstr "ID de cuenta"
 
 #: src/components/layout/Toolbar.tsx:147
 msgid "Actions"
-msgstr ""
+msgstr "Acciones"
 
 #: src/components/workspace/CVListItem.tsx:88
 msgid "active"
@@ -196,7 +196,7 @@ msgstr "Configurar IA para mejorar viñetas"
 
 #: src/components/layout/Toolbar.tsx:309
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #: src/components/layout/Toolbar.tsx:197
 msgid "Confirm Reset"
@@ -302,7 +302,7 @@ msgstr "Edita todo"
 
 #: src/components/layout/AppLayout.tsx:21
 msgid "Editor"
-msgstr ""
+msgstr "Editor"
 
 #: src/components/editor/SectionList.tsx:29
 msgid "Education"
@@ -565,9 +565,13 @@ msgid "Phone"
 msgstr "Teléfono"
 
 #: src/components/landing/LandingPage.tsx:238
-#: src/components/layout/AppLayout.tsx:27
 msgid "Preview"
 msgstr "Revisa"
+
+#: src/components/layout/AppLayout.tsx:27
+msgctxt "tab"
+msgid "Preview"
+msgstr "Vista previa"
 
 #: src/components/layout/Toolbar.tsx:154
 #: src/components/layout/Toolbar.tsx:213

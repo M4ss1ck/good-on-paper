@@ -24,7 +24,7 @@ export function AppLayout() {
           className={`flex-1 py-2 text-sm font-medium transition-colors ${mobilePanel === "preview" ? "text-accent border-b-2 border-accent" : "text-muted"}`}
           onClick={() => setMobilePanel("preview")}
         >
-          <Trans>Preview</Trans>
+          <Trans context="tab">Preview</Trans>
         </button>
       </div>
       {/* Desktop: side-by-side, Mobile: toggle */}

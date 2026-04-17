@@ -89,7 +89,7 @@ export function LandingPage() {
         </div>
       </a>
       {/* Top bar */}
-      <nav className="flex items-center justify-between px-6 py-4 max-w-6xl mx-auto">
+      <nav className="flex items-center justify-between pl-6 pr-20 py-4 max-w-6xl mx-auto">
         <span className="text-sm font-semibold tracking-wide text-white/70">
           Good on Paper
         </span>

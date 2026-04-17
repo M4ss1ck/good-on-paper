@@ -59,19 +59,15 @@ export async function callAI(
 
   type Choice = {
     finish_reason?: string;
-    message?: { content?: string; reasoning?: string };
+    message?: { content?: string };
   };
   const choice = (data as { choices?: Choice[] }).choices?.[0];
-
-  const content =
-    choice?.message?.content?.trim() ||
-    choice?.message?.reasoning?.trim() ||
-    "";
+  const content = choice?.message?.content?.trim() ?? "";
 
   if (!content) {
     if (choice?.finish_reason === "length") {
       throw new Error(
-        "The response was cut off (token limit reached). Try a smaller input or a model with a larger context window.",
+        "The model used all available tokens on internal reasoning and never produced output. Try increasing the token limit or using a non-reasoning model.",
       );
     }
     throw new Error("The AI returned an empty response. Try again.");

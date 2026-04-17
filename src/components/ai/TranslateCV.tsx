@@ -42,7 +42,7 @@ export function TranslateCV({ open, onClose }: TranslateCVProps) {
     reset();
 
     const messages = translateCVPrompt(cv, targetLocale);
-    const result = await run(messages);
+    const result = await run(messages, { max_tokens: 4096 });
     if (!result) return;
 
     // Try to parse the response

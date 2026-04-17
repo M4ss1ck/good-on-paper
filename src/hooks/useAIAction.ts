@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { AIActionState } from "../types/ai";
 import { useAIStore } from "../store/aiStore";
-import { callAI } from "../lib/ai/provider";
+import { callAI, type CallAIOptions } from "../lib/ai/provider";
 
 export function useAIAction() {
   const [state, setState] = useState<AIActionState>("idle");
@@ -10,6 +10,7 @@ export function useAIAction() {
 
   const run = async (
     messages: { role: string; content: string }[],
+    options?: CallAIOptions,
   ): Promise<string | null> => {
     if (!settings.provider) {
       setError("No AI provider configured. Go to Settings.");
@@ -21,7 +22,7 @@ export function useAIAction() {
     setError(null);
 
     try {
-      const content = await callAI(settings.provider, messages);
+      const content = await callAI(settings.provider, messages, options);
       setState("idle");
       return content;
     } catch (e: unknown) {

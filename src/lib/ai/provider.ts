@@ -1,5 +1,9 @@
 import type { AIProvider } from "../../types/ai";
 
+export interface CallAIOptions {
+  max_tokens?: number;
+}
+
 interface AIRequestBody {
   provider: AIProvider["id"];
   baseUrl: string;
@@ -22,6 +26,7 @@ function friendlyError(status: number, message: string): string {
 export async function callAI(
   provider: AIProvider,
   messages: { role: string; content: string }[],
+  options?: CallAIOptions,
 ): Promise<string> {
   const body: AIRequestBody = {
     provider: provider.id,
@@ -29,6 +34,7 @@ export async function callAI(
     apiKey: provider.apiKey,
     model: provider.model,
     messages,
+    ...(options?.max_tokens != null && { max_tokens: options.max_tokens }),
   };
 
   let res: Response;
@@ -50,12 +56,32 @@ export async function callAI(
   }
 
   const data = await res.json();
-  const content = (
-    data as { choices?: { message?: { content?: string } }[] }
-  ).choices?.[0]?.message?.content?.trim();
 
-  if (!content)
+  type Choice = {
+    finish_reason?: string;
+    message?: { content?: string; reasoning?: string };
+  };
+  const choice = (data as { choices?: Choice[] }).choices?.[0];
+
+  const content =
+    choice?.message?.content?.trim() ||
+    choice?.message?.reasoning?.trim() ||
+    "";
+
+  if (!content) {
+    if (choice?.finish_reason === "length") {
+      throw new Error(
+        "The response was cut off (token limit reached). Try a smaller input or a model with a larger context window.",
+      );
+    }
     throw new Error("The AI returned an empty response. Try again.");
+  }
+
+  if (choice?.finish_reason === "length") {
+    throw new Error(
+      "The response was cut off (token limit reached). The output may be incomplete.",
+    );
+  }
 
   return content;
 }

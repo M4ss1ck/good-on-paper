@@ -24,6 +24,8 @@ export function DiffPicker({ onClose, initialBaseId, initialAgainstId }: DiffPic
 
   const baseCv = baseId ? workspace.cvs[baseId] : undefined;
   const againstCv = againstId ? workspace.cvs[againstId] : undefined;
+  const canCompare = baseId && againstId && baseId !== againstId;
+  const trapRef = useFocusTrap<HTMLDivElement>(onClose);
 
   if (comparing && baseCv && againstCv) {
     return (
@@ -34,9 +36,6 @@ export function DiffPicker({ onClose, initialBaseId, initialAgainstId }: DiffPic
       />
     );
   }
-
-  const canCompare = baseId && againstId && baseId !== againstId;
-  const trapRef = useFocusTrap<HTMLDivElement>(onClose);
 
   return (
     <div

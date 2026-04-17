@@ -88,7 +88,7 @@ msgstr "Add your experience, skills, and education."
 msgid "After"
 msgstr "After"
 
-#: src/components/diff/DiffPicker.tsx:81
+#: src/components/diff/DiffPicker.tsx:80
 msgid "Against"
 msgstr "Against"
 
@@ -113,7 +113,7 @@ msgstr "AI Suggestion"
 msgid "API Key"
 msgstr "API Key"
 
-#: src/components/diff/DiffPicker.tsx:67
+#: src/components/diff/DiffPicker.tsx:66
 msgid "Base"
 msgstr "Base"
 
@@ -134,7 +134,7 @@ msgid "Bullet points"
 msgstr "Bullet points"
 
 #: src/components/ai/ProviderSettings.tsx:227
-#: src/components/diff/DiffPicker.tsx:103
+#: src/components/diff/DiffPicker.tsx:102
 #: src/components/editor/SectionList.tsx:150
 #: src/components/layout/Toolbar.tsx:230
 #: src/components/workspace/CVListItem.tsx:174
@@ -152,7 +152,7 @@ msgstr "Category (e.g. Frontend)"
 #: src/components/ai/TailorToJob.tsx:156
 #: src/components/ai/TailorToJob.tsx:246
 #: src/components/ai/TranslateCV.tsx:111
-#: src/components/diff/DiffPicker.tsx:58
+#: src/components/diff/DiffPicker.tsx:57
 #: src/components/diff/DiffView.tsx:41
 #: src/components/pdf/PdfPreviewModal.tsx:62
 msgid "Close"
@@ -166,12 +166,12 @@ msgstr "Collapse"
 msgid "Company"
 msgstr "Company"
 
-#: src/components/diff/DiffPicker.tsx:110
+#: src/components/diff/DiffPicker.tsx:109
 #: src/components/layout/Toolbar.tsx:141
 msgid "Compare"
 msgstr "Compare"
 
-#: src/components/diff/DiffPicker.tsx:55
+#: src/components/diff/DiffPicker.tsx:54
 msgid "Compare CVs"
 msgstr "Compare CVs"
 
@@ -625,8 +625,8 @@ msgstr "Sections, bullets, skills, education. Drag to reorder. Toggle visibility
 msgid "See your CV rendered in real time."
 msgstr "See your CV rendered in real time."
 
-#: src/components/diff/DiffPicker.tsx:73
-#: src/components/diff/DiffPicker.tsx:87
+#: src/components/diff/DiffPicker.tsx:72
+#: src/components/diff/DiffPicker.tsx:86
 #: src/components/workspace/NewCVDialog.tsx:89
 msgid "Select a CV…"
 msgstr "Select a CV…"
@@ -635,7 +635,7 @@ msgstr "Select a CV…"
 msgid "Select level"
 msgstr "Select level"
 
-#: src/components/diff/DiffPicker.tsx:95
+#: src/components/diff/DiffPicker.tsx:94
 msgid "Select two different CVs to compare."
 msgstr "Select two different CVs to compare."
 

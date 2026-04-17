@@ -1,7 +1,7 @@
 import type { ExportedHandler } from "@cloudflare/workers-types";
 
 interface AIRequest {
-  provider: "openrouter" | "cloudflare";
+  provider: string;
   baseUrl: string;
   apiKey: string;
   model: string;

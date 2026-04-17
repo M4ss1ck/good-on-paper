@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { AIProvider, AISettings } from "../types/ai";
+import { isProviderId } from "../lib/ai/providers";
 
 const STORAGE_KEY = "gop-ai-settings";
 
@@ -7,7 +8,11 @@ function loadSettings(): AISettings {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return { provider: null };
-    return JSON.parse(raw) as AISettings;
+    const parsed = JSON.parse(raw) as AISettings;
+    if (parsed.provider && !isProviderId(parsed.provider.id)) {
+      return { provider: null };
+    }
+    return parsed;
   } catch {
     return { provider: null };
   }

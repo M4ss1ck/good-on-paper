@@ -1,5 +1,7 @@
+import type { ProviderId } from "../lib/ai/providers";
+
 export interface AIProvider {
-  id: "openrouter" | "cloudflare";
+  id: ProviderId;
   name: string;
   baseUrl: string;
   apiKey: string;

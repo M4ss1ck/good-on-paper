@@ -6,26 +6,7 @@ import type { AIProvider } from "../../types/ai";
 import { useAIStore } from "../../store/aiStore";
 import { callAI } from "../../lib/ai/provider";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
-
-const OPENROUTER_BASE = "https://openrouter.ai/api/v1";
-const CLOUDFLARE_BASE_TEMPLATE =
-  "https://api.cloudflare.com/client/v4/accounts/{accountId}/ai/v1";
-
-const DEFAULTS: Record<
-  AIProvider["id"],
-  { name: string; model: string; baseUrl: string }
-> = {
-  openrouter: {
-    name: "OpenRouter",
-    model: "meta-llama/llama-3.3-70b-instruct:free",
-    baseUrl: OPENROUTER_BASE,
-  },
-  cloudflare: {
-    name: "Cloudflare Workers AI",
-    model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-    baseUrl: CLOUDFLARE_BASE_TEMPLATE,
-  },
-};
+import { PROVIDERS, PROVIDER_IDS } from "../../lib/ai/providers";
 
 type TestStatus = "idle" | "testing" | "success" | "error";
 
@@ -56,7 +37,7 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
   );
   const [apiKey, setApiKey] = useState(provider?.apiKey ?? "");
   const [model, setModel] = useState(
-    provider?.model ?? DEFAULTS[provider?.id ?? "openrouter"].model,
+    provider?.model ?? PROVIDERS[provider?.id ?? "openrouter"].defaultModel,
   );
   const [accountId, setAccountId] = useState(provider?.accountId ?? "");
   const [showKey, setShowKey] = useState(false);
@@ -65,26 +46,28 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
 
   const handleProviderChange = (id: AIProvider["id"]) => {
     setProviderId(id);
-    setModel(DEFAULTS[id].model);
+    setModel(PROVIDERS[id].defaultModel);
     setTestStatus("idle");
     setTestError(null);
   };
 
   const buildBaseUrl = () => {
-    if (providerId === "cloudflare") {
-      return CLOUDFLARE_BASE_TEMPLATE.replace("{accountId}", accountId);
+    const config = PROVIDERS[providerId];
+    if (config.requiresAccountId) {
+      return config.baseUrl.replace("{accountId}", accountId);
     }
-    return DEFAULTS[providerId].baseUrl;
+    return config.baseUrl;
   };
 
   const handleSave = () => {
+    const config = PROVIDERS[providerId];
     const p: AIProvider = {
       id: providerId,
-      name: DEFAULTS[providerId].name,
+      name: config.name,
       baseUrl: buildBaseUrl(),
       apiKey,
       model,
-      ...(providerId === "cloudflare" ? { accountId } : {}),
+      ...(config.requiresAccountId ? { accountId } : {}),
     };
     setProvider(p);
     onClose();
@@ -96,7 +79,7 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
 
     const testProvider: AIProvider = {
       id: providerId,
-      name: DEFAULTS[providerId].name,
+      name: PROVIDERS[providerId].name,
       baseUrl: buildBaseUrl(),
       apiKey,
       model,
@@ -114,7 +97,8 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
   };
 
   const canSave = apiKey.trim() && model.trim();
-  const canTest = canSave && (providerId !== "cloudflare" || accountId.trim());
+  const canTest =
+    canSave && (!PROVIDERS[providerId].requiresAccountId || accountId.trim());
 
   const labelClass = "block text-sm font-medium text-gray-700 mb-1";
   const inputClass =
@@ -137,24 +121,25 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
 
       <div className="px-6 py-4 space-y-4">
         {/* Provider selector */}
-        <fieldset>
-          <legend className={labelClass}><Trans>Provider</Trans></legend>
-          <div className="flex gap-4 mt-1">
-            {(["openrouter", "cloudflare"] as const).map((id) => (
-              <label key={id} className="flex items-center gap-2 text-sm">
-                <input
-                  type="radio"
-                  name="provider"
-                  value={id}
-                  checked={providerId === id}
-                  onChange={() => handleProviderChange(id)}
-                  className="accent-accent"
-                />
-                {DEFAULTS[id].name}
-              </label>
+        <div>
+          <label htmlFor="ai-provider-select" className={labelClass}>
+            <Trans>Provider</Trans>
+          </label>
+          <select
+            id="ai-provider-select"
+            value={providerId}
+            onChange={(e) =>
+              handleProviderChange(e.target.value as AIProvider["id"])
+            }
+            className={inputClass}
+          >
+            {PROVIDER_IDS.map((id) => (
+              <option key={id} value={id}>
+                {PROVIDERS[id].name}
+              </option>
             ))}
-          </div>
-        </fieldset>
+          </select>
+        </div>
 
         {/* API Key */}
         <div>
@@ -177,8 +162,8 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
           </div>
         </div>
 
-        {/* Account ID (Cloudflare only) */}
-        {providerId === "cloudflare" && (
+        {/* Account ID (only for providers that need it, e.g. Cloudflare) */}
+        {PROVIDERS[providerId].requiresAccountId && (
           <div>
             <label className={labelClass}><Trans>Account ID</Trans></label>
             <input

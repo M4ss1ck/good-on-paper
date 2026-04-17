@@ -8,6 +8,7 @@ interface AIRequest {
   messages: { role: string; content: string }[];
   temperature?: number;
   max_tokens?: number;
+  reasoning_effort?: string;
 }
 
 const corsHeaders = {
@@ -41,6 +42,7 @@ async function handleAI(request: Request): Promise<Response> {
     messages,
     temperature = 0.7,
     max_tokens = 1024,
+    reasoning_effort,
   } = body;
 
   // Validate required fields
@@ -75,6 +77,7 @@ async function handleAI(request: Request): Promise<Response> {
         messages,
         temperature,
         max_tokens,
+        ...(reasoning_effort != null && { reasoning_effort }),
       }),
     });
 

@@ -2,6 +2,7 @@ import type { AIProvider } from "../../types/ai";
 
 export interface CallAIOptions {
   max_tokens?: number;
+  reasoning_effort?: "none" | "low" | "medium" | "high";
 }
 
 interface AIRequestBody {
@@ -12,6 +13,7 @@ interface AIRequestBody {
   messages: { role: string; content: string }[];
   temperature?: number;
   max_tokens?: number;
+  reasoning_effort?: string;
 }
 
 function friendlyError(status: number, message: string): string {
@@ -35,6 +37,7 @@ export async function callAI(
     model: provider.model,
     messages,
     ...(options?.max_tokens != null && { max_tokens: options.max_tokens }),
+    ...(options?.reasoning_effort != null && { reasoning_effort: options.reasoning_effort }),
   };
 
   let res: Response;

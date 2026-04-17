@@ -52,7 +52,7 @@ export function PdfPreviewModal() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="pdf-preview-title"
-        className="bg-white rounded-lg shadow-lg w-[90vw] h-[90vh] max-w-225 flex flex-col"
+        className="bg-white rounded-lg shadow-lg w-[95vw] h-[90dvh] sm:w-[90vw] max-w-225 flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">

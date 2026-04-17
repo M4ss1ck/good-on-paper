@@ -49,7 +49,7 @@ export function CVSwitcher() {
     <>
       <div className="relative" ref={containerRef}>
         <button
-          className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-primary rounded border border-gray-200 hover:border-accent transition-colors max-w-48"
+          className="flex items-center gap-1.5 px-2 py-1.5 text-sm font-medium text-primary rounded border border-gray-200 hover:border-accent transition-colors max-w-32 sm:max-w-48 sm:px-3"
           onClick={() => setListOpen((v) => !v)}
         >
           <span className="truncate">{activeCvName}</span>

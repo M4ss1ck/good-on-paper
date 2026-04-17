@@ -76,6 +76,10 @@ msgstr "Accept"
 msgid "Account ID"
 msgstr "Account ID"
 
+#: src/components/layout/Toolbar.tsx:147
+msgid "Actions"
+msgstr "Actions"
+
 #: src/components/workspace/CVListItem.tsx:88
 msgid "active"
 msgstr "active"
@@ -97,11 +101,13 @@ msgid "AI assist (BYOK)"
 msgstr "AI assist (BYOK)"
 
 #: src/components/ai/DetectAIText.tsx:77
-#: src/components/layout/Toolbar.tsx:182
+#: src/components/layout/Toolbar.tsx:171
+#: src/components/layout/Toolbar.tsx:267
 msgid "AI Phrase Check"
 msgstr "AI Phrase Check"
 
 #: src/components/ai/ProviderSettings.tsx:112
+#: src/components/layout/Toolbar.tsx:188
 msgid "AI Settings"
 msgstr "AI Settings"
 
@@ -136,7 +142,8 @@ msgstr "Bullet points"
 #: src/components/ai/ProviderSettings.tsx:227
 #: src/components/diff/DiffPicker.tsx:102
 #: src/components/editor/SectionList.tsx:150
-#: src/components/layout/Toolbar.tsx:230
+#: src/components/layout/Toolbar.tsx:200
+#: src/components/layout/Toolbar.tsx:315
 #: src/components/workspace/CVListItem.tsx:174
 #: src/components/workspace/NewCVDialog.tsx:121
 msgid "Cancel"
@@ -167,7 +174,9 @@ msgid "Company"
 msgstr "Company"
 
 #: src/components/diff/DiffPicker.tsx:109
-#: src/components/layout/Toolbar.tsx:141
+#: src/components/layout/Toolbar.tsx:160
+#: src/components/layout/Toolbar.tsx:221
+#: src/components/layout/Toolbar.tsx:223
 msgid "Compare"
 msgstr "Compare"
 
@@ -175,7 +184,7 @@ msgstr "Compare"
 msgid "Compare CVs"
 msgstr "Compare CVs"
 
-#: src/components/preview/CVPreview.tsx:62
+#: src/components/preview/CVPreview.tsx:88
 msgid "Compare with parent"
 msgstr "Compare with parent"
 
@@ -187,7 +196,11 @@ msgstr "Configure AI to generate a summary"
 msgid "Configure AI to improve bullets"
 msgstr "Configure AI to improve bullets"
 
-#: src/components/layout/Toolbar.tsx:224
+#: src/components/layout/Toolbar.tsx:309
+msgid "Confirm"
+msgstr "Confirm"
+
+#: src/components/layout/Toolbar.tsx:197
 msgid "Confirm Reset"
 msgstr "Confirm Reset"
 
@@ -266,7 +279,9 @@ msgstr "Dismiss"
 msgid "Download"
 msgstr "Download"
 
-#: src/components/layout/Toolbar.tsx:138
+#: src/components/layout/Toolbar.tsx:157
+#: src/components/layout/Toolbar.tsx:217
+#: src/components/layout/Toolbar.tsx:219
 msgid "Download PDF"
 msgstr "Download PDF"
 
@@ -286,6 +301,10 @@ msgstr "e.g. en, es, pt-BR"
 #: src/components/landing/LandingPage.tsx:186
 msgid "Edit anything"
 msgstr "Edit anything"
+
+#: src/components/layout/AppLayout.tsx:21
+msgid "Editor"
+msgstr "Editor"
 
 #: src/components/editor/SectionList.tsx:29
 msgid "Education"
@@ -328,7 +347,9 @@ msgstr "Experience Entry"
 msgid "Export as PDF, ready to send."
 msgstr "Export as PDF, ready to send."
 
-#: src/components/layout/Toolbar.tsx:144
+#: src/components/layout/Toolbar.tsx:164
+#: src/components/layout/Toolbar.tsx:225
+#: src/components/layout/Toolbar.tsx:227
 msgid "Export JSON"
 msgstr "Export JSON"
 
@@ -365,7 +386,7 @@ msgstr "Fork existing"
 msgid "Fork name"
 msgstr "Fork name"
 
-#: src/components/preview/CVPreview.tsx:56
+#: src/components/preview/CVPreview.tsx:82
 msgid "forked from {parentName}"
 msgstr "forked from {parentName}"
 
@@ -411,7 +432,9 @@ msgstr "Hide section"
 msgid "How it works"
 msgstr "How it works"
 
-#: src/components/layout/Toolbar.tsx:150
+#: src/components/layout/Toolbar.tsx:167
+#: src/components/layout/Toolbar.tsx:232
+#: src/components/layout/Toolbar.tsx:235
 msgid "Import JSON"
 msgstr "Import JSON"
 
@@ -468,7 +491,9 @@ msgstr "My new CV"
 msgid "Native"
 msgstr "Native"
 
-#: src/components/layout/Toolbar.tsx:235
+#: src/components/layout/Toolbar.tsx:205
+#: src/components/layout/Toolbar.tsx:319
+#: src/components/layout/Toolbar.tsx:321
 #: src/components/workspace/NewCVDialog.tsx:60
 msgid "New CV"
 msgstr "New CV"
@@ -542,10 +567,13 @@ msgid "Phone"
 msgstr "Phone"
 
 #: src/components/landing/LandingPage.tsx:238
+#: src/components/layout/AppLayout.tsx:27
 msgid "Preview"
 msgstr "Preview"
 
-#: src/components/layout/Toolbar.tsx:135
+#: src/components/layout/Toolbar.tsx:154
+#: src/components/layout/Toolbar.tsx:213
+#: src/components/layout/Toolbar.tsx:215
 msgid "Preview PDF"
 msgstr "Preview PDF"
 
@@ -605,11 +633,11 @@ msgstr "Role / Title"
 msgid "Save"
 msgstr "Save"
 
-#: src/components/layout/Toolbar.tsx:113
+#: src/components/layout/Toolbar.tsx:121
 msgid "Saved"
 msgstr "Saved"
 
-#: src/components/layout/Toolbar.tsx:111
+#: src/components/layout/Toolbar.tsx:119
 msgid "Saving..."
 msgstr "Saving..."
 
@@ -639,7 +667,7 @@ msgstr "Select level"
 msgid "Select two different CVs to compare."
 msgstr "Select two different CVs to compare."
 
-#: src/components/layout/Toolbar.tsx:212
+#: src/components/layout/Toolbar.tsx:297
 msgid "Settings"
 msgstr "Settings"
 
@@ -687,7 +715,8 @@ msgstr "Summary"
 msgid "Tailor my CV"
 msgstr "Tailor my CV"
 
-#: src/components/layout/Toolbar.tsx:192
+#: src/components/layout/Toolbar.tsx:178
+#: src/components/layout/Toolbar.tsx:277
 msgid "Tailor to Job"
 msgstr "Tailor to Job"
 
@@ -716,7 +745,8 @@ msgid "These two CVs are identical."
 msgstr "These two CVs are identical."
 
 #: src/components/ai/TranslateCV.tsx:160
-#: src/components/layout/Toolbar.tsx:202
+#: src/components/layout/Toolbar.tsx:185
+#: src/components/layout/Toolbar.tsx:287
 msgid "Translate"
 msgstr "Translate"
 

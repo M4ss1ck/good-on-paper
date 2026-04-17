@@ -71,7 +71,7 @@ function DetectAIPanel({ onClose, flags, grouped, onRun, onFlagClick }: {
   const trapRef = useFocusTrap<HTMLDivElement>(onClose);
 
   return (
-    <div ref={trapRef} role="dialog" aria-modal="true" aria-labelledby="detect-ai-title" className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 max-h-[80vh] flex flex-col">
+    <div ref={trapRef} role="dialog" aria-modal="true" aria-labelledby="detect-ai-title" className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-2 sm:mx-4 max-h-[85dvh] flex flex-col">
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
         <h2 id="detect-ai-title" className="text-lg font-semibold text-primary">
           <Search size={18} className="inline mr-1.5" /><Trans>AI Phrase Check</Trans>

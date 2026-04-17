@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { CornerDownRight } from "lucide-react";
 import { Trans } from "@lingui/react/macro";
 import { useCVStore } from "../../store/cvStore";
@@ -30,11 +30,37 @@ const FONT_FAMILY_CSS: Record<string, string> = {
   Lora: "'Lora', serif",
 };
 
+/** A4 width in px (210mm at 96dpi ≈ 793.7px) */
+const A4_WIDTH_PX = 793.7;
+
+/** Compute scale factor so the A4 page fits inside the container */
+function usePreviewScale() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  const recalc = useCallback(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const available = el.clientWidth;
+    setScale(available < A4_WIDTH_PX ? available / A4_WIDTH_PX : 1);
+  }, []);
+
+  useEffect(() => {
+    recalc();
+    const observer = new ResizeObserver(recalc);
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [recalc]);
+
+  return { containerRef, scale };
+}
+
 export function CVPreview() {
   const cv = useCVStore((s) => s.activeCv());
   const workspace = useCVStore((s) => s.workspace);
   const setActiveCV = useCVStore((s) => s.setActiveCV);
   const [diffOpen, setDiffOpen] = useState(false);
+  const { containerRef, scale } = usePreviewScale();
   usePreviewFonts();
   if (!cv) return null;
 
@@ -43,7 +69,7 @@ export function CVPreview() {
   const fontFamily = FONT_FAMILY_CSS[cv.settings?.fontFamily ?? "Roboto"] ?? FONT_FAMILY_CSS.Roboto;
 
   return (
-    <div className="flex flex-col items-center p-8 min-h-full">
+    <div ref={containerRef} className="flex flex-col items-center p-4 md:p-8 min-h-full">
       {/* CV name badge + fork indicator */}
       <div className="w-full max-w-[210mm] mb-2 flex items-center gap-2 text-xs text-light">
         <span className="font-medium text-muted">{cv.name}</span>
@@ -66,8 +92,13 @@ export function CVPreview() {
       </div>
 
       <div
-        className="w-full max-w-[210mm] min-h-[297mm] bg-page shadow-sm rounded px-12.5 py-10"
-        style={{ fontFamily }}
+        className="bg-page shadow-sm rounded px-12.5 py-10 origin-top"
+        style={{
+          fontFamily,
+          width: `${A4_WIDTH_PX}px`,
+          minHeight: "297mm",
+          transform: scale < 1 ? `scale(${scale})` : undefined,
+        }}
       >
         <PreviewMeta meta={cv.meta} />
         {visibleSections.map((section) => (

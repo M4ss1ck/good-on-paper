@@ -107,7 +107,7 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
   const trapRef = useFocusTrap<HTMLDivElement>(onClose);
 
   return (
-    <div ref={trapRef} role="dialog" aria-modal="true" aria-labelledby="ai-settings-title" className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
+    <div ref={trapRef} role="dialog" aria-modal="true" aria-labelledby="ai-settings-title" className="bg-white rounded-lg shadow-xl w-full max-w-md mx-2 sm:mx-4 max-h-[90dvh] overflow-y-auto">
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
         <h2 id="ai-settings-title" className="text-lg font-semibold text-primary"><Trans>AI Settings</Trans></h2>
         <button

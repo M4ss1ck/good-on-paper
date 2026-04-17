@@ -28,7 +28,7 @@ export function DiffView({ base, against, onClose }: DiffViewProps) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="diff-view-title"
-        className="bg-white rounded-lg shadow-lg w-[90vw] max-w-3xl max-h-[90vh] flex flex-col"
+        className="bg-white rounded-lg shadow-lg w-[95vw] sm:w-[90vw] max-w-3xl max-h-[90dvh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

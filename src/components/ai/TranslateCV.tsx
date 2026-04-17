@@ -97,7 +97,7 @@ export function TranslateCV({ open, onClose }: TranslateCVProps) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="translate-cv-title"
-        className="bg-white rounded-lg shadow-lg w-full max-w-md flex flex-col"
+        className="bg-white rounded-lg shadow-lg w-full max-w-md mx-2 sm:mx-4 max-h-[85dvh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

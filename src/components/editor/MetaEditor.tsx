@@ -39,7 +39,7 @@ export function MetaEditor() {
       <h2 className="text-sm font-semibold text-primary uppercase tracking-wide">
         <Trans>Personal Information</Trans>
       </h2>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <input
           className={inputClass}
           placeholder={t`Full Name`}
@@ -67,7 +67,7 @@ export function MetaEditor() {
           onChange={(e) => updateMeta({ phone: e.target.value })}
         />
         <input
-          className={inputClass + " col-span-2"}
+          className={inputClass + " sm:col-span-2"}
           placeholder={t`Location`}
           value={meta.location}
           onChange={(e) => updateMeta({ location: e.target.value })}

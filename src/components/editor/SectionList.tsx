@@ -68,10 +68,10 @@ function SortableSectionCard({ section }: { section: Section }) {
       className={`border border-gray-200 rounded-lg bg-white mb-2 ${!section.visible ? "opacity-60" : ""
         }`}
     >
-      <div className="flex items-center gap-2 px-3 py-2.5">
+      <div className="flex items-center gap-1 sm:gap-2 px-3 py-2.5">
         {/* Drag handle */}
         <button
-          className="cursor-grab text-light hover:text-muted touch-none"
+          className="cursor-grab text-light hover:text-muted touch-none p-1"
           {...attributes}
           {...listeners}
           title={t`Drag to reorder`}
@@ -101,7 +101,7 @@ function SortableSectionCard({ section }: { section: Section }) {
         {/* Visibility toggle */}
         <button
           onClick={() => toggleVisibility(section.id)}
-          className="text-light hover:text-muted transition-colors"
+          className="text-light hover:text-muted transition-colors p-1"
           title={section.visible ? t`Hide section` : t`Show section`}
         >
           {section.visible ? (
@@ -153,7 +153,7 @@ function SortableSectionCard({ section }: { section: Section }) {
         ) : (
           <button
             onClick={() => setConfirmDelete(true)}
-            className="text-light hover:text-red-500 transition-colors"
+            className="text-light hover:text-red-500 transition-colors p-1"
             title={t`Delete section`}
           >
             <svg
@@ -173,7 +173,7 @@ function SortableSectionCard({ section }: { section: Section }) {
         {/* Collapse toggle */}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="text-light hover:text-muted transition-colors"
+          className="text-light hover:text-muted transition-colors p-1"
           title={collapsed ? t`Expand` : t`Collapse`}
         >
           <svg

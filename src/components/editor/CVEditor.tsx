@@ -17,7 +17,7 @@ export function CVEditor() {
   const updateSettings = useCVStore((s) => s.updateSettings);
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 space-y-5 md:p-6 md:space-y-6">
       <MetaEditor />
 
       <div>

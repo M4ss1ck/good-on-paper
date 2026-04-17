@@ -25,7 +25,7 @@ export function CVList({ onClose, onNewCV }: CVListProps) {
   const isLarge = getWorkspaceSize() > TWO_MB;
 
   return (
-    <div className="absolute left-0 top-full mt-1 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+    <div className="absolute left-0 top-full mt-1 w-[calc(100vw-1.5rem)] sm:w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
       {isLarge && (
         <div className="px-3 py-1.5 bg-amber-50 border-b border-amber-200 text-xs text-amber-700">
           <Trans>You have a lot of saved CVs. Consider deleting old ones to keep things fast.</Trans>

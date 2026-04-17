@@ -31,7 +31,7 @@ function EditorRoute() {
             role="alertdialog"
             aria-modal="true"
             aria-labelledby="storage-error-title"
-            className="bg-white rounded-lg shadow-lg w-96 max-w-[90vw] p-5 space-y-3"
+            className="bg-white rounded-lg shadow-lg w-full max-w-sm mx-3 sm:mx-0 p-5 space-y-3"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 id="storage-error-title" className="text-sm font-semibold text-red-600"><Trans>Storage Error</Trans></h2>

@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { Sparkles, Search, Target, Globe, Settings } from "lucide-react";
+import { Sparkles, Search, Target, Globe, Settings, Eye, Download, GitCompare, Upload, FileDown, FilePlus, MoreHorizontal } from "lucide-react";
 import { Link } from "react-router";
 import { Trans } from "@lingui/react/macro";
 import { t } from "@lingui/core/macro";
@@ -38,7 +38,9 @@ export function Toolbar() {
   const [tailorOpen, setTailorOpen] = useState(false);
   const [translateOpen, setTranslateOpen] = useState(false);
   const [diffPickerOpen, setDiffPickerOpen] = useState(false);
+  const [actionsOpen, setActionsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const actionsRef = useRef<HTMLDivElement>(null);
 
   // Locale toggle
   const { i18n } = useLingui();
@@ -50,15 +52,18 @@ export function Toolbar() {
 
   // Close dropdown on outside click
   useEffect(() => {
-    if (!aiDropdownOpen) return;
+    if (!aiDropdownOpen && !actionsOpen) return;
     const handle = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (aiDropdownOpen && dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setAiDropdownOpen(false);
+      }
+      if (actionsOpen && actionsRef.current && !actionsRef.current.contains(e.target as Node)) {
+        setActionsOpen(false);
       }
     };
     document.addEventListener("mousedown", handle);
     return () => document.removeEventListener("mousedown", handle);
-  }, [aiDropdownOpen]);
+  }, [aiDropdownOpen, actionsOpen]);
 
   const handlePreviewPdf = () => {
     openModal(true);
@@ -103,8 +108,11 @@ export function Toolbar() {
     setConfirmReset(false);
   };
 
-  const btnClass =
-    "px-3 py-1.5 text-sm rounded border border-gray-200 text-muted hover:text-primary hover:border-accent transition-colors flex flex-row items-center gap-1";
+  const btnBase =
+    "h-8 px-2 text-sm rounded border border-gray-200 text-muted hover:text-primary hover:border-accent transition-colors items-center justify-center gap-1.5 whitespace-nowrap";
+
+  const dropItemClass =
+    "w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2";
 
   const saveLabel =
     saveStatus === "saving"
@@ -114,11 +122,11 @@ export function Toolbar() {
         : "";
 
   return (
-    <div className="flex items-center gap-2 px-6 py-3 border-b border-gray-200 bg-white">
+    <div className="flex items-center gap-1.5 px-3 py-2 border-b border-gray-200 bg-white md:px-4 lg:px-6">
       <Link
         to="/"
         onClick={() => localStorage.setItem("gop-last-page", "/")}
-        className="text-sm font-semibold text-primary hover:text-accent transition-colors"
+        className="text-sm font-semibold text-primary hover:text-accent transition-colors shrink-0"
       >
         Good on Paper
       </Link>
@@ -128,26 +136,103 @@ export function Toolbar() {
       <span className="mr-auto" />
 
       {saveLabel && (
-        <span className="text-xs text-light mr-1">{saveLabel}</span>
+        <span className="text-xs text-light mr-1 shrink-0">{saveLabel}</span>
       )}
 
-      <button className={btnClass} onClick={handlePreviewPdf}>
-        <Trans>Preview PDF</Trans>
+      {/* ── Small screens: single "Actions" dropdown with ALL actions ── */}
+      <div className="relative md:hidden" ref={actionsRef}>
+        <button
+          className={`${btnBase} inline-flex`}
+          onClick={() => setActionsOpen((v) => !v)}
+          title={t`Actions`}
+        >
+          <MoreHorizontal size={14} />
+        </button>
+        {actionsOpen && (
+          <div className="absolute right-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-40 py-1">
+            <button className={dropItemClass} onClick={() => { handlePreviewPdf(); setActionsOpen(false); }}>
+              <Eye size={14} /><Trans>Preview PDF</Trans>
+            </button>
+            <button className={dropItemClass} onClick={() => { handleDownloadPdf(); setActionsOpen(false); }}>
+              <Download size={14} /><Trans>Download PDF</Trans>
+            </button>
+            <button className={dropItemClass} onClick={() => { setDiffPickerOpen(true); setActionsOpen(false); }}>
+              <GitCompare size={14} /><Trans>Compare</Trans>
+            </button>
+            <hr className="my-1 border-gray-100" />
+            <button className={dropItemClass} onClick={() => { handleExportJson(); setActionsOpen(false); }}>
+              <FileDown size={14} /><Trans>Export JSON</Trans>
+            </button>
+            <button className={dropItemClass} onClick={() => { fileInputRef.current?.click(); setActionsOpen(false); }}>
+              <Upload size={14} /><Trans>Import JSON</Trans>
+            </button>
+            <hr className="my-1 border-gray-100" />
+            <button className={dropItemClass} onClick={() => { setDetectOpen(true); setActionsOpen(false); }}>
+              <Search size={14} /><Trans>AI Phrase Check</Trans>
+            </button>
+            <button
+              className={`${dropItemClass} disabled:opacity-50 disabled:cursor-not-allowed`}
+              disabled={!hasProvider}
+              onClick={() => { setTailorOpen(true); setActionsOpen(false); }}
+            >
+              <Target size={14} /><Trans>Tailor to Job</Trans>
+            </button>
+            <button
+              className={`${dropItemClass} disabled:opacity-50 disabled:cursor-not-allowed`}
+              disabled={!hasProvider}
+              onClick={() => { setTranslateOpen(true); setActionsOpen(false); }}
+            >
+              <Globe size={14} /><Trans>Translate</Trans>
+            </button>
+            <button className={dropItemClass} onClick={() => { setSettingsOpen(true); setActionsOpen(false); }}>
+              <Settings size={14} /><Trans>AI Settings</Trans>
+            </button>
+            <hr className="my-1 border-gray-100" />
+            {confirmReset ? (
+              <>
+                <button
+                  className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2"
+                  onClick={() => { handleReset(); setActionsOpen(false); }}
+                >
+                  <Trans>Confirm Reset</Trans>
+                </button>
+                <button className={dropItemClass} onClick={() => { setConfirmReset(false); setActionsOpen(false); }}>
+                  <Trans>Cancel</Trans>
+                </button>
+              </>
+            ) : (
+              <button className={dropItemClass} onClick={() => { handleReset(); setActionsOpen(false); }}>
+                <FilePlus size={14} /><Trans>New CV</Trans>
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* ── md+ screens: individual icon buttons (text labels at xl+) ── */}
+      <button className={`${btnBase} hidden md:inline-flex`} onClick={handlePreviewPdf} title={t`Preview PDF`}>
+        <Eye size={14} />
+        <span className="hidden xl:inline"><Trans>Preview PDF</Trans></span>
       </button>
-      <button className={btnClass} onClick={handleDownloadPdf}>
-        <Trans>Download PDF</Trans>
+      <button className={`${btnBase} hidden md:inline-flex`} onClick={handleDownloadPdf} title={t`Download PDF`}>
+        <Download size={14} />
+        <span className="hidden xl:inline"><Trans>Download PDF</Trans></span>
       </button>
-      <button className={btnClass} onClick={() => setDiffPickerOpen(true)}>
-        <Trans>Compare</Trans>
+      <button className={`${btnBase} hidden md:inline-flex`} onClick={() => setDiffPickerOpen(true)} title={t`Compare`}>
+        <GitCompare size={14} />
+        <span className="hidden xl:inline"><Trans>Compare</Trans></span>
       </button>
-      <button className={btnClass} onClick={handleExportJson}>
-        <Trans>Export JSON</Trans>
+      <button className={`${btnBase} hidden md:inline-flex`} onClick={handleExportJson} title={t`Export JSON`}>
+        <FileDown size={14} />
+        <span className="hidden xl:inline"><Trans>Export JSON</Trans></span>
       </button>
       <button
-        className={btnClass}
+        className={`${btnBase} hidden md:inline-flex`}
         onClick={() => fileInputRef.current?.click()}
+        title={t`Import JSON`}
       >
-        <Trans>Import JSON</Trans>
+        <Upload size={14} />
+        <span className="hidden xl:inline"><Trans>Import JSON</Trans></span>
       </button>
       <input
         ref={fileInputRef}
@@ -158,17 +243,17 @@ export function Toolbar() {
       />
 
       <DetectAIText open={detectOpen} onClose={() => setDetectOpen(false)} />
-
       <TailorToJob open={tailorOpen} onClose={() => setTailorOpen(false)} />
-
       <TranslateCV open={translateOpen} onClose={() => setTranslateOpen(false)} />
 
-      <div className="relative" ref={dropdownRef}>
+      <div className="relative hidden md:block" ref={dropdownRef}>
         <button
-          className={btnClass}
+          className={`${btnBase} inline-flex`}
           onClick={() => setAiDropdownOpen((v) => !v)}
+          title="AI"
         >
-          <Sparkles size={14} /> AI
+          <Sparkles size={14} />
+          <span className="hidden xl:inline">AI</span>
         </button>
         {aiDropdownOpen && (
           <div className="absolute right-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-40 py-1">
@@ -216,29 +301,31 @@ export function Toolbar() {
       </div>
 
       {confirmReset ? (
-        <span className="flex items-center gap-1 text-xs">
+        <span className="hidden md:flex items-center gap-1 text-xs">
           <button
             onClick={handleReset}
-            className="px-2 py-1 rounded bg-red-500 text-white hover:bg-red-600 transition-colors"
+            className="h-8 px-2 rounded bg-red-500 text-white hover:bg-red-600 transition-colors text-xs"
           >
-            <Trans>Confirm Reset</Trans>
+            <Trans>Confirm</Trans>
           </button>
           <button
             onClick={() => setConfirmReset(false)}
-            className="px-2 py-1 rounded border border-gray-200 text-muted hover:text-primary transition-colors"
+            className="h-8 px-2 rounded border border-gray-200 text-muted hover:text-primary transition-colors text-xs"
           >
             <Trans>Cancel</Trans>
           </button>
         </span>
       ) : (
-        <button className={btnClass} onClick={handleReset}>
-          <Trans>New CV</Trans>
+        <button className={`${btnBase} hidden md:inline-flex`} onClick={handleReset} title={t`New CV`}>
+          <FilePlus size={14} />
+          <span className="hidden xl:inline"><Trans>New CV</Trans></span>
         </button>
       )}
 
       <button
-        className="px-2 py-1.5 text-xs font-medium rounded border border-gray-200 text-muted hover:text-primary hover:border-accent transition-colors"
+        className={`${btnBase} inline-flex`}
         onClick={toggleLocale}
+        title={currentLocale === "en" ? "Español" : "English"}
       >
         {currentLocale === "en" ? "ES" : "EN"}
       </button>

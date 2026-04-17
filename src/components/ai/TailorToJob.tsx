@@ -145,7 +145,7 @@ export function TailorToJob({ open, onClose }: TailorToJobProps) {
         if (e.target === e.currentTarget) handleClose();
       }}
     >
-      <div ref={trapRef} role="dialog" aria-modal="true" aria-labelledby="tailor-title" className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[85vh] flex flex-col">
+      <div ref={trapRef} role="dialog" aria-modal="true" aria-labelledby="tailor-title" className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-2 sm:mx-4 max-h-[85dvh] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
           <h2 id="tailor-title" className="text-lg font-semibold text-primary">

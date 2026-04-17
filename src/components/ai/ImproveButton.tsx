@@ -77,7 +77,7 @@ export function ImproveButton({
         )}
       </button>
       {state === "error" && error && (
-        <div className="absolute top-full right-0 mt-1 px-2 py-1 text-xs text-red-600 bg-red-50 border border-red-200 rounded shadow-sm whitespace-nowrap z-10">
+        <div className="absolute top-full right-0 mt-1 px-2 py-1 text-xs text-red-600 bg-red-50 border border-red-200 rounded shadow-sm whitespace-nowrap z-10 max-w-[90vw]">
           {error}
         </div>
       )}

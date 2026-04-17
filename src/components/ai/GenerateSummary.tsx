@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Trans } from "@lingui/react/macro";
-import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 import { useAIStore } from "../../store/aiStore";
 import { useAIAction } from "../../hooks/useAIAction";
@@ -46,7 +45,7 @@ export function GenerateSummary({ sectionId, itemId }: GenerateSummaryProps) {
           onClick={handleGenerate}
           state={state}
           error={error}
-          label={t`Generate from my experience`}
+          label={<Trans>Generate from my experience</Trans>}
         />
       ) : (
         <button

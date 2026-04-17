@@ -186,7 +186,7 @@ msgstr "Comparar CVs"
 msgid "Compare with parent"
 msgstr "Comparar con el original"
 
-#: src/components/ai/GenerateSummary.tsx:56
+#: src/components/ai/GenerateSummary.tsx:55
 msgid "Configure AI to generate a summary"
 msgstr "Configurar IA para generar un resumen"
 
@@ -406,7 +406,7 @@ msgstr "Contenido libre..."
 msgid "Full Name"
 msgstr "Nombre completo"
 
-#: src/components/ai/GenerateSummary.tsx:49
+#: src/components/ai/GenerateSummary.tsx:48
 msgid "Generate from my experience"
 msgstr "Generar desde mi experiencia"
 

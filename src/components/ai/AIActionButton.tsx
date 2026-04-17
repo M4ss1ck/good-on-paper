@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Sparkles } from "lucide-react";
 import type { AIActionState } from "../../types/ai";
 
@@ -5,7 +6,7 @@ interface AIActionButtonProps {
   onClick: () => void;
   state: AIActionState;
   error: string | null;
-  label: string;
+  label: ReactNode;
   disabled?: boolean;
   disabledTitle?: string;
 }

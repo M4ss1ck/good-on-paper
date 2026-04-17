@@ -17,6 +17,7 @@ import { TranslateCV } from "../ai/TranslateCV";
 import { CVSwitcher } from "../workspace/CVSwitcher";
 import { DiffPicker } from "../diff/DiffPicker";
 import { loadCatalog, type AppLocale } from "../../i18n";
+import { GoodOnPaperLogo } from "../logo/GoodOnPaperLogo";
 
 pdfMake.addVirtualFileSystem(pdfFonts);
 
@@ -128,7 +129,7 @@ export function Toolbar() {
         onClick={() => localStorage.setItem("gop-last-page", "/")}
         className="text-sm font-semibold text-primary hover:text-accent transition-colors shrink-0"
       >
-        Good on Paper
+        <GoodOnPaperLogo />
       </Link>
 
       <CVSwitcher />

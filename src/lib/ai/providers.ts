@@ -55,6 +55,12 @@ export const PROVIDERS = {
     defaultModel: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
     requiresAccountId: true,
   },
+  opencode_go: {
+    name: "OpenCode Go",
+    baseUrl: "https://opencode.ai/zen/go/v1",
+    defaultModel: "kimi-k2.6",
+    requiresAccountId: false,
+  },
 } as const satisfies Record<string, ProviderConfig>;
 
 export type ProviderId = keyof typeof PROVIDERS;

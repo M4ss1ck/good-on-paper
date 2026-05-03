@@ -5,7 +5,7 @@ A free, private CV builder that runs entirely in your browser. No account, no cl
 ## Features
 
 - **Edit anything** — sections, bullets, skills, education. Drag to reorder, toggle visibility
-- **AI assist (BYOK)** — generate summaries, improve bullets, tailor to job descriptions. Works with OpenAI, Google Gemini, Mistral, Groq, DeepSeek, xAI, OpenRouter, and Cloudflare Workers AI — bring your own API key
+- **AI assist (BYOK)** — generate summaries, improve bullets, tailor to job descriptions. Works with OpenAI, Google Gemini, Mistral, Groq, DeepSeek, xAI, OpenRouter, Cloudflare Workers AI, and OpenCode Go — bring your own API key
 - **Fork & compare** — create variants for different roles. Compare versions side by side with visual diffs
 - **AI translation** — translate your entire CV into another language, creating a new fork
 - **PDF export** — download a clean, print-ready PDF

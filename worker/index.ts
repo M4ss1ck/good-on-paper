@@ -1,4 +1,8 @@
-import type { ExportedHandler } from "@cloudflare/workers-types";
+import type { ExportedHandler, Fetcher } from "@cloudflare/workers-types";
+
+interface Env {
+  ASSETS: Fetcher;
+}
 
 interface AIRequest {
   provider: string;
@@ -92,14 +96,13 @@ async function handleAI(request: Request): Promise<Response> {
 }
 
 export default {
-  async fetch(request): Promise<Response> {
+  async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
 
     if (url.pathname === "/api/ai") {
       return handleAI(request);
     }
 
-    // All other requests are handled by the assets binding (static files)
-    return new Response("Not found", { status: 404 });
+    return env.ASSETS.fetch(request);
   },
-} satisfies ExportedHandler;
+} satisfies ExportedHandler<Env>;

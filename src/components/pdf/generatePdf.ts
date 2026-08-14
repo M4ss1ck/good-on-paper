@@ -90,24 +90,40 @@ function sectionHeadingBlock(title: string): Content[] {
   ];
 }
 
+function keepTogether(content: Content[]): Content {
+  return { stack: content, unbreakable: true };
+}
+
+function buildSection(title: string, blocks: Content[]): Content[] {
+  const heading = sectionHeadingBlock(title);
+
+  if (blocks.length === 0) {
+    return [keepTogether(heading)];
+  }
+
+  const [firstBlock, ...remainingBlocks] = blocks;
+  return [keepTogether([...heading, firstBlock]), ...remainingBlocks];
+}
+
 function buildSummary(section: Section): Content[] {
   const items = section.items as SummaryItem[];
-  const blocks: Content[] = [...sectionHeadingBlock(section.title)];
+  const blocks: Content[] = [];
   for (const item of items) {
     if (item.content) {
       blocks.push({
         text: item.content,
         style: "body",
         alignment: "justify" as const,
+        unbreakable: true,
       });
     }
   }
-  return blocks;
+  return buildSection(section.title, blocks);
 }
 
 function buildSkills(section: Section): Content[] {
   const items = section.items as SkillItem[];
-  const blocks: Content[] = [...sectionHeadingBlock(section.title)];
+  const blocks: Content[] = [];
   for (const item of items) {
     const filled = item.items.filter(Boolean);
     if (item.category || filled.length > 0) {
@@ -117,20 +133,22 @@ function buildSkills(section: Section): Content[] {
           { text: filled.join(", "), fontSize: 10 },
         ],
         margin: [0, 1, 0, 1],
+        unbreakable: true,
       });
     }
   }
-  return blocks;
+  return buildSection(section.title, blocks);
 }
 
 function buildExperience(section: Section): Content[] {
   const items = section.items as ExperienceItem[];
-  const blocks: Content[] = [...sectionHeadingBlock(section.title)];
+  const blocks: Content[] = [];
   for (const item of items) {
+    const heading: Content[] = [];
     const dateText = [item.startDate, item.endDate].filter(Boolean).join(" – ");
 
     if (item.role || dateText) {
-      blocks.push({
+      heading.push({
         columns: [
           { text: item.role, style: "roleTitle", width: "*" },
           {
@@ -148,26 +166,39 @@ function buildExperience(section: Section): Content[] {
       .filter(Boolean)
       .join(", ");
     if (companyLine) {
-      blocks.push({ text: companyLine, style: "companyLine" });
+      heading.push({ text: companyLine, style: "companyLine" });
     }
 
     const bullets = item.bullets.filter(Boolean);
-    if (bullets.length > 0) {
-      blocks.push({
-        ul: bullets.map((b) => ({ text: b, style: "bullet" })),
-        margin: [12, 2, 0, 0],
-      });
+    if (bullets.length === 0) {
+      if (heading.length > 0) blocks.push(keepTogether(heading));
+      continue;
     }
+
+    bullets.forEach((bullet, index) => {
+      const bulletBlock: Content = {
+        ul: [{ text: bullet, style: "bullet" }],
+        margin: [12, index === 0 ? 2 : 0, 0, 0],
+        unbreakable: true,
+      };
+
+      blocks.push(
+        index === 0 && heading.length > 0
+          ? keepTogether([...heading, bulletBlock])
+          : bulletBlock,
+      );
+    });
   }
-  return blocks;
+  return buildSection(section.title, blocks);
 }
 
 function buildEducation(section: Section): Content[] {
   const items = section.items as EducationItem[];
-  const blocks: Content[] = [...sectionHeadingBlock(section.title)];
+  const blocks: Content[] = [];
   for (const item of items) {
+    const entry: Content[] = [];
     if (item.degree || item.dates) {
-      blocks.push({
+      entry.push({
         columns: [
           { text: item.degree, style: "roleTitle", width: "*" },
           {
@@ -181,26 +212,25 @@ function buildEducation(section: Section): Content[] {
       });
     }
     if (item.institution) {
-      blocks.push({ text: item.institution, style: "companyLine" });
+      entry.push({ text: item.institution, style: "companyLine" });
     }
     if (item.notes) {
-      blocks.push({
+      entry.push({
         text: item.notes,
         style: "bullet",
         margin: [0, 1, 0, 0],
       });
     }
+    if (entry.length > 0) blocks.push(keepTogether(entry));
   }
-  return blocks;
+  return buildSection(section.title, blocks);
 }
 
 function buildLanguages(section: Section): Content[] {
   const items = section.items as LanguageItem[];
   const filled = items.filter((i) => i.language);
-  if (filled.length === 0)
-    return [...sectionHeadingBlock(section.title)];
+  if (filled.length === 0) return buildSection(section.title, []);
 
-  const blocks: Content[] = [...sectionHeadingBlock(section.title)];
   const textParts = filled.flatMap((item, i) => {
     const parts: Content[] = [];
     if (i > 0) parts.push({ text: "  ·  " });
@@ -208,22 +238,24 @@ function buildLanguages(section: Section): Content[] {
     if (item.level) parts.push({ text: ` (${item.level})` });
     return parts;
   });
-  blocks.push({
-    text: textParts,
-    style: "body",
-  });
-  return blocks;
+  return buildSection(section.title, [
+    {
+      text: textParts,
+      style: "body",
+      unbreakable: true,
+    },
+  ]);
 }
 
 function buildCustom(section: Section): Content[] {
   const items = section.items as CustomItem[];
-  const blocks: Content[] = [...sectionHeadingBlock(section.title)];
+  const blocks: Content[] = [];
   for (const item of items) {
     if (item.content) {
-      blocks.push({ text: item.content, style: "body" });
+      blocks.push({ text: item.content, style: "body", unbreakable: true });
     }
   }
-  return blocks;
+  return buildSection(section.title, blocks);
 }
 
 export function generatePdfDefinition(cv: CV): TDocumentDefinitions {

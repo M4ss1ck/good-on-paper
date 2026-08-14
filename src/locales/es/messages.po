@@ -25,7 +25,7 @@ msgstr "- Descartado"
 msgid "{0} suggestion{1} remaining"
 msgstr "{0} sugerencia{1} restante{1}"
 
-#: src/components/editor/ExperienceEditor.tsx:137
+#: src/components/editor/ExperienceEditor.tsx:133
 msgid "+ Add bullet"
 msgstr "+ Añadir viñeta"
 
@@ -37,11 +37,11 @@ msgstr "+ Añadir categoría"
 msgid "+ Add education"
 msgstr "+ Añadir educación"
 
-#: src/components/editor/CustomEditor.tsx:43
+#: src/components/editor/CustomEditor.tsx:44
 msgid "+ Add entry"
 msgstr "+ Añadir entrada"
 
-#: src/components/editor/ExperienceEditor.tsx:147
+#: src/components/editor/ExperienceEditor.tsx:143
 msgid "+ Add experience"
 msgstr "+ Añadir experiencia"
 
@@ -264,7 +264,7 @@ msgstr "Eliminar"
 msgid "Delete section"
 msgstr "Eliminar sección"
 
-#: src/components/editor/ExperienceEditor.tsx:97
+#: src/components/editor/ExperienceEditor.tsx:99
 msgid "Describe an achievement or responsibility..."
 msgstr "Describe un logro o responsabilidad..."
 
@@ -398,7 +398,7 @@ msgstr "Se encontraron {0} frase{1} que un reclutador podría notar. Haz clic en
 msgid "Free forever"
 msgstr "Gratis para siempre"
 
-#: src/components/editor/CustomEditor.tsx:23
+#: src/components/editor/CustomEditor.tsx:24
 msgid "Freeform content..."
 msgstr "Contenido libre..."
 
@@ -599,7 +599,7 @@ msgstr "Re-escanear"
 msgid "Remove"
 msgstr "Eliminar"
 
-#: src/components/editor/ExperienceEditor.tsx:127
+#: src/components/editor/ExperienceEditor.tsx:123
 msgid "Remove bullet"
 msgstr "Eliminar viñeta"
 
@@ -607,7 +607,7 @@ msgstr "Eliminar viñeta"
 msgid "Remove category"
 msgstr "Eliminar categoría"
 
-#: src/components/editor/CustomEditor.tsx:32
+#: src/components/editor/CustomEditor.tsx:33
 msgid "Remove entry"
 msgstr "Eliminar entrada"
 
@@ -785,7 +785,7 @@ msgstr "Sin título"
 msgid "URL"
 msgstr "URL"
 
-#: src/components/editor/SummaryEditor.tsx:26
+#: src/components/editor/SummaryEditor.tsx:27
 msgid "Write a brief professional summary..."
 msgstr "Escribe un breve resumen profesional..."
 

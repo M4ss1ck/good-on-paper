@@ -91,9 +91,11 @@ export function ExperienceEditor({ section }: { section: Section }) {
             <span className="text-xs text-muted"><Trans>Bullet points</Trans></span>
             {item.bullets.map((bullet, bulletIndex) => (
               <div key={bulletIndex} className="flex items-center gap-1.5">
-                <span className="text-light text-xs">•</span>
-                <input
-                  className={inputClass + " bg-gray-50"}
+                <span className="text-light text-xs h-full">•</span>
+                <textarea
+                  id={`bullet-${section.id}-${item.id}-${bulletIndex}`}
+                  rows={1}
+                  className={inputClass + " bg-gray-50 resize-y"}
                   placeholder={t`Describe an achievement or responsibility...`}
                   value={bullet}
                   onChange={(e) =>
@@ -104,12 +106,6 @@ export function ExperienceEditor({ section }: { section: Section }) {
                       e.target.value,
                     )
                   }
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      addBullet(section.id, item.id);
-                    }
-                  }}
                 />
                 <ImproveButton
                   bullet={bullet}

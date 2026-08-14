@@ -135,7 +135,7 @@ msgstr "Before"
 msgid "Blank CV"
 msgstr "Blank CV"
 
-#: src/components/editor/ExperienceEditor.tsx:91
+#: src/components/editor/ExperienceEditor.tsx:92
 msgid "Bullet points"
 msgstr "Bullet points"
 
@@ -169,7 +169,7 @@ msgstr "Close"
 msgid "Collapse"
 msgstr "Collapse"
 
-#: src/components/editor/ExperienceEditor.tsx:53
+#: src/components/editor/ExperienceEditor.tsx:54
 msgid "Company"
 msgstr "Company"
 
@@ -323,7 +323,7 @@ msgstr "Email"
 msgid "empty"
 msgstr "empty"
 
-#: src/components/editor/ExperienceEditor.tsx:80
+#: src/components/editor/ExperienceEditor.tsx:81
 msgid "End date"
 msgstr "End date"
 
@@ -339,7 +339,7 @@ msgstr "Expand"
 msgid "Experience"
 msgstr "Experience"
 
-#: src/components/editor/ExperienceEditor.tsx:32
+#: src/components/editor/ExperienceEditor.tsx:33
 msgid "Experience Entry"
 msgstr "Experience Entry"
 
@@ -470,7 +470,7 @@ msgstr "Links"
 msgid "Links have been modified"
 msgstr "Links have been modified"
 
-#: src/components/editor/ExperienceEditor.tsx:61
+#: src/components/editor/ExperienceEditor.tsx:62
 #: src/components/editor/MetaEditor.tsx:71
 msgid "Location"
 msgstr "Location"
@@ -522,7 +522,7 @@ msgstr "No CV"
 msgid "No education entries yet. Add one below."
 msgstr "No education entries yet. Add one below."
 
-#: src/components/editor/ExperienceEditor.tsx:24
+#: src/components/editor/ExperienceEditor.tsx:25
 msgid "No experience entries yet. Add one below."
 msgstr "No experience entries yet. Add one below."
 
@@ -629,7 +629,7 @@ msgstr "Removed empty section"
 msgid "Rename"
 msgstr "Rename"
 
-#: src/components/editor/ExperienceEditor.tsx:45
+#: src/components/editor/ExperienceEditor.tsx:46
 msgid "Role / Title"
 msgstr "Role / Title"
 
@@ -699,7 +699,7 @@ msgstr "Source CV"
 msgid "Start building"
 msgstr "Start building"
 
-#: src/components/editor/ExperienceEditor.tsx:70
+#: src/components/editor/ExperienceEditor.tsx:71
 msgid "Start date"
 msgstr "Start date"
 

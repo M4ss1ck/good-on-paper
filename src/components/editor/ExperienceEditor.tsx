@@ -4,6 +4,7 @@ import { t } from "@lingui/core/macro";
 import { useCVStore } from "../../store/cvStore";
 import type { Section, ExperienceItem } from "../../types/cv";
 import { ImproveButton } from "../ai/ImproveButton";
+import { AutoResizeTextarea } from "./AutoResizeTextarea";
 
 export function ExperienceEditor({ section }: { section: Section }) {
   const addItem = useCVStore((s) => s.addItem);
@@ -92,10 +93,9 @@ export function ExperienceEditor({ section }: { section: Section }) {
             {item.bullets.map((bullet, bulletIndex) => (
               <div key={bulletIndex} className="flex items-center gap-1.5">
                 <span className="text-light text-xs h-full">•</span>
-                <textarea
+                <AutoResizeTextarea
                   id={`bullet-${section.id}-${item.id}-${bulletIndex}`}
-                  rows={1}
-                  className={inputClass + " bg-gray-50 resize-y"}
+                  className={inputClass + " bg-gray-50 resize-none"}
                   placeholder={t`Describe an achievement or responsibility...`}
                   value={bullet}
                   onChange={(e) =>

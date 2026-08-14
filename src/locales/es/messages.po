@@ -133,7 +133,7 @@ msgstr "Antes"
 msgid "Blank CV"
 msgstr "CV en blanco"
 
-#: src/components/editor/ExperienceEditor.tsx:91
+#: src/components/editor/ExperienceEditor.tsx:92
 msgid "Bullet points"
 msgstr "Viñetas"
 
@@ -167,7 +167,7 @@ msgstr "Cerrar"
 msgid "Collapse"
 msgstr "Contraer"
 
-#: src/components/editor/ExperienceEditor.tsx:53
+#: src/components/editor/ExperienceEditor.tsx:54
 msgid "Company"
 msgstr "Empresa"
 
@@ -321,7 +321,7 @@ msgstr "Correo electrónico"
 msgid "empty"
 msgstr "vacío"
 
-#: src/components/editor/ExperienceEditor.tsx:80
+#: src/components/editor/ExperienceEditor.tsx:81
 msgid "End date"
 msgstr "Fecha de fin"
 
@@ -337,7 +337,7 @@ msgstr "Expandir"
 msgid "Experience"
 msgstr "Experiencia"
 
-#: src/components/editor/ExperienceEditor.tsx:32
+#: src/components/editor/ExperienceEditor.tsx:33
 msgid "Experience Entry"
 msgstr "Entrada de experiencia"
 
@@ -468,7 +468,7 @@ msgstr "Enlaces"
 msgid "Links have been modified"
 msgstr "Los enlaces han sido modificados"
 
-#: src/components/editor/ExperienceEditor.tsx:61
+#: src/components/editor/ExperienceEditor.tsx:62
 #: src/components/editor/MetaEditor.tsx:71
 msgid "Location"
 msgstr "Ubicación"
@@ -520,7 +520,7 @@ msgstr "Sin CV"
 msgid "No education entries yet. Add one below."
 msgstr "Sin entradas de educación aún. Añade una abajo."
 
-#: src/components/editor/ExperienceEditor.tsx:24
+#: src/components/editor/ExperienceEditor.tsx:25
 msgid "No experience entries yet. Add one below."
 msgstr "Sin entradas de experiencia aún. Añade una abajo."
 
@@ -627,7 +627,7 @@ msgstr "Sección vacía eliminada"
 msgid "Rename"
 msgstr "Renombrar"
 
-#: src/components/editor/ExperienceEditor.tsx:45
+#: src/components/editor/ExperienceEditor.tsx:46
 msgid "Role / Title"
 msgstr "Rol / Título"
 
@@ -697,7 +697,7 @@ msgstr "CV de origen"
 msgid "Start building"
 msgstr "Empieza a crear"
 
-#: src/components/editor/ExperienceEditor.tsx:70
+#: src/components/editor/ExperienceEditor.tsx:71
 msgid "Start date"
 msgstr "Fecha de inicio"
 

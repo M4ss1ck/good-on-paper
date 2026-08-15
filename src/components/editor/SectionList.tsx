@@ -137,8 +137,8 @@ function SortableSectionCard({ section }: { section: Section }) {
           onClick={() => toggleDivider(section.id)}
           className={`p-1 transition-colors ${
             section.hideDivider
-              ? "text-accent"
-              : "text-light hover:text-muted"
+              ? "text-red-500 hover:text-muted"
+              : "text-light hover:text-red-500"
           }`}
           title={section.hideDivider ? t`Show divider` : t`Hide divider`}
         >

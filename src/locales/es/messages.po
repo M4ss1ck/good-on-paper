@@ -53,7 +53,7 @@ msgstr "+ Añadir idioma"
 msgid "+ Add link"
 msgstr "+ Añadir enlace"
 
-#: src/components/editor/SectionList.tsx:252
+#: src/components/editor/SectionList.tsx:275
 msgid "+ Add section"
 msgstr "+ Añadir sección"
 
@@ -139,7 +139,7 @@ msgstr "Viñetas"
 
 #: src/components/ai/ProviderSettings.tsx:227
 #: src/components/diff/DiffPicker.tsx:102
-#: src/components/editor/SectionList.tsx:150
+#: src/components/editor/SectionList.tsx:173
 #: src/components/layout/Toolbar.tsx:201
 #: src/components/layout/Toolbar.tsx:316
 #: src/components/workspace/CVListItem.tsx:174
@@ -163,7 +163,7 @@ msgstr "Categoría (ej. Frontend)"
 msgid "Close"
 msgstr "Cerrar"
 
-#: src/components/editor/SectionList.tsx:177
+#: src/components/editor/SectionList.tsx:200
 msgid "Collapse"
 msgstr "Contraer"
 
@@ -254,13 +254,13 @@ msgstr "Fechas (ej. 2018 – 2022)"
 msgid "Degree / Certificate"
 msgstr "Título / Certificado"
 
-#: src/components/editor/SectionList.tsx:144
+#: src/components/editor/SectionList.tsx:167
 #: src/components/workspace/CVListItem.tsx:139
 #: src/components/workspace/CVListItem.tsx:168
 msgid "Delete"
 msgstr "Eliminar"
 
-#: src/components/editor/SectionList.tsx:157
+#: src/components/editor/SectionList.tsx:180
 msgid "Delete section"
 msgstr "Eliminar sección"
 
@@ -283,7 +283,7 @@ msgstr "Descarga"
 msgid "Download PDF"
 msgstr "Descargar PDF"
 
-#: src/components/editor/SectionList.tsx:77
+#: src/components/editor/SectionList.tsx:78
 msgid "Drag to reorder"
 msgstr "Arrastra para reordenar"
 
@@ -329,7 +329,7 @@ msgstr "Fecha de fin"
 msgid "Everything you need, nothing you don't."
 msgstr "Todo lo que necesitas, nada sobra."
 
-#: src/components/editor/SectionList.tsx:177
+#: src/components/editor/SectionList.tsx:200
 msgid "Expand"
 msgstr "Expandir"
 
@@ -422,7 +422,11 @@ msgstr "Generando PDF..."
 msgid "Hide"
 msgstr "Ocultar"
 
-#: src/components/editor/SectionList.tsx:105
+#: src/components/editor/SectionList.tsx:143
+msgid "Hide divider"
+msgstr ""
+
+#: src/components/editor/SectionList.tsx:106
 msgid "Hide section"
 msgstr "Ocultar sección"
 
@@ -643,7 +647,7 @@ msgstr "Guardado"
 msgid "Saving..."
 msgstr "Guardando..."
 
-#: src/components/editor/SectionList.tsx:228
+#: src/components/editor/SectionList.tsx:251
 msgid "Sections"
 msgstr "Secciones"
 
@@ -677,7 +681,11 @@ msgstr "Configuración"
 msgid "Show"
 msgstr "Mostrar"
 
-#: src/components/editor/SectionList.tsx:105
+#: src/components/editor/SectionList.tsx:143
+msgid "Show divider"
+msgstr ""
+
+#: src/components/editor/SectionList.tsx:106
 msgid "Show section"
 msgstr "Mostrar sección"
 

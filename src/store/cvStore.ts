@@ -82,6 +82,7 @@ interface CVStore {
   moveSection: (fromIndex: number, toIndex: number) => void;
   updateSectionTitle: (sectionId: string, title: string) => void;
   toggleSectionVisibility: (sectionId: string) => void;
+  toggleSectionDivider: (sectionId: string) => void;
 
   // Items
   addItem: (sectionId: string) => void;
@@ -301,6 +302,17 @@ export const useCVStore = create<CVStore>()(
         const section = cv.sections.find((s) => s.id === sectionId);
         if (section) {
           section.visible = !section.visible;
+          cv.updatedAt = new Date().toISOString();
+        }
+      }),
+
+    toggleSectionDivider: (sectionId) =>
+      set((state) => {
+        const cv = getActive(state.workspace);
+        if (!cv) return;
+        const section = cv.sections.find((s) => s.id === sectionId);
+        if (section) {
+          section.hideDivider = !section.hideDivider;
           cv.updatedAt = new Date().toISOString();
         }
       }),

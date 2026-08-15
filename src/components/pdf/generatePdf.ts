@@ -70,23 +70,27 @@ function buildHeader(cv: CV): Content[] {
   return content;
 }
 
-function sectionHeadingBlock(title: string): Content[] {
+function sectionHeadingBlock(title: string, hideDivider?: boolean): Content[] {
   return [
     { text: title.toUpperCase(), style: "sectionHeading" },
-    {
-      canvas: [
-        {
-          type: "line" as const,
-          x1: 0,
-          y1: 0,
-          x2: 515,
-          y2: 0,
-          lineWidth: 0.5,
-          lineColor: "#1F3A5F",
-        },
-      ],
-      margin: [0, 0, 0, 6] as [number, number, number, number],
-    },
+    ...(hideDivider
+      ? []
+      : [
+          {
+            canvas: [
+              {
+                type: "line" as const,
+                x1: 0,
+                y1: 0,
+                x2: 515,
+                y2: 0,
+                lineWidth: 0.5,
+                lineColor: "#1F3A5F",
+              },
+            ],
+            margin: [0, 0, 0, 6] as [number, number, number, number],
+          },
+        ]),
   ];
 }
 
@@ -94,8 +98,8 @@ function keepTogether(content: Content[]): Content {
   return { stack: content, unbreakable: true };
 }
 
-function buildSection(title: string, blocks: Content[]): Content[] {
-  const heading = sectionHeadingBlock(title);
+function buildSection(title: string, blocks: Content[], hideDivider?: boolean): Content[] {
+  const heading = sectionHeadingBlock(title, hideDivider);
 
   if (blocks.length === 0) {
     return [keepTogether(heading)];
@@ -118,7 +122,7 @@ function buildSummary(section: Section): Content[] {
       });
     }
   }
-  return buildSection(section.title, blocks);
+  return buildSection(section.title, blocks, section.hideDivider);
 }
 
 function buildSkills(section: Section): Content[] {
@@ -137,7 +141,7 @@ function buildSkills(section: Section): Content[] {
       });
     }
   }
-  return buildSection(section.title, blocks);
+  return buildSection(section.title, blocks, section.hideDivider);
 }
 
 function buildExperience(section: Section): Content[] {
@@ -189,7 +193,7 @@ function buildExperience(section: Section): Content[] {
       );
     });
   }
-  return buildSection(section.title, blocks);
+  return buildSection(section.title, blocks, section.hideDivider);
 }
 
 function buildEducation(section: Section): Content[] {
@@ -223,13 +227,13 @@ function buildEducation(section: Section): Content[] {
     }
     if (entry.length > 0) blocks.push(keepTogether(entry));
   }
-  return buildSection(section.title, blocks);
+  return buildSection(section.title, blocks, section.hideDivider);
 }
 
 function buildLanguages(section: Section): Content[] {
   const items = section.items as LanguageItem[];
   const filled = items.filter((i) => i.language);
-  if (filled.length === 0) return buildSection(section.title, []);
+  if (filled.length === 0) return buildSection(section.title, [], section.hideDivider);
 
   const textParts = filled.flatMap((item, i) => {
     const parts: Content[] = [];
@@ -244,7 +248,7 @@ function buildLanguages(section: Section): Content[] {
       style: "body",
       unbreakable: true,
     },
-  ]);
+  ], section.hideDivider);
 }
 
 function buildCustom(section: Section): Content[] {
@@ -255,7 +259,7 @@ function buildCustom(section: Section): Content[] {
       blocks.push({ text: item.content, style: "body", unbreakable: true });
     }
   }
-  return buildSection(section.title, blocks);
+  return buildSection(section.title, blocks, section.hideDivider);
 }
 
 export function generatePdfDefinition(cv: CV): TDocumentDefinitions {

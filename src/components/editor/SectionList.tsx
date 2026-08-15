@@ -36,6 +36,7 @@ function SortableSectionCard({ section }: { section: Section }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const removeSection = useCVStore((s) => s.removeSection);
   const toggleVisibility = useCVStore((s) => s.toggleSectionVisibility);
+  const toggleDivider = useCVStore((s) => s.toggleSectionDivider);
   const updateTitle = useCVStore((s) => s.updateSectionTitle);
 
   // Subscribe to activeSection outside React render to auto-expand
@@ -129,6 +130,28 @@ function SortableSectionCard({ section }: { section: Section }) {
               <line x1="1" y1="1" x2="23" y2="23" />
             </svg>
           )}
+        </button>
+
+        {/* Divider toggle */}
+        <button
+          onClick={() => toggleDivider(section.id)}
+          className={`p-1 transition-colors ${
+            section.hideDivider
+              ? "text-accent"
+              : "text-light hover:text-muted"
+          }`}
+          title={section.hideDivider ? t`Show divider` : t`Hide divider`}
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <line x1="3" y1="12" x2="21" y2="12" />
+          </svg>
         </button>
 
         {/* Delete */}

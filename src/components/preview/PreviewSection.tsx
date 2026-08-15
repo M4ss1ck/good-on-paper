@@ -8,13 +8,13 @@ import type {
   CustomItem,
 } from "../../types/cv";
 
-function SectionHeading({ title }: { title: string }) {
+function SectionHeading({ title, hideDivider }: { title: string; hideDivider?: boolean }) {
   return (
     <div className="mt-5 mb-2">
       <h2 className="text-[11pt] font-bold text-primary uppercase tracking-wide">
         {title}
       </h2>
-      <hr className="border-t border-primary/30 mt-1" />
+      {!hideDivider && <hr className="border-t border-primary/30 mt-1" />}
     </div>
   );
 }
@@ -145,7 +145,7 @@ function CustomPreview({ items }: { items: CustomItem[] }) {
 export function PreviewSection({ section }: { section: Section }) {
   return (
     <div>
-      <SectionHeading title={section.title} />
+      <SectionHeading title={section.title} hideDivider={section.hideDivider} />
       {section.type === "summary" && <SummaryPreview items={section.items as SummaryItem[]} />}
       {section.type === "skills" && <SkillsPreview items={section.items as SkillItem[]} />}
       {section.type === "experience" && <ExperiencePreview items={section.items as ExperienceItem[]} />}

@@ -38,6 +38,7 @@ export interface Section {
   type: SectionType;
   title: string;
   visible: boolean;
+  hideDivider?: boolean;
   items: SectionItem[];
 }
 

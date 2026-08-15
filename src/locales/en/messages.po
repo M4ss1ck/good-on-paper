@@ -47,7 +47,7 @@ msgstr "+ Add entry"
 msgid "+ Add experience"
 msgstr "+ Add experience"
 
-#: src/components/editor/LanguagesEditor.tsx:59
+#: src/components/editor/LanguagesEditor.tsx:61
 msgid "+ Add language"
 msgstr "+ Add language"
 
@@ -123,7 +123,7 @@ msgstr "API Key"
 msgid "Base"
 msgstr "Base"
 
-#: src/components/editor/LanguagesEditor.tsx:43
+#: src/components/editor/LanguagesEditor.tsx:45
 msgid "Basic"
 msgstr "Basic"
 
@@ -212,7 +212,7 @@ msgstr "Connection successful"
 msgid "Contact Info"
 msgstr "Contact Info"
 
-#: src/components/editor/LanguagesEditor.tsx:42
+#: src/components/editor/LanguagesEditor.tsx:44
 msgid "Conversational"
 msgstr "Conversational"
 
@@ -491,7 +491,7 @@ msgstr "Model"
 msgid "My new CV"
 msgstr "My new CV"
 
-#: src/components/editor/LanguagesEditor.tsx:40
+#: src/components/editor/LanguagesEditor.tsx:42
 msgid "Native"
 msgstr "Native"
 
@@ -585,7 +585,7 @@ msgstr "Preview"
 msgid "Preview PDF"
 msgstr "Preview PDF"
 
-#: src/components/editor/LanguagesEditor.tsx:41
+#: src/components/editor/LanguagesEditor.tsx:43
 msgid "Professional"
 msgstr "Professional"
 
@@ -617,7 +617,7 @@ msgstr "Remove category"
 msgid "Remove entry"
 msgstr "Remove entry"
 
-#: src/components/editor/LanguagesEditor.tsx:48
+#: src/components/editor/LanguagesEditor.tsx:50
 msgid "Remove language"
 msgstr "Remove language"
 
@@ -667,9 +667,9 @@ msgstr "See your CV rendered in real time."
 msgid "Select a CV…"
 msgstr "Select a CV…"
 
-#: src/components/editor/LanguagesEditor.tsx:39
-msgid "Select level"
-msgstr "Select level"
+#: src/components/editor/LanguagesEditor.tsx:35
+msgid "Select or type level"
+msgstr "Select or type level"
 
 #: src/components/diff/DiffPicker.tsx:94
 msgid "Select two different CVs to compare."

@@ -29,19 +29,21 @@ export function LanguagesEditor({ section }: { section: Section }) {
               updateItem(section.id, item.id, { language: e.target.value })
             }
           />
-          <select
-            className="border-b border-gray-200 px-2 py-1.5 text-sm focus:outline-none focus:border-accent transition-colors bg-transparent"
+          <input
+            list={`level-options-${item.id}`}
+            className={inputClass}
+            placeholder={t`Select or type level`}
             value={item.level}
             onChange={(e) =>
               updateItem(section.id, item.id, { level: e.target.value })
             }
-          >
-            <option value="">{t`Select level`}</option>
-            <option value="Native">{t`Native`}</option>
-            <option value="Professional">{t`Professional`}</option>
-            <option value="Conversational">{t`Conversational`}</option>
-            <option value="Basic">{t`Basic`}</option>
-          </select>
+          />
+          <datalist id={`level-options-${item.id}`}>
+            <option value={t`Native`} />
+            <option value={t`Professional`} />
+            <option value={t`Conversational`} />
+            <option value={t`Basic`} />
+          </datalist>
           <button
             onClick={() => removeItem(section.id, item.id)}
             className="text-light hover:text-red-500 transition-colors text-sm shrink-0"

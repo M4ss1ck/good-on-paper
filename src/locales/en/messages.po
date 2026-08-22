@@ -91,7 +91,7 @@ msgstr "Accepts a Good on Paper CV export, or an AI adaptation file produced fro
 msgid "Account ID"
 msgstr "Account ID"
 
-#: src/components/layout/Toolbar.tsx:137
+#: src/components/layout/Toolbar.tsx:146
 msgid "Actions"
 msgstr "Actions"
 
@@ -100,8 +100,8 @@ msgid "active"
 msgstr "active"
 
 #: src/components/ai/TailorToJob.tsx:221
-#: src/components/layout/Toolbar.tsx:167
-#: src/components/layout/Toolbar.tsx:258
+#: src/components/layout/Toolbar.tsx:176
+#: src/components/layout/Toolbar.tsx:267
 msgid "Adapt my CV"
 msgstr "Adapt my CV"
 
@@ -147,13 +147,13 @@ msgid "AI assist (BYOK)"
 msgstr "AI assist (BYOK)"
 
 #: src/components/ai/DetectAIText.tsx:77
-#: src/components/layout/Toolbar.tsx:161
-#: src/components/layout/Toolbar.tsx:249
+#: src/components/layout/Toolbar.tsx:170
+#: src/components/layout/Toolbar.tsx:258
 msgid "AI Phrase Check"
 msgstr "AI Phrase Check"
 
 #: src/components/ai/ProviderSettings.tsx:126
-#: src/components/layout/Toolbar.tsx:177
+#: src/components/layout/Toolbar.tsx:186
 msgid "AI Settings"
 msgstr "AI Settings"
 
@@ -197,8 +197,8 @@ msgstr "Bullet points"
 #: src/components/ai/ProviderSettings.tsx:267
 #: src/components/diff/DiffPicker.tsx:102
 #: src/components/editor/SectionList.tsx:180
-#: src/components/layout/Toolbar.tsx:189
-#: src/components/layout/Toolbar.tsx:296
+#: src/components/layout/Toolbar.tsx:198
+#: src/components/layout/Toolbar.tsx:305
 #: src/components/workspace/CVListItem.tsx:174
 #: src/components/workspace/ImportDialog.tsx:265
 #: src/components/workspace/NewCVDialog.tsx:121
@@ -239,9 +239,9 @@ msgid "Company"
 msgstr "Company"
 
 #: src/components/diff/DiffPicker.tsx:109
-#: src/components/layout/Toolbar.tsx:150
-#: src/components/layout/Toolbar.tsx:210
-#: src/components/layout/Toolbar.tsx:212
+#: src/components/layout/Toolbar.tsx:159
+#: src/components/layout/Toolbar.tsx:219
+#: src/components/layout/Toolbar.tsx:221
 msgid "Compare"
 msgstr "Compare"
 
@@ -265,11 +265,11 @@ msgstr "Configure AI to generate a summary"
 msgid "Configure AI to improve bullets"
 msgstr "Configure AI to improve bullets"
 
-#: src/components/layout/Toolbar.tsx:290
+#: src/components/layout/Toolbar.tsx:299
 msgid "Confirm"
 msgstr "Confirm"
 
-#: src/components/layout/Toolbar.tsx:186
+#: src/components/layout/Toolbar.tsx:195
 msgid "Confirm Reset"
 msgstr "Confirm Reset"
 
@@ -369,9 +369,9 @@ msgstr "Dismiss"
 msgid "Download"
 msgstr "Download"
 
-#: src/components/layout/Toolbar.tsx:147
-#: src/components/layout/Toolbar.tsx:206
-#: src/components/layout/Toolbar.tsx:208
+#: src/components/layout/Toolbar.tsx:156
+#: src/components/layout/Toolbar.tsx:215
+#: src/components/layout/Toolbar.tsx:217
 msgid "Download PDF"
 msgstr "Download PDF"
 
@@ -445,9 +445,9 @@ msgstr "Experience Entry"
 msgid "Export as PDF, ready to send."
 msgstr "Export as PDF, ready to send."
 
-#: src/components/layout/Toolbar.tsx:154
-#: src/components/layout/Toolbar.tsx:214
-#: src/components/layout/Toolbar.tsx:216
+#: src/components/layout/Toolbar.tsx:163
+#: src/components/layout/Toolbar.tsx:223
+#: src/components/layout/Toolbar.tsx:225
 msgid "Export JSON"
 msgstr "Export JSON"
 
@@ -546,9 +546,9 @@ msgstr "Import"
 msgid "Import anyway"
 msgstr "Import anyway"
 
-#: src/components/layout/Toolbar.tsx:157
-#: src/components/layout/Toolbar.tsx:221
-#: src/components/layout/Toolbar.tsx:224
+#: src/components/layout/Toolbar.tsx:166
+#: src/components/layout/Toolbar.tsx:230
+#: src/components/layout/Toolbar.tsx:233
 #: src/components/workspace/ImportDialog.tsx:176
 msgid "Import JSON"
 msgstr "Import JSON"
@@ -619,9 +619,9 @@ msgstr "My new CV"
 msgid "Native"
 msgstr "Native"
 
-#: src/components/layout/Toolbar.tsx:194
-#: src/components/layout/Toolbar.tsx:300
-#: src/components/layout/Toolbar.tsx:302
+#: src/components/layout/Toolbar.tsx:203
+#: src/components/layout/Toolbar.tsx:309
+#: src/components/layout/Toolbar.tsx:311
 #: src/components/workspace/NewCVDialog.tsx:60
 msgid "New CV"
 msgstr "New CV"
@@ -719,9 +719,9 @@ msgctxt "tab"
 msgid "Preview"
 msgstr "Preview"
 
-#: src/components/layout/Toolbar.tsx:144
-#: src/components/layout/Toolbar.tsx:202
-#: src/components/layout/Toolbar.tsx:204
+#: src/components/layout/Toolbar.tsx:153
+#: src/components/layout/Toolbar.tsx:211
+#: src/components/layout/Toolbar.tsx:213
 msgid "Preview PDF"
 msgstr "Preview PDF"
 
@@ -806,11 +806,11 @@ msgstr "Save"
 msgid "Save its answer as a .json file, then use Import JSON in the toolbar. Good on Paper validates it and creates a new CV. Your current CV is never modified."
 msgstr "Save its answer as a .json file, then use Import JSON in the toolbar. Good on Paper validates it and creates a new CV. Your current CV is never modified."
 
-#: src/components/layout/Toolbar.tsx:111
+#: src/components/layout/Toolbar.tsx:120
 msgid "Saved"
 msgstr "Saved"
 
-#: src/components/layout/Toolbar.tsx:109
+#: src/components/layout/Toolbar.tsx:118
 msgid "Saving..."
 msgstr "Saving..."
 
@@ -840,7 +840,7 @@ msgstr "Select or type level"
 msgid "Select two different CVs to compare."
 msgstr "Select two different CVs to compare."
 
-#: src/components/layout/Toolbar.tsx:278
+#: src/components/layout/Toolbar.tsx:287
 msgid "Settings"
 msgstr "Settings"
 
@@ -961,8 +961,8 @@ msgid "This section is no longer in your CV."
 msgstr "This section is no longer in your CV."
 
 #: src/components/ai/TranslateCV.tsx:160
-#: src/components/layout/Toolbar.tsx:174
-#: src/components/layout/Toolbar.tsx:268
+#: src/components/layout/Toolbar.tsx:183
+#: src/components/layout/Toolbar.tsx:277
 msgid "Translate"
 msgstr "Translate"
 

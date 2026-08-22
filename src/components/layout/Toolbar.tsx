@@ -22,6 +22,15 @@ import { GoodOnPaperLogo } from "../logo/GoodOnPaperLogo";
 
 pdfMake.addVirtualFileSystem(pdfFonts);
 
+/** Turns a CV name into a safe file base name. */
+function fileBaseName(name: string | undefined): string {
+  const cleaned = (name ?? "")
+    .replace(/[\\/:*?"<>|]/g, "-")
+    .replace(/\s+/g, " ")
+    .trim();
+  return cleaned || "cv";
+}
+
 export function Toolbar() {
   const cv = useCVStore((s) => s.activeCv());
   const exportJson = useCVStore((s) => s.exportJson);
@@ -75,7 +84,7 @@ export function Toolbar() {
   const handleDownloadPdf = () => {
     if (!cv) return;
     const def = generatePdfDefinition(cv);
-    pdfMake.createPdf(def).download("cv.pdf");
+    pdfMake.createPdf(def).download(`${fileBaseName(cv.name)}.pdf`);
   };
 
   const handleExportJson = () => {
@@ -84,7 +93,7 @@ export function Toolbar() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "cv.json";
+    a.download = `${fileBaseName(cv?.name)}.json`;
     a.click();
     URL.revokeObjectURL(url);
   };

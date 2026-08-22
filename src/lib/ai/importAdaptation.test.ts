@@ -66,7 +66,7 @@ describe("importAdaptation", () => {
   it("parses a valid adaptation", () => {
     const { cv, warnings } = expectOk(envelope());
     expect(warnings).toEqual([]);
-    expect(cv.name).toBe("Platform Engineer — Globex");
+    expect(cv.name).toBe("Platform Engineer - Globex");
     expect(cv.meta.title).toBe("Platform Engineer");
   });
 
@@ -187,12 +187,12 @@ describe("importAdaptation", () => {
 describe("adaptedCVName", () => {
   it("uses position and company when both are known", () => {
     expect(adaptedCVName({ position: "SRE", company: "Globex" }, "My CV", "Adapted"))
-      .toBe("SRE — Globex");
+      .toBe("SRE - Globex");
   });
 
   it("falls back through company, then the source name", () => {
     expect(adaptedCVName({ company: "Globex" }, "My CV", "Adapted")).toBe(
-      "My CV — Globex",
+      "My CV - Globex",
     );
     expect(adaptedCVName({ position: "SRE" }, "My CV", "Adapted")).toBe("SRE");
     expect(adaptedCVName({}, "My CV", "Adapted")).toBe("My CV (Adapted)");

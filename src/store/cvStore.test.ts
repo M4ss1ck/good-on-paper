@@ -69,7 +69,7 @@ describe("importing an external adaptation", () => {
     expect(workspace.order).toHaveLength(2);
     expect(JSON.stringify(workspace.cvs["cv-1"])).toBe(before);
     expect(workspace.activeCvId).toBe(result.cv.id);
-    expect(workspace.cvs[result.cv.id].name).toBe("Platform Engineer — Globex");
+    expect(workspace.cvs[result.cv.id].name).toBe("Platform Engineer - Globex");
   });
 });
 
@@ -80,7 +80,7 @@ describe("forking during BYOK adaptation", () => {
     const store = useCVStore.getState();
     const before = JSON.stringify(store.workspace.cvs["cv-1"]);
 
-    store.forkCV("cv-1", "Platform Engineer — Globex");
+    store.forkCV("cv-1", "Platform Engineer - Globex");
     const forkId = useCVStore.getState().workspace.activeCvId!;
     useCVStore
       .getState()

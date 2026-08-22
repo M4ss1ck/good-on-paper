@@ -50,9 +50,9 @@ export function adaptedCVName(
   const company = target.company?.trim() || "";
 
   let name: string;
-  if (position && company) name = `${position} — ${company}`;
+  if (position && company) name = `${position} - ${company}`;
   else if (position) name = position;
-  else if (company) name = `${sourceName} — ${company}`;
+  else if (company) name = `${sourceName} - ${company}`;
   else name = `${sourceName} (${adaptedSuffix})`;
 
   return name.length > MAX_NAME_LENGTH

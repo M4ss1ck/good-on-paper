@@ -11,19 +11,22 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#: src/components/ai/TailorToJob.tsx:269
+#: src/components/ai/TailorToJob.tsx:531
 msgid "- Applied"
 msgstr "- Aplicado"
 
-#: src/components/ai/TailorToJob.tsx:281
+#: src/components/ai/TailorToJob.tsx:545
 msgid "- Dismissed"
 msgstr "- Descartado"
 
-#. placeholder {0}: suggestions.filter((s) => s.status === "pending").length
-#. placeholder {1}: suggestions.filter((s) => s.status === "pending").length === 1 ? "" : "s"
-#: src/components/ai/TailorToJob.tsx:218
-msgid "{0} suggestion{1} remaining"
-msgstr "{0} sugerencia{1} restante{1}"
+#. placeholder {0}: result.skipped
+#: src/components/ai/TailorToJob.tsx:481
+msgid "{0} suggestions were malformed and skipped."
+msgstr "Se descartaron {0} sugerencias con formato incorrecto."
+
+#: src/components/ai/TailorToJob.tsx:476
+msgid "{pending} suggestions remaining"
+msgstr "{pending} sugerencias pendientes"
 
 #: src/components/editor/ExperienceEditor.tsx:133
 msgid "+ Add bullet"
@@ -66,15 +69,19 @@ msgid "+ New blank CV"
 msgstr "+ Nuevo CV en blanco"
 
 #: src/components/ai/AISuggestion.tsx:42
-#: src/components/ai/TailorToJob.tsx:315
+#: src/components/ai/TailorToJob.tsx:599
 msgid "Accept"
 msgstr "Aceptar"
 
-#: src/components/ai/ProviderSettings.tsx:168
+#: src/components/workspace/ImportDialog.tsx:189
+msgid "Accepts a Good on Paper CV export, or an AI adaptation file produced from the Adapt my CV prompt."
+msgstr "Acepta un CV exportado desde Good on Paper o un archivo de adaptación generado con el prompt de Adaptar mi CV."
+
+#: src/components/ai/ProviderSettings.tsx:182
 msgid "Account ID"
 msgstr "ID de cuenta"
 
-#: src/components/layout/Toolbar.tsx:148
+#: src/components/layout/Toolbar.tsx:137
 msgid "Actions"
 msgstr "Acciones"
 
@@ -82,9 +89,40 @@ msgstr "Acciones"
 msgid "active"
 msgstr "activo"
 
+#: src/components/ai/TailorToJob.tsx:221
+#: src/components/layout/Toolbar.tsx:167
+#: src/components/layout/Toolbar.tsx:258
+msgid "Adapt my CV"
+msgstr "Adaptar mi CV"
+
+#: src/components/ai/TailorToJob.tsx:311
+msgid "Adapt with configured AI"
+msgstr "Adaptar con la IA configurada"
+
+#: src/components/ai/TailorToJob.tsx:165
+#: src/components/workspace/ImportDialog.tsx:60
+msgid "Adapted"
+msgstr "Adaptado"
+
+#: src/components/ai/TailorToJob.tsx:308
+msgid "Adapting..."
+msgstr "Adaptando..."
+
+#: src/components/ai/TailorToJob.tsx:46
+msgid "Add bullet"
+msgstr "Añadir viñeta"
+
+#: src/components/ai/TailorToJob.tsx:278
+msgid "Add experience missing from your CV, clarify your background, or tell the AI how you want this application adapted."
+msgstr "Añade experiencia que no esté en tu CV, aclara tu trayectoria o indica a la IA cómo quieres adaptar esta candidatura."
+
 #: src/components/landing/LandingPage.tsx:249
 msgid "Add your experience, skills, and education."
 msgstr "Agrega tu experiencia, habilidades y educación."
+
+#: src/components/ai/TailorToJob.tsx:275
+msgid "Additional context & instructions"
+msgstr "Contexto e instrucciones adicionales"
 
 #: src/components/diff/MetaDiff.tsx:20
 msgid "After"
@@ -99,13 +137,13 @@ msgid "AI assist (BYOK)"
 msgstr "Asistencia con IA (trae tu clave)"
 
 #: src/components/ai/DetectAIText.tsx:77
-#: src/components/layout/Toolbar.tsx:172
-#: src/components/layout/Toolbar.tsx:268
+#: src/components/layout/Toolbar.tsx:161
+#: src/components/layout/Toolbar.tsx:249
 msgid "AI Phrase Check"
 msgstr "Verificar frases de IA"
 
-#: src/components/ai/ProviderSettings.tsx:112
-#: src/components/layout/Toolbar.tsx:189
+#: src/components/ai/ProviderSettings.tsx:126
+#: src/components/layout/Toolbar.tsx:177
 msgid "AI Settings"
 msgstr "Configuración de IA"
 
@@ -113,9 +151,18 @@ msgstr "Configuración de IA"
 msgid "AI Suggestion"
 msgstr "Sugerencia de IA"
 
-#: src/components/ai/ProviderSettings.tsx:146
+#. placeholder {0}: issues.length - 10
+#: src/components/workspace/ImportDialog.tsx:239
+msgid "and {0} more problems"
+msgstr "y {0} problemas más"
+
+#: src/components/ai/ProviderSettings.tsx:160
 msgid "API Key"
 msgstr "Clave API"
+
+#: src/components/ai/TailorToJob.tsx:211
+msgid "Back"
+msgstr "Volver"
 
 #: src/components/diff/DiffPicker.tsx:66
 msgid "Base"
@@ -137,12 +184,13 @@ msgstr "CV en blanco"
 msgid "Bullet points"
 msgstr "Viñetas"
 
-#: src/components/ai/ProviderSettings.tsx:227
+#: src/components/ai/ProviderSettings.tsx:267
 #: src/components/diff/DiffPicker.tsx:102
 #: src/components/editor/SectionList.tsx:173
-#: src/components/layout/Toolbar.tsx:201
-#: src/components/layout/Toolbar.tsx:316
+#: src/components/layout/Toolbar.tsx:189
+#: src/components/layout/Toolbar.tsx:296
 #: src/components/workspace/CVListItem.tsx:174
+#: src/components/workspace/ImportDialog.tsx:265
 #: src/components/workspace/NewCVDialog.tsx:121
 msgid "Cancel"
 msgstr "Cancelar"
@@ -151,15 +199,24 @@ msgstr "Cancelar"
 msgid "Category (e.g. Frontend)"
 msgstr "Categoría (ej. Frontend)"
 
+#: src/components/ai/TailorToJob.tsx:52
+msgid "Change headline"
+msgstr "Cambiar titular"
+
+#: src/components/workspace/ImportDialog.tsx:201
+msgid "Choose file"
+msgstr "Elegir archivo"
+
 #: src/components/ai/DetectAIText.tsx:81
 #: src/components/ai/DetectAIText.tsx:155
-#: src/components/ai/ProviderSettings.tsx:115
-#: src/components/ai/TailorToJob.tsx:156
-#: src/components/ai/TailorToJob.tsx:246
+#: src/components/ai/ProviderSettings.tsx:129
+#: src/components/ai/TailorToJob.tsx:227
+#: src/components/ai/TailorToJob.tsx:357
 #: src/components/ai/TranslateCV.tsx:111
 #: src/components/diff/DiffPicker.tsx:57
 #: src/components/diff/DiffView.tsx:41
 #: src/components/pdf/PdfPreviewModal.tsx:62
+#: src/components/workspace/ImportDialog.tsx:180
 msgid "Close"
 msgstr "Cerrar"
 
@@ -172,15 +229,19 @@ msgid "Company"
 msgstr "Empresa"
 
 #: src/components/diff/DiffPicker.tsx:109
-#: src/components/layout/Toolbar.tsx:161
-#: src/components/layout/Toolbar.tsx:222
-#: src/components/layout/Toolbar.tsx:224
+#: src/components/layout/Toolbar.tsx:150
+#: src/components/layout/Toolbar.tsx:210
+#: src/components/layout/Toolbar.tsx:212
 msgid "Compare"
 msgstr "Comparar"
 
 #: src/components/diff/DiffPicker.tsx:54
 msgid "Compare CVs"
 msgstr "Comparar CVs"
+
+#: src/components/workspace/ImportDialog.tsx:86
+msgid "Compare with original"
+msgstr "Comparar con el original"
 
 #: src/components/preview/CVPreview.tsx:88
 msgid "Compare with parent"
@@ -194,15 +255,15 @@ msgstr "Configurar IA para generar un resumen"
 msgid "Configure AI to improve bullets"
 msgstr "Configurar IA para mejorar viñetas"
 
-#: src/components/layout/Toolbar.tsx:310
+#: src/components/layout/Toolbar.tsx:290
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: src/components/layout/Toolbar.tsx:198
+#: src/components/layout/Toolbar.tsx:186
 msgid "Confirm Reset"
 msgstr "Confirmar reinicio"
 
-#: src/components/ai/ProviderSettings.tsx:201
+#: src/components/ai/ProviderSettings.tsx:241
 msgid "Connection successful"
 msgstr "Conexión exitosa"
 
@@ -214,13 +275,25 @@ msgstr "Información de contacto"
 msgid "Conversational"
 msgstr "Conversacional"
 
-#: src/components/ai/TailorToJob.tsx:206
-msgid "Couldn't parse structured suggestions. Showing raw response:"
-msgstr "No se pudieron analizar las sugerencias estructuradas. Mostrando respuesta sin procesar:"
+#: src/components/ai/TailorToJob.tsx:390
+msgid "Copy prompt"
+msgstr "Copiar prompt"
+
+#: src/components/ai/TailorToJob.tsx:377
+msgid "Copy this prompt and paste it into ChatGPT, Claude, Codex, OpenCode, Pi or any other capable chat model. It already contains your CV, the job offer and the rules the AI must follow."
+msgstr "Copia este prompt y pégalo en ChatGPT, Claude, Codex, OpenCode, Pi o cualquier otro chat con un modelo capaz. Ya contiene tu CV, la oferta de empleo y las reglas que la IA debe seguir."
+
+#: src/components/ai/TailorToJob.tsx:185
+msgid "Couldn't copy. Select the prompt and copy it manually."
+msgstr "No se pudo copiar. Selecciona el prompt y cópialo manualmente."
 
 #: src/components/ai/TranslateCV.tsx:80
 msgid "Couldn't parse the AI response as JSON. Copy and apply manually."
 msgstr "No se pudo interpretar la respuesta de la IA como JSON. Copia y aplica manualmente."
+
+#: src/components/workspace/ImportDialog.tsx:152
+msgid "Couldn't read that file."
+msgstr "No se pudo leer ese archivo."
 
 #: src/components/workspace/NewCVDialog.tsx:128
 msgid "Create"
@@ -230,11 +303,20 @@ msgstr "Crear"
 msgid "Create variants for different roles. Compare versions side by side with visual diffs."
 msgstr "Crea variantes para distintos roles. Compara versiones lado a lado con diffs visuales."
 
+#. placeholder {0}: created.name
+#: src/components/workspace/ImportDialog.tsx:83
+msgid "Created \"{0}\""
+msgstr "Se creó \"{0}\""
+
+#: src/components/ai/TailorToJob.tsx:168
+msgid "Created \"{name}\""
+msgstr "Se creó \"{name}\""
+
 #: src/components/ai/TranslateCV.tsx:123
 msgid "Current language"
 msgstr "Idioma actual"
 
-#: src/components/ai/TailorToJob.tsx:300
+#: src/components/ai/TailorToJob.tsx:572
 msgid "Current:"
 msgstr "Actual:"
 
@@ -269,7 +351,7 @@ msgid "Describe an achievement or responsibility..."
 msgstr "Describe un logro o responsabilidad..."
 
 #: src/components/ai/AISuggestion.tsx:48
-#: src/components/ai/TailorToJob.tsx:321
+#: src/components/ai/TailorToJob.tsx:605
 msgid "Dismiss"
 msgstr "Descartar"
 
@@ -277,9 +359,9 @@ msgstr "Descartar"
 msgid "Download"
 msgstr "Descarga"
 
-#: src/components/layout/Toolbar.tsx:158
-#: src/components/layout/Toolbar.tsx:218
-#: src/components/layout/Toolbar.tsx:220
+#: src/components/layout/Toolbar.tsx:147
+#: src/components/layout/Toolbar.tsx:206
+#: src/components/layout/Toolbar.tsx:208
 msgid "Download PDF"
 msgstr "Descargar PDF"
 
@@ -300,7 +382,7 @@ msgstr "ej. en, es, pt-BR"
 msgid "Edit anything"
 msgstr "Edita todo"
 
-#: src/components/layout/AppLayout.tsx:21
+#: src/components/layout/AppLayout.tsx:22
 msgid "Editor"
 msgstr "Editor"
 
@@ -325,9 +407,17 @@ msgstr "vacío"
 msgid "End date"
 msgstr "Fecha de fin"
 
+#: src/components/ai/ProviderSettings.tsx:225
+msgid "Enter a number between 256 and 200000, or leave it blank."
+msgstr "Introduce un número entre 256 y 200000, o déjalo en blanco."
+
 #: src/components/landing/LandingPage.tsx:123
 msgid "Everything you need, nothing you don't."
 msgstr "Todo lo que necesitas, nada sobra."
+
+#: src/components/ai/TailorToJob.tsx:292
+msgid "Example: I have used Kubernetes professionally for about a year, but it isn't currently mentioned in my CV. Emphasize backend work and don't change my current job title."
+msgstr "Ejemplo: llevo aproximadamente un año usando Kubernetes profesionalmente, pero ahora mismo no aparece en mi CV. Destaca el trabajo de backend y no cambies mi puesto actual."
 
 #: src/components/editor/SectionList.tsx:200
 msgid "Expand"
@@ -345,9 +435,9 @@ msgstr "Entrada de experiencia"
 msgid "Export as PDF, ready to send."
 msgstr "Exporta como PDF, listo para enviar."
 
-#: src/components/layout/Toolbar.tsx:165
-#: src/components/layout/Toolbar.tsx:226
-#: src/components/layout/Toolbar.tsx:228
+#: src/components/layout/Toolbar.tsx:154
+#: src/components/layout/Toolbar.tsx:214
+#: src/components/layout/Toolbar.tsx:216
 msgid "Export JSON"
 msgstr "Exportar JSON"
 
@@ -414,11 +504,15 @@ msgstr "Generar desde mi experiencia"
 msgid "Generate summaries, improve bullets, tailor to job descriptions. Bring your own API key."
 msgstr "Genera resúmenes, mejora viñetas, adapta a ofertas de empleo. Trae tu propia clave API."
 
+#: src/components/ai/TailorToJob.tsx:395
+msgid "Generated prompt"
+msgstr "Prompt generado"
+
 #: src/components/pdf/PdfPreviewModal.tsx:77
 msgid "Generating PDF..."
 msgstr "Generando PDF..."
 
-#: src/components/ai/ProviderSettings.tsx:160
+#: src/components/ai/ProviderSettings.tsx:174
 msgid "Hide"
 msgstr "Ocultar"
 
@@ -434,11 +528,29 @@ msgstr "Ocultar sección"
 msgid "How it works"
 msgstr "Cómo funciona"
 
-#: src/components/layout/Toolbar.tsx:168
-#: src/components/layout/Toolbar.tsx:233
-#: src/components/layout/Toolbar.tsx:236
+#: src/components/workspace/ImportDialog.tsx:272
+msgid "Import"
+msgstr "Importar"
+
+#: src/components/workspace/ImportDialog.tsx:253
+msgid "Import anyway"
+msgstr "Importar de todos modos"
+
+#: src/components/layout/Toolbar.tsx:157
+#: src/components/layout/Toolbar.tsx:221
+#: src/components/layout/Toolbar.tsx:224
+#: src/components/workspace/ImportDialog.tsx:176
 msgid "Import JSON"
 msgstr "Importar JSON"
+
+#. placeholder {0}: (parsed as CV).name
+#: src/components/workspace/ImportDialog.tsx:113
+msgid "Imported \"{0}\""
+msgstr "Se importó \"{0}\""
+
+#: src/components/workspace/ImportDialog.tsx:248
+msgid "Imported with problems"
+msgstr "Importado con problemas"
 
 #: src/components/ai/ImproveButton.tsx:69
 msgid "Improve this bullet"
@@ -481,7 +593,11 @@ msgstr "Ubicación"
 msgid "Looks good!"
 msgstr "¡Se ve bien!"
 
-#: src/components/ai/ProviderSettings.tsx:181
+#: src/components/ai/ProviderSettings.tsx:206
+msgid "Max output tokens"
+msgstr "Máximo de tokens de salida"
+
+#: src/components/ai/ProviderSettings.tsx:195
 msgid "Model"
 msgstr "Modelo"
 
@@ -493,9 +609,9 @@ msgstr "Mi nuevo CV"
 msgid "Native"
 msgstr "Nativo"
 
-#: src/components/layout/Toolbar.tsx:206
-#: src/components/layout/Toolbar.tsx:320
-#: src/components/layout/Toolbar.tsx:322
+#: src/components/layout/Toolbar.tsx:194
+#: src/components/layout/Toolbar.tsx:300
+#: src/components/layout/Toolbar.tsx:302
 #: src/components/workspace/NewCVDialog.tsx:60
 msgid "New CV"
 msgstr "Nuevo CV"
@@ -503,6 +619,10 @@ msgstr "Nuevo CV"
 #: src/components/diff/SectionDiff.tsx:57
 msgid "New empty section"
 msgstr "Nueva sección vacía"
+
+#: src/components/ai/TailorToJob.tsx:326
+msgid "No AI provider configured. Add one in AI Settings, or use an external AI instead."
+msgstr "No hay ningún proveedor de IA configurado. Añade uno en Ajustes de IA o usa una IA externa."
 
 #: src/components/ai/TranslateCV.tsx:166
 msgid "No AI provider configured. Go to AI Settings first."
@@ -536,7 +656,7 @@ msgstr "Sin idiomas añadidos aún."
 msgid "No skill categories yet. Add one below."
 msgstr "Sin categorías de habilidades aún. Añade una abajo."
 
-#: src/components/ai/TailorToJob.tsx:235
+#: src/components/ai/TailorToJob.tsx:489
 msgid "No suggestions generated. The CV may already be well-aligned."
 msgstr "No se generaron sugerencias. El CV puede estar ya bien alineado."
 
@@ -544,17 +664,29 @@ msgstr "No se generaron sugerencias. El CV puede estar ya bien alineado."
 msgid "Notes (optional)"
 msgstr "Notas (opcional)"
 
+#: src/components/workspace/ImportDialog.tsx:122
+msgid "Nothing to import. Choose a file or paste some JSON."
+msgstr "No hay nada que importar. Elige un archivo o pega un JSON."
+
 #: src/App.tsx:43
 msgid "OK"
 msgstr "OK"
 
-#: src/components/ai/TailorToJob.tsx:174
-msgid "Paste the full job description here..."
-msgstr "Pega la descripción completa del puesto aquí..."
+#: src/components/ai/ProviderSettings.tsx:217
+msgid "Optional. Leave blank to use the default of 8192. Raise it only if your model supports longer output; providers reject values above their model's limit."
+msgstr "Opcional. Déjalo en blanco para usar el valor por defecto de 8192. Súbelo solo si tu modelo admite respuestas más largas; los proveedores rechazan valores por encima del límite del modelo."
 
-#: src/components/ai/TailorToJob.tsx:168
-msgid "Paste the job description"
-msgstr "Pega la descripción del puesto"
+#: src/components/workspace/ImportDialog.tsx:217
+msgid "Or paste the JSON"
+msgstr "O pega el JSON"
+
+#: src/components/ai/TailorToJob.tsx:255
+msgid "Paste the complete job description here, not just the job title."
+msgstr "Pega aquí la descripción completa del puesto, no solo el título."
+
+#: src/components/ai/TailorToJob.tsx:246
+msgid "Paste the full job offer"
+msgstr "Pega la oferta de empleo completa"
 
 #: src/components/pdf/PdfPreviewModal.tsx:59
 msgid "PDF Preview"
@@ -572,14 +704,14 @@ msgstr "Teléfono"
 msgid "Preview"
 msgstr "Revisa"
 
-#: src/components/layout/AppLayout.tsx:27
+#: src/components/layout/AppLayout.tsx:28
 msgctxt "tab"
 msgid "Preview"
 msgstr "Vista previa"
 
-#: src/components/layout/Toolbar.tsx:155
-#: src/components/layout/Toolbar.tsx:214
-#: src/components/layout/Toolbar.tsx:216
+#: src/components/layout/Toolbar.tsx:144
+#: src/components/layout/Toolbar.tsx:202
+#: src/components/layout/Toolbar.tsx:204
 msgid "Preview PDF"
 msgstr "Vista previa PDF"
 
@@ -587,7 +719,11 @@ msgstr "Vista previa PDF"
 msgid "Professional"
 msgstr "Profesional"
 
-#: src/components/ai/ProviderSettings.tsx:126
+#: src/components/ai/TailorToJob.tsx:181
+msgid "Prompt copied to clipboard"
+msgstr "Prompt copiado al portapapeles"
+
+#: src/components/ai/ProviderSettings.tsx:140
 msgid "Provider"
 msgstr "Proveedor"
 
@@ -603,6 +739,7 @@ msgstr "Re-escanear"
 msgid "Remove"
 msgstr "Eliminar"
 
+#: src/components/ai/TailorToJob.tsx:48
 #: src/components/editor/ExperienceEditor.tsx:123
 msgid "Remove bullet"
 msgstr "Eliminar viñeta"
@@ -631,19 +768,39 @@ msgstr "Sección vacía eliminada"
 msgid "Rename"
 msgstr "Renombrar"
 
+#: src/components/ai/TailorToJob.tsx:50
+msgid "Reorder skills"
+msgstr "Reordenar competencias"
+
+#: src/components/ai/TailorToJob.tsx:44
+msgid "Reword bullet"
+msgstr "Reformular viñeta"
+
+#: src/components/ai/TailorToJob.tsx:54
+msgid "Rewrite section"
+msgstr "Reescribir sección"
+
+#: src/components/ai/TailorToJob.tsx:42
+msgid "Rewrite summary"
+msgstr "Reescribir resumen"
+
 #: src/components/editor/ExperienceEditor.tsx:46
 msgid "Role / Title"
 msgstr "Rol / Título"
 
-#: src/components/ai/ProviderSettings.tsx:234
+#: src/components/ai/ProviderSettings.tsx:274
 msgid "Save"
 msgstr "Guardar"
 
-#: src/components/layout/Toolbar.tsx:122
+#: src/components/ai/TailorToJob.tsx:406
+msgid "Save its answer as a .json file, then use Import JSON in the toolbar. Good on Paper validates it and creates a new CV. Your current CV is never modified."
+msgstr "Guarda su respuesta como un archivo .json y luego usa Importar JSON en la barra de herramientas. Good on Paper lo valida y crea un CV nuevo. Tu CV actual nunca se modifica."
+
+#: src/components/layout/Toolbar.tsx:111
 msgid "Saved"
 msgstr "Guardado"
 
-#: src/components/layout/Toolbar.tsx:120
+#: src/components/layout/Toolbar.tsx:109
 msgid "Saving..."
 msgstr "Guardando..."
 
@@ -673,17 +830,21 @@ msgstr ""
 msgid "Select two different CVs to compare."
 msgstr "Selecciona dos CVs diferentes para comparar."
 
-#: src/components/layout/Toolbar.tsx:298
+#: src/components/layout/Toolbar.tsx:278
 msgid "Settings"
 msgstr "Configuración"
 
-#: src/components/ai/ProviderSettings.tsx:160
+#: src/components/ai/ProviderSettings.tsx:174
 msgid "Show"
 msgstr "Mostrar"
 
 #: src/components/editor/SectionList.tsx:143
 msgid "Show divider"
 msgstr ""
+
+#: src/components/ai/TailorToJob.tsx:461
+msgid "Show raw response"
+msgstr "Ver la respuesta sin procesar"
 
 #: src/components/editor/SectionList.tsx:106
 msgid "Show section"
@@ -713,7 +874,7 @@ msgstr "Fecha de inicio"
 msgid "Storage Error"
 msgstr "Error de almacenamiento"
 
-#: src/components/ai/TailorToJob.tsx:306
+#: src/components/ai/TailorToJob.tsx:581
 msgid "Suggested:"
 msgstr "Sugerido:"
 
@@ -721,42 +882,77 @@ msgstr "Sugerido:"
 msgid "Summary"
 msgstr "Resumen"
 
-#: src/components/ai/TailorToJob.tsx:191
-msgid "Tailor my CV"
-msgstr "Adaptar mi CV"
-
-#: src/components/layout/Toolbar.tsx:179
-#: src/components/layout/Toolbar.tsx:278
-msgid "Tailor to Job"
-msgstr "Adaptar al puesto"
-
-#: src/components/ai/TailorToJob.tsx:152
-msgid "Tailor to Job Description"
-msgstr "Adaptar a la descripción del puesto"
-
-#: src/components/ai/TailorToJob.tsx:188
-msgid "Tailoring..."
-msgstr "Adaptando..."
-
-#: src/components/ai/ProviderSettings.tsx:197
+#: src/components/ai/ProviderSettings.tsx:237
 msgid "Test connection"
 msgstr "Probar conexión"
 
-#: src/components/ai/ProviderSettings.tsx:197
+#: src/components/ai/ProviderSettings.tsx:237
 msgid "Testing..."
 msgstr "Probando..."
+
+#: src/components/workspace/ImportDialog.tsx:65
+msgid "That file isn't valid JSON."
+msgstr "Ese archivo no es un JSON válido."
+
+#: src/components/workspace/ImportDialog.tsx:130
+msgid "That isn't valid JSON."
+msgstr "Eso no es un JSON válido."
+
+#: src/components/ai/TailorToJob.tsx:434
+msgid "The AI didn't return JSON. Showing its raw answer so you can use it manually:"
+msgstr "La IA no devolvió JSON. Se muestra su respuesta sin procesar para que puedas usarla manualmente:"
+
+#: src/components/ai/TailorToJob.tsx:67
+msgid "The AI pointed this at the wrong kind of section."
+msgstr "La IA apuntó esto a un tipo de sección equivocado."
+
+#: src/components/ai/TailorToJob.tsx:450
+msgid "The AI returned JSON in the wrong shape. Nothing was applied."
+msgstr "La IA devolvió un JSON con una forma incorrecta. No se aplicó nada."
+
+#: src/components/workspace/ImportDialog.tsx:27
+msgid "The AI tried to change some dates. The original dates were kept."
+msgstr "La IA intentó cambiar algunas fechas. Se conservaron las fechas originales."
 
 #: src/components/landing/LandingPage.tsx:110
 msgid "The CV builder that gets out of your way."
 msgstr "El creador de CV que no te estorba."
 
+#: src/components/workspace/ImportDialog.tsx:23
+msgid "The original CV no longer exists, so contact details and hidden sections couldn't be carried over."
+msgstr "El CV original ya no existe, así que no se pudieron conservar los datos de contacto ni las secciones ocultas."
+
 #: src/components/diff/DiffView.tsx:52
 msgid "These two CVs are identical."
 msgstr "Estos dos CVs son idénticos."
 
+#: src/components/workspace/ImportDialog.tsx:73
+msgid "This adaptation file isn't valid. Nothing was imported."
+msgstr "Este archivo de adaptación no es válido. No se importó nada."
+
+#: src/components/ai/TailorToJob.tsx:65
+msgid "This bullet is no longer in your CV."
+msgstr "Esta viñeta ya no está en tu CV."
+
+#: src/components/ai/TailorToJob.tsx:63
+msgid "This entry is no longer in your CV."
+msgstr "Esta entrada ya no está en tu CV."
+
+#: src/components/workspace/ImportDialog.tsx:104
+msgid "This file doesn't look like a complete Good on Paper CV. You can import it anyway, but parts of it may be missing."
+msgstr "Este archivo no parece un CV completo de Good on Paper. Puedes importarlo igualmente, pero puede que falten partes."
+
+#: src/components/ai/TailorToJob.tsx:261
+msgid "This looks short. Paste the full job offer, not just the title, so the AI can match its wording and requirements."
+msgstr "Esto parece muy corto. Pega la oferta de empleo completa, no solo el título, para que la IA pueda ajustarse a su vocabulario y requisitos."
+
+#: src/components/ai/TailorToJob.tsx:61
+msgid "This section is no longer in your CV."
+msgstr "Esta sección ya no está en tu CV."
+
 #: src/components/ai/TranslateCV.tsx:160
-#: src/components/layout/Toolbar.tsx:186
-#: src/components/layout/Toolbar.tsx:288
+#: src/components/layout/Toolbar.tsx:174
+#: src/components/layout/Toolbar.tsx:268
 msgid "Translate"
 msgstr "Traducir"
 
@@ -785,6 +981,11 @@ msgstr "Traducción completada. Revisa: las traducciones de IA pueden necesitar 
 msgid "Unknown error"
 msgstr "Error desconocido"
 
+#. placeholder {0}: result.version
+#: src/components/workspace/ImportDialog.tsx:69
+msgid "Unsupported format version: {0}. This file was made for a different version of Good on Paper."
+msgstr "Versión de formato no admitida: {0}. Este archivo se creó para otra versión de Good on Paper."
+
 #: src/components/workspace/CVSwitcher.tsx:15
 msgid "Untitled"
 msgstr "Sin título"
@@ -792,6 +993,15 @@ msgstr "Sin título"
 #: src/components/editor/MetaEditor.tsx:117
 msgid "URL"
 msgstr "URL"
+
+#: src/components/ai/TailorToJob.tsx:216
+#: src/components/ai/TailorToJob.tsx:320
+msgid "Use an external AI"
+msgstr "Usar una IA externa"
+
+#: src/components/ai/TailorToJob.tsx:403
+msgid "When the AI replies"
+msgstr "Cuando la IA responda"
 
 #: src/components/editor/SummaryEditor.tsx:27
 msgid "Write a brief professional summary..."
@@ -805,9 +1015,13 @@ msgstr "Escribe una viñeta primero"
 msgid "You have a lot of saved CVs. Consider deleting old ones to keep things fast."
 msgstr "Tienes muchos CVs guardados. Considera eliminar los antiguos para mantener la velocidad."
 
-#: src/components/ai/ProviderSettings.tsx:213
+#: src/components/ai/ProviderSettings.tsx:253
 msgid "Your API key is stored locally in your browser and sent only to the AI provider you configure. It never passes through our servers. The proxy only forwards your request."
 msgstr "Tu clave API se almacena localmente en tu navegador y solo se envía al proveedor de IA que configures. Nunca pasa por nuestros servidores. El proxy solo reenvía tu solicitud."
+
+#: src/components/workspace/ImportDialog.tsx:25
+msgid "Your CV changed after this prompt was generated. Review the imported version carefully."
+msgstr "Tu CV cambió después de generar este prompt. Revisa con atención la versión importada."
 
 #: src/components/landing/LandingPage.tsx:223
 msgid "Your data stays in your browser. No account, no cloud, no tracking. Open source."

@@ -1,6 +1,7 @@
 import { CVEditor } from "../editor/CVEditor";
 import { CVPreview } from "../preview/CVPreview";
 import { Toolbar } from "./Toolbar";
+import { Toasts } from "./Toasts";
 import { PdfPreviewModal } from "../pdf/PdfPreviewModal";
 import { useUIStore } from "../../store/uiStore";
 import { Trans } from "@lingui/react/macro";
@@ -37,6 +38,7 @@ export function AppLayout() {
         </div>
       </div>
       <PdfPreviewModal />
+      <Toasts />
     </div>
   );
 }

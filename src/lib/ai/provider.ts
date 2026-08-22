@@ -1,6 +1,13 @@
 import type { AIProvider } from "../../types/ai";
 
+/** Output-token ceiling used when the provider config doesn't set one. */
+export const DEFAULT_MAX_TOKENS = 8192;
+
+/** CV adaptation is precise editing, not creative writing. */
+export const ADAPTATION_TEMPERATURE = 0.15;
+
 export interface CallAIOptions {
+  temperature?: number;
   max_tokens?: number;
   reasoning_effort?: "none" | "low" | "medium" | "high";
 }
@@ -36,6 +43,7 @@ export async function callAI(
     apiKey: provider.apiKey,
     model: provider.model,
     messages,
+    ...(options?.temperature != null && { temperature: options.temperature }),
     ...(options?.max_tokens != null && { max_tokens: options.max_tokens }),
     ...(options?.reasoning_effort != null && { reasoning_effort: options.reasoning_effort }),
   };

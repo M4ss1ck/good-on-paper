@@ -7,6 +7,8 @@ export interface AIProvider {
   apiKey: string;
   model: string;
   accountId?: string; // Cloudflare only
+  /** Optional output-token ceiling. BYOK models differ wildly; unset uses the per-action default. */
+  maxTokens?: number;
 }
 
 export interface AISettings {

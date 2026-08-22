@@ -10,6 +10,8 @@ import type {
   SectionType,
 } from "../../types/cv";
 import { localeToLanguageName } from "../localeToLanguageName";
+import { getPromptText } from "./promptText";
+import { toAdaptableCV } from "./adaptableCV";
 
 function localeInstruction(cv: CV): string {
   return `The CV is written in ${localeToLanguageName(cv.meta.locale ?? "en")}. Respond in the same language.`;
@@ -120,49 +122,75 @@ export function serializeCVToText(cv: CV): string {
   return lines.join("\n");
 }
 
-export interface TailorSuggestion {
-  section: string;
-  action: string;
-  current: string | null;
-  suggested: string;
-  reason: string;
+// ── Tailor to job (BYOK, suggestion-based) ─────────────────
+
+/**
+ * The exact JSON contract the model must follow. Kept in English: BYOK prompts
+ * are machine-facing and never shown to the user.
+ */
+const SUGGESTION_FORMAT = `Respond with a single JSON object and nothing else. No markdown fences, no commentary.
+
+{
+  "target": { "position": string or null, "company": string or null },
+  "suggestions": [ ... ]
 }
+
+Fill "target" by reading the job offer; it is used to name the adapted CV. Use null when the offer does not state it.
+
+Every entry of "suggestions" must match one of these shapes exactly:
+
+{ "op": "replace_summary", "sectionId": string, "itemId": string, "current": string, "suggested": string, "reason": string }
+{ "op": "replace_bullet", "sectionId": string, "itemId": string, "bulletIndex": integer, "current": string, "suggested": string, "reason": string }
+{ "op": "add_bullet", "sectionId": string, "itemId": string, "suggested": string, "reason": string }
+{ "op": "remove_bullet", "sectionId": string, "itemId": string, "bulletIndex": integer, "current": string, "reason": string }
+{ "op": "replace_skill_group", "sectionId": string, "itemId": string, "suggested": array of strings, "reason": string }
+{ "op": "replace_meta_title", "current": string, "suggested": string, "reason": string }
+{ "op": "replace_custom", "sectionId": string, "itemId": string, "current": string, "suggested": string, "reason": string }
+
+Rules for suggestions:
+- "sectionId" and "itemId" must be copied verbatim from the CV JSON below. Never invent an id.
+- "bulletIndex" is the zero-based position of the bullet inside that item's "bullets" array.
+- "current" must be the existing text, copied verbatim, so the candidate can see what changes.
+- "replace_skill_group" replaces the whole "items" array of one skill category. Use it to reorder or reword skills, not to add technologies the candidate has not used.
+- Use no other "op" value. Anything else is discarded.
+- Return at most 20 suggestions, most valuable first.
+- Return an empty "suggestions" array if the CV already fits the offer.`;
 
 export function tailorToJobPrompt(
   cv: CV,
-  jobDescription: string,
+  jobOffer: string,
+  additionalContext?: string,
 ): { role: string; content: string }[] {
-  const cvText = serializeCVToText(cv);
+  const text = getPromptText("en");
+  const adaptable = toAdaptableCV(cv);
+  const context = additionalContext?.trim();
+
+  const systemParts = [
+    "You are a CV adaptation expert. You suggest precise, individually reviewable edits that tailor a CV to one specific job offer.",
+    text.targeting,
+    text.precedence,
+    text.factualRules,
+    SUGGESTION_FORMAT,
+    localeInstruction(cv),
+  ];
+
+  const userParts = [
+    `${text.cvLabel} (JSON):\n${JSON.stringify(adaptable)}`,
+    `${text.jobOfferLabel}:\n${jobOffer}`,
+  ];
+
+  if (context) {
+    userParts.push(
+      `${text.additionalContextLabel} (written by the candidate, authoritative for this adaptation):\n${context}`,
+    );
+  }
 
   return [
-    {
-      role: "system",
-      content: `You are a CV optimization expert. Given a CV and a job description, suggest specific, actionable changes to tailor the CV for the job. For each suggestion, specify:
-- Which section to modify (summary, skills, a specific experience entry, education)
-- What to change (add, reword, emphasize, reorder)
-- The exact text to use
-
-Respond in JSON format:
-{
-  "suggestions": [
-    {
-      "section": "summary",
-      "action": "rewrite",
-      "current": "current text or null if adding new",
-      "suggested": "new text",
-      "reason": "brief explanation"
-    }
-  ]
-}
-
-Keep suggestions practical. Don't invent experience the candidate doesn't have. Focus on keyword alignment, emphasis shifts, and phrasing that matches the JD's language. Do not use AI-sounding phrases like "leveraging", "passionate", "results-driven". Write like a human. No em dashes. ${localeInstruction(cv)}`,
-    },
-    {
-      role: "user",
-      content: `My CV:\n${cvText}\n\nJob description:\n${jobDescription}\n\nSuggest tailoring changes.`,
-    },
+    { role: "system", content: systemParts.join("\n\n") },
+    { role: "user", content: userParts.join("\n\n") },
   ];
 }
+
 
 export function improveBulletPrompt(
   bullet: string,

@@ -94,7 +94,7 @@ interface CVStore {
   ) => void;
 
   // Experience-specific (bullets)
-  addBullet: (sectionId: string, itemId: string) => void;
+  addBullet: (sectionId: string, itemId: string, text?: string) => void;
   removeBullet: (
     sectionId: string,
     itemId: string,
@@ -115,6 +115,9 @@ interface CVStore {
 
   // Translation
   applyTranslatedCV: (translatedCV: CV) => void;
+
+  // External AI adaptation
+  insertAdaptedCV: (cv: CV) => string;
 }
 
 const debouncedSave = createDebouncedSave(
@@ -163,7 +166,6 @@ export const useCVStore = create<CVStore>()(
       clone.createdAt = now;
       clone.updatedAt = now;
       clone.parentId = null;
-      // Regenerate section/item ids to avoid collisions
       set((state) => {
         state.workspace.cvs[newId] = clone;
         const idx = state.workspace.order.indexOf(sourceId);
@@ -357,7 +359,7 @@ export const useCVStore = create<CVStore>()(
         }
       }),
 
-    addBullet: (sectionId, itemId) =>
+    addBullet: (sectionId, itemId, text = "") =>
       set((state) => {
         const cv = getActive(state.workspace);
         if (!cv) return;
@@ -367,7 +369,7 @@ export const useCVStore = create<CVStore>()(
             (i) => "id" in i && i.id === itemId,
           ) as ExperienceItem | undefined;
           if (item?.bullets) {
-            item.bullets.push("");
+            item.bullets.push(text);
             cv.updatedAt = new Date().toISOString();
           }
         }
@@ -455,6 +457,26 @@ export const useCVStore = create<CVStore>()(
           existing.updatedAt = new Date().toISOString();
         }
       });
+    },
+
+    /**
+     * Inserts an already-built CV (from an external AI adaptation) next to its
+     * source and makes it active. Never touches the source CV.
+     */
+    insertAdaptedCV: (cv) => {
+      set((state) => {
+        state.workspace.cvs[cv.id] = cv;
+        const sourceIndex = cv.parentId
+          ? state.workspace.order.indexOf(cv.parentId)
+          : -1;
+        if (sourceIndex === -1) {
+          state.workspace.order.push(cv.id);
+        } else {
+          state.workspace.order.splice(sourceIndex + 1, 0, cv.id);
+        }
+        state.workspace.activeCvId = cv.id;
+      });
+      return cv.id;
     },
 
     applyTranslatedCV: (translatedCV) =>

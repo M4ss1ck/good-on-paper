@@ -40,6 +40,9 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
     provider?.model ?? PROVIDERS[provider?.id ?? "openrouter"].defaultModel,
   );
   const [accountId, setAccountId] = useState(provider?.accountId ?? "");
+  const [maxTokens, setMaxTokens] = useState(
+    provider?.maxTokens != null ? String(provider.maxTokens) : "",
+  );
   const [showKey, setShowKey] = useState(false);
   const [testStatus, setTestStatus] = useState<TestStatus>("idle");
   const [testError, setTestError] = useState<string | null>(null);
@@ -61,6 +64,7 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
 
   const handleSave = () => {
     const config = PROVIDERS[providerId];
+    const parsedMaxTokens = maxTokensValue;
     const p: AIProvider = {
       id: providerId,
       name: config.name,
@@ -68,6 +72,7 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
       apiKey,
       model,
       ...(config.requiresAccountId ? { accountId } : {}),
+      ...(parsedMaxTokens != null ? { maxTokens: parsedMaxTokens } : {}),
     };
     setProvider(p);
     onClose();
@@ -96,7 +101,16 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
     }
   };
 
-  const canSave = apiKey.trim() && model.trim();
+  // Blank means "use the per-action default".
+  const maxTokensValue =
+    maxTokens.trim() === "" ? null : Number.parseInt(maxTokens, 10);
+  const maxTokensInvalid =
+    maxTokensValue != null &&
+    (!Number.isFinite(maxTokensValue) ||
+      maxTokensValue < 256 ||
+      maxTokensValue > 200000);
+
+  const canSave = apiKey.trim() && model.trim() && !maxTokensInvalid;
   const canTest =
     canSave && (!PROVIDERS[providerId].requiresAccountId || accountId.trim());
 
@@ -185,6 +199,32 @@ function SettingsForm({ onClose }: { onClose: () => void }) {
             onChange={(e) => setModel(e.target.value)}
             className={inputClass}
           />
+        </div>
+
+        {/* Max output tokens */}
+        <div>
+          <label className={labelClass}><Trans>Max output tokens</Trans></label>
+          <input
+            type="number"
+            min={256}
+            max={200000}
+            value={maxTokens}
+            onChange={(e) => setMaxTokens(e.target.value)}
+            placeholder="8192"
+            className={inputClass}
+          />
+          <p className="text-xs text-muted mt-1">
+            <Trans>
+              Optional. Leave blank to use the default of 8192. Raise it only if
+              your model supports longer output; providers reject values above
+              their model's limit.
+            </Trans>
+          </p>
+          {maxTokensInvalid && (
+            <p className="text-xs text-red-600 mt-1">
+              <Trans>Enter a number between 256 and 200000, or leave it blank.</Trans>
+            </p>
+          )}
         </div>
 
         {/* Test connection */}

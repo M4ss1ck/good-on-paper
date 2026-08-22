@@ -89,10 +89,10 @@ export function CVListItem({ cv, isActive, onSelect, onClose }: CVListItemProps)
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-2 text-[11px] text-light">
-              <span>{relativeTime(cv.updatedAt)}</span>
+            <div className="flex items-center gap-2 text-[11px] text-light min-w-0">
+              <span className="shrink-0 whitespace-nowrap">{relativeTime(cv.updatedAt)}</span>
               {parentName && (
-                <span className="truncate">↳ forked from {parentName}</span>
+                <span className="truncate min-w-0">↳ forked from {parentName}</span>
               )}
             </div>
           </div>

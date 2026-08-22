@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Trans } from "@lingui/react/macro";
 import { t } from "@lingui/core/macro";
 import {
@@ -31,8 +31,15 @@ const sectionTypeLabels: Record<SectionType, () => string> = {
   custom: () => t`Custom`,
 };
 
-function SortableSectionCard({ section }: { section: Section }) {
-  const [collapsed, setCollapsed] = useState(true);
+function SortableSectionCard({
+  section,
+  expanded,
+  onExpandedChange,
+}: {
+  section: Section;
+  expanded: boolean;
+  onExpandedChange: (id: string, next: boolean) => void;
+}) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const removeSection = useCVStore((s) => s.removeSection);
   const toggleVisibility = useCVStore((s) => s.toggleSectionVisibility);
@@ -46,12 +53,12 @@ function SortableSectionCard({ section }: { section: Section }) {
         state.activeSection === section.id &&
         prev.activeSection !== section.id
       ) {
-        setCollapsed(false);
+        onExpandedChange(section.id, true);
         state.setActiveSection(null);
       }
     });
     return unsub;
-  }, [section.id]);
+  }, [section.id, onExpandedChange]);
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: section.id });
@@ -195,9 +202,9 @@ function SortableSectionCard({ section }: { section: Section }) {
 
         {/* Collapse toggle */}
         <button
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={() => onExpandedChange(section.id, !expanded)}
           className="text-light hover:text-muted transition-colors p-1"
-          title={collapsed ? t`Expand` : t`Collapse`}
+          title={expanded ? t`Collapse` : t`Expand`}
         >
           <svg
             width="16"
@@ -206,7 +213,7 @@ function SortableSectionCard({ section }: { section: Section }) {
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
-            className={`transition-transform ${collapsed ? "" : "rotate-180"}`}
+            className={`transition-transform ${expanded ? "rotate-180" : ""}`}
           >
             <polyline points="6 9 12 15 18 9" />
           </svg>
@@ -214,7 +221,7 @@ function SortableSectionCard({ section }: { section: Section }) {
       </div>
 
       {/* Collapsible content */}
-      {!collapsed && (
+      {expanded && (
         <div className="px-4 pb-4 border-t border-gray-100">
           <SectionEditor section={section} />
         </div>
@@ -228,6 +235,18 @@ export function SectionList() {
   const moveSection = useCVStore((s) => s.moveSection);
   const addSection = useCVStore((s) => s.addSection);
   const [showAddMenu, setShowAddMenu] = useState(false);
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+  const allExpanded =
+    sections.length > 0 && sections.every((s) => expandedIds.has(s.id));
+
+  const handleExpandedChange = useCallback((id: string, next: boolean) => {
+    setExpandedIds((prev) => {
+      const updated = new Set(prev);
+      if (next) updated.add(id);
+      else updated.delete(id);
+      return updated;
+    });
+  }, []);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -247,9 +266,25 @@ export function SectionList() {
 
   return (
     <div className="space-y-2">
-      <h2 className="text-sm font-semibold text-primary uppercase tracking-wide">
-        <Trans>Sections</Trans>
-      </h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-sm font-semibold text-primary uppercase tracking-wide">
+          <Trans>Sections</Trans>
+        </h2>
+        <button
+          onClick={() =>
+            setExpandedIds(
+              allExpanded ? new Set() : new Set(sections.map((s) => s.id)),
+            )
+          }
+          className="text-xs text-accent hover:text-primary transition-colors"
+        >
+          {allExpanded ? (
+            <Trans>− Collapse all</Trans>
+          ) : (
+            <Trans>+ Expand all</Trans>
+          )}
+        </button>
+      </div>
 
       <DndContext
         sensors={sensors}
@@ -261,7 +296,12 @@ export function SectionList() {
           strategy={verticalListSortingStrategy}
         >
           {sections.map((section) => (
-            <SortableSectionCard key={section.id} section={section} />
+            <SortableSectionCard
+              key={section.id}
+              section={section}
+              expanded={expandedIds.has(section.id)}
+              onExpandedChange={handleExpandedChange}
+            />
           ))}
         </SortableContext>
       </DndContext>

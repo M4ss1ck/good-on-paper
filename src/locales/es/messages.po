@@ -56,7 +56,7 @@ msgstr "+ Añadir idioma"
 msgid "+ Add link"
 msgstr "+ Añadir enlace"
 
-#: src/components/editor/SectionList.tsx:275
+#: src/components/editor/SectionList.tsx:315
 msgid "+ Add section"
 msgstr "+ Añadir sección"
 
@@ -64,9 +64,17 @@ msgstr "+ Añadir sección"
 msgid "+ Add summary"
 msgstr "+ Añadir resumen"
 
+#: src/components/editor/SectionList.tsx:284
+msgid "+ Expand all"
+msgstr "+ Expandir todo"
+
 #: src/components/workspace/CVList.tsx:53
 msgid "+ New blank CV"
 msgstr "+ Nuevo CV en blanco"
+
+#: src/components/editor/SectionList.tsx:282
+msgid "− Collapse all"
+msgstr "− Contraer todo"
 
 #: src/components/ai/AISuggestion.tsx:42
 #: src/components/ai/TailorToJob.tsx:599
@@ -186,7 +194,7 @@ msgstr "Viñetas"
 
 #: src/components/ai/ProviderSettings.tsx:267
 #: src/components/diff/DiffPicker.tsx:102
-#: src/components/editor/SectionList.tsx:173
+#: src/components/editor/SectionList.tsx:180
 #: src/components/layout/Toolbar.tsx:189
 #: src/components/layout/Toolbar.tsx:296
 #: src/components/workspace/CVListItem.tsx:174
@@ -220,7 +228,7 @@ msgstr "Elegir archivo"
 msgid "Close"
 msgstr "Cerrar"
 
-#: src/components/editor/SectionList.tsx:200
+#: src/components/editor/SectionList.tsx:207
 msgid "Collapse"
 msgstr "Contraer"
 
@@ -336,13 +344,13 @@ msgstr "Fechas (ej. 2018 – 2022)"
 msgid "Degree / Certificate"
 msgstr "Título / Certificado"
 
-#: src/components/editor/SectionList.tsx:167
+#: src/components/editor/SectionList.tsx:174
 #: src/components/workspace/CVListItem.tsx:139
 #: src/components/workspace/CVListItem.tsx:168
 msgid "Delete"
 msgstr "Eliminar"
 
-#: src/components/editor/SectionList.tsx:180
+#: src/components/editor/SectionList.tsx:187
 msgid "Delete section"
 msgstr "Eliminar sección"
 
@@ -365,7 +373,7 @@ msgstr "Descarga"
 msgid "Download PDF"
 msgstr "Descargar PDF"
 
-#: src/components/editor/SectionList.tsx:78
+#: src/components/editor/SectionList.tsx:85
 msgid "Drag to reorder"
 msgstr "Arrastra para reordenar"
 
@@ -419,7 +427,7 @@ msgstr "Todo lo que necesitas, nada sobra."
 msgid "Example: I have used Kubernetes professionally for about a year, but it isn't currently mentioned in my CV. Emphasize backend work and don't change my current job title."
 msgstr "Ejemplo: llevo aproximadamente un año usando Kubernetes profesionalmente, pero ahora mismo no aparece en mi CV. Destaca el trabajo de backend y no cambies mi puesto actual."
 
-#: src/components/editor/SectionList.tsx:200
+#: src/components/editor/SectionList.tsx:207
 msgid "Expand"
 msgstr "Expandir"
 
@@ -516,11 +524,11 @@ msgstr "Generando PDF..."
 msgid "Hide"
 msgstr "Ocultar"
 
-#: src/components/editor/SectionList.tsx:143
+#: src/components/editor/SectionList.tsx:150
 msgid "Hide divider"
 msgstr ""
 
-#: src/components/editor/SectionList.tsx:106
+#: src/components/editor/SectionList.tsx:113
 msgid "Hide section"
 msgstr "Ocultar sección"
 
@@ -804,7 +812,7 @@ msgstr "Guardado"
 msgid "Saving..."
 msgstr "Guardando..."
 
-#: src/components/editor/SectionList.tsx:251
+#: src/components/editor/SectionList.tsx:271
 msgid "Sections"
 msgstr "Secciones"
 
@@ -838,7 +846,7 @@ msgstr "Configuración"
 msgid "Show"
 msgstr "Mostrar"
 
-#: src/components/editor/SectionList.tsx:143
+#: src/components/editor/SectionList.tsx:150
 msgid "Show divider"
 msgstr ""
 
@@ -846,7 +854,7 @@ msgstr ""
 msgid "Show raw response"
 msgstr "Ver la respuesta sin procesar"
 
-#: src/components/editor/SectionList.tsx:106
+#: src/components/editor/SectionList.tsx:113
 msgid "Show section"
 msgstr "Mostrar sección"
 

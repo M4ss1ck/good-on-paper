@@ -1,97 +1,35 @@
-export interface CV {
-  id: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  parentId: string | null;
-  meta: CVMeta;
-  settings: CVSettings;
-  sections: Section[];
-}
+import type { z } from "zod";
+import type {
+  cvSchema,
+  cvWorkspaceSchema,
+  cvMetaSchema,
+  cvSettingsSchema,
+  fontFamilySchema,
+  sectionSchema,
+  sectionTypeSchema,
+  sectionItemSchema,
+  summaryItemSchema,
+  skillItemSchema,
+  experienceItemSchema,
+  educationItemSchema,
+  languageItemSchema,
+  customItemSchema,
+} from "../lib/schemas/cv";
 
-export interface CVWorkspace {
-  cvs: Record<string, CV>;
-  order: string[];
-  activeCvId: string | null;
-}
+// These types are derived from the zod schemas in lib/schemas/cv.ts, which are
+// the single source of truth. Edit the schema, not a duplicate interface.
 
-export interface CVMeta {
-  name: string;
-  title: string;
-  email: string;
-  phone: string;
-  location: string;
-  locale: string;
-  links: { label: string; url: string }[];
-}
-
-export type SectionType =
-  | "summary"
-  | "skills"
-  | "experience"
-  | "education"
-  | "languages"
-  | "custom";
-
-export interface Section {
-  id: string;
-  type: SectionType;
-  title: string;
-  visible: boolean;
-  hideDivider?: boolean;
-  items: SectionItem[];
-}
-
-export interface SummaryItem {
-  id: string;
-  content: string;
-}
-
-export interface SkillItem {
-  id: string;
-  category: string;
-  items: string[];
-}
-
-export interface ExperienceItem {
-  id: string;
-  role: string;
-  company: string;
-  location: string;
-  startDate: string;
-  endDate: string;
-  bullets: string[];
-}
-
-export interface EducationItem {
-  id: string;
-  degree: string;
-  institution: string;
-  dates: string;
-  notes?: string;
-}
-
-export interface LanguageItem {
-  id: string;
-  language: string;
-  level: string;
-}
-
-export interface CustomItem {
-  id: string;
-  content: string;
-}
-
-export type SectionItem =
-  | SummaryItem
-  | SkillItem
-  | ExperienceItem
-  | EducationItem
-  | LanguageItem
-  | CustomItem;
-
-export type FontFamily = "Roboto" | "Inter" | "Lora";
-
-export interface CVSettings {
-  fontFamily: FontFamily;
-}
+export type CV = z.infer<typeof cvSchema>;
+export type CVWorkspace = z.infer<typeof cvWorkspaceSchema>;
+export type CVMeta = z.infer<typeof cvMetaSchema>;
+export type CVSettings = z.infer<typeof cvSettingsSchema>;
+export type FontFamily = z.infer<typeof fontFamilySchema>;
+export type Section = z.infer<typeof sectionSchema>;
+export type SectionType = z.infer<typeof sectionTypeSchema>;
+export type SectionItem = z.infer<typeof sectionItemSchema>;
+export type SummaryItem = z.infer<typeof summaryItemSchema>;
+export type SkillItem = z.infer<typeof skillItemSchema>;
+export type ExperienceItem = z.infer<typeof experienceItemSchema>;
+export type EducationItem = z.infer<typeof educationItemSchema>;
+export type LanguageItem = z.infer<typeof languageItemSchema>;
+export type CustomItem = z.infer<typeof customItemSchema>;

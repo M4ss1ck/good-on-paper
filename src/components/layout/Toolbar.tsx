@@ -16,6 +16,7 @@ import { TailorToJob } from "../ai/TailorToJob";
 import { TranslateCV } from "../ai/TranslateCV";
 import { CVSwitcher } from "../workspace/CVSwitcher";
 import { DiffPicker } from "../diff/DiffPicker";
+import { ImportDialog } from "../workspace/ImportDialog";
 import { loadCatalog, type AppLocale } from "../../i18n";
 import { GoodOnPaperLogo } from "../logo/GoodOnPaperLogo";
 
@@ -24,13 +25,11 @@ pdfMake.addVirtualFileSystem(pdfFonts);
 export function Toolbar() {
   const cv = useCVStore((s) => s.activeCv());
   const exportJson = useCVStore((s) => s.exportJson);
-  const importJson = useCVStore((s) => s.importJson);
   const resetCV = useCVStore((s) => s.resetCV);
   const openModal = useUIStore((s) => s.setPdfModalOpen);
   const saveStatus = useUIStore((s) => s.saveStatus);
   const setSettingsOpen = useAIStore((s) => s.setSettingsOpen);
   const hasProvider = useAIStore((s) => s.settings.provider !== null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [confirmReset, setConfirmReset] = useState(false);
 
   // AI dropdown state
@@ -39,6 +38,9 @@ export function Toolbar() {
   const [tailorOpen, setTailorOpen] = useState(false);
   const [translateOpen, setTranslateOpen] = useState(false);
   const [diffPickerOpen, setDiffPickerOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
+  const diffRequest = useUIStore((s) => s.diffRequest);
+  const setDiffRequest = useUIStore((s) => s.setDiffRequest);
   const [actionsOpen, setActionsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const actionsRef = useRef<HTMLDivElement>(null);
@@ -85,19 +87,6 @@ export function Toolbar() {
     a.download = "cv.json";
     a.click();
     URL.revokeObjectURL(url);
-  };
-
-  const handleImportJson = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === "string") {
-        importJson(reader.result);
-      }
-    };
-    reader.readAsText(file);
-    e.target.value = "";
   };
 
   const handleReset = () => {
@@ -164,7 +153,7 @@ export function Toolbar() {
             <button className={dropItemClass} onClick={() => { handleExportJson(); setActionsOpen(false); }}>
               <FileDown size={14} /><Trans>Export JSON</Trans>
             </button>
-            <button className={dropItemClass} onClick={() => { fileInputRef.current?.click(); setActionsOpen(false); }}>
+            <button className={dropItemClass} onClick={() => { setImportOpen(true); setActionsOpen(false); }}>
               <Upload size={14} /><Trans>Import JSON</Trans>
             </button>
             <hr className="my-1 border-gray-100" />
@@ -172,11 +161,10 @@ export function Toolbar() {
               <Search size={14} /><Trans>AI Phrase Check</Trans>
             </button>
             <button
-              className={`${dropItemClass} disabled:opacity-50 disabled:cursor-not-allowed`}
-              disabled={!hasProvider}
+              className={dropItemClass}
               onClick={() => { setTailorOpen(true); setActionsOpen(false); }}
             >
-              <Target size={14} /><Trans>Tailor to Job</Trans>
+              <Target size={14} /><Trans>Adapt my CV</Trans>
             </button>
             <button
               className={`${dropItemClass} disabled:opacity-50 disabled:cursor-not-allowed`}
@@ -229,22 +217,15 @@ export function Toolbar() {
       </button>
       <button
         className={`${btnBase} hidden md:inline-flex`}
-        onClick={() => fileInputRef.current?.click()}
+        onClick={() => setImportOpen(true)}
         title={t`Import JSON`}
       >
         <Upload size={14} />
         <span className="hidden xl:inline"><Trans>Import JSON</Trans></span>
       </button>
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept=".json"
-        className="hidden"
-        onChange={handleImportJson}
-      />
-
       <DetectAIText open={detectOpen} onClose={() => setDetectOpen(false)} />
-      <TailorToJob open={tailorOpen} onClose={() => setTailorOpen(false)} />
+      {tailorOpen && <TailorToJob onClose={() => setTailorOpen(false)} />}
+      {importOpen && <ImportDialog onClose={() => setImportOpen(false)} />}
       <TranslateCV open={translateOpen} onClose={() => setTranslateOpen(false)} />
 
       <div className="relative hidden md:block" ref={dropdownRef}>
@@ -268,14 +249,13 @@ export function Toolbar() {
               <Search size={14} className="inline mr-1.5" /><Trans>AI Phrase Check</Trans>
             </button>
             <button
-              className="w-full text-left px-4 py-2 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 hover:bg-gray-50"
-              disabled={!hasProvider}
+              className="w-full text-left px-4 py-2 text-sm transition-colors text-gray-700 hover:bg-gray-50"
               onClick={() => {
                 setTailorOpen(true);
                 setAiDropdownOpen(false);
               }}
             >
-              <Target size={14} className="inline mr-1.5" /><Trans>Tailor to Job</Trans>
+              <Target size={14} className="inline mr-1.5" /><Trans>Adapt my CV</Trans>
             </button>
             <button
               className="w-full text-left px-4 py-2 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 hover:bg-gray-50"
@@ -332,8 +312,15 @@ export function Toolbar() {
       </button>
 
       <ProviderSettings />
-      {diffPickerOpen && (
-        <DiffPicker onClose={() => setDiffPickerOpen(false)} />
+      {(diffPickerOpen || diffRequest) && (
+        <DiffPicker
+          onClose={() => {
+            setDiffPickerOpen(false);
+            setDiffRequest(null);
+          }}
+          initialBaseId={diffRequest?.baseId}
+          initialAgainstId={diffRequest?.againstId}
+        />
       )}
     </div>
   );

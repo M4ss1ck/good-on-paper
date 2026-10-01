@@ -12,6 +12,12 @@ export interface CallAIOptions {
   reasoning_effort?: "none" | "low" | "medium" | "high";
 }
 
+/**
+ * Stable per-page-load session ID. OpenCode Zen/Go reject requests without an
+ * `x-opencode-session` header; the worker forwards this as that header.
+ */
+const SESSION_ID = crypto.randomUUID();
+
 interface AIRequestBody {
   provider: AIProvider["id"];
   baseUrl: string;
@@ -21,6 +27,7 @@ interface AIRequestBody {
   temperature?: number;
   max_tokens?: number;
   reasoning_effort?: string;
+  sessionId: string;
 }
 
 function friendlyError(status: number, message: string): string {
@@ -43,6 +50,7 @@ export async function callAI(
     apiKey: provider.apiKey,
     model: provider.model,
     messages,
+    sessionId: SESSION_ID,
     ...(options?.temperature != null && { temperature: options.temperature }),
     ...(options?.max_tokens != null && { max_tokens: options.max_tokens }),
     ...(options?.reasoning_effort != null && { reasoning_effort: options.reasoning_effort }),

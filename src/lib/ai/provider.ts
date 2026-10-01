@@ -13,7 +13,7 @@ export interface CallAIOptions {
 }
 
 /**
- * Stable per-page-load session ID. OpenCode Zen/Go reject requests without an
+ * Stable per-page-load session ID. OpenCode Go rejects requests without an
  * `x-opencode-session` header; the worker forwards this as that header.
  */
 const SESSION_ID = crypto.randomUUID();

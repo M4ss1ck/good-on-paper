@@ -79,7 +79,7 @@ async function handleAI(request: Request): Promise<Response> {
     Authorization: `Bearer ${apiKey}`,
   };
 
-  // OpenCode Zen/Go require a stable per-session ID and an identifying
+  // OpenCode Go requires a stable per-session ID and an identifying
   // User-Agent on every request.
   if (provider === "opencode_go") {
     headers["User-Agent"] = USER_AGENT;

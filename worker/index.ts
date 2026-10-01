@@ -1,4 +1,7 @@
 import type { ExportedHandler, Fetcher } from "@cloudflare/workers-types";
+import pkg from "../package.json" with { type: "json" };
+
+const USER_AGENT = `${pkg.name}/${pkg.version} (+https://github.com/M4ss1ck/good-on-paper)`;
 
 interface Env {
   ASSETS: Fetcher;
@@ -77,8 +80,10 @@ async function handleAI(request: Request): Promise<Response> {
     Authorization: `Bearer ${apiKey}`,
   };
 
-  // OpenCode Zen/Go require a stable per-session ID on every request.
+  // OpenCode Zen/Go require a stable per-session ID and an identifying
+  // User-Agent on every request.
   if (provider === "opencode_go") {
+    headers["User-Agent"] = USER_AGENT;
     headers["x-opencode-session"] =
       typeof sessionId === "string" && sessionId ? sessionId : crypto.randomUUID();
   }

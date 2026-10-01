@@ -1,5 +1,7 @@
 import type { ExportedHandler, Fetcher } from "@cloudflare/workers-types";
 
+const USER_AGENT = "good-on-paper";
+
 interface Env {
   ASSETS: Fetcher;
 }
@@ -13,6 +15,7 @@ interface AIRequest {
   temperature?: number;
   max_tokens?: number;
   reasoning_effort?: string;
+  sessionId?: string;
 }
 
 const corsHeaders = {
@@ -40,6 +43,7 @@ async function handleAI(request: Request): Promise<Response> {
   const body: AIRequest = await request.json();
 
   const {
+    provider,
     baseUrl,
     apiKey,
     model,
@@ -47,6 +51,7 @@ async function handleAI(request: Request): Promise<Response> {
     temperature = 0.7,
     max_tokens = 1024,
     reasoning_effort,
+    sessionId,
   } = body;
 
   // Validate required fields
@@ -69,13 +74,23 @@ async function handleAI(request: Request): Promise<Response> {
     );
   }
 
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${apiKey}`,
+  };
+
+  // OpenCode Go requires a stable per-session ID and an identifying
+  // User-Agent on every request.
+  if (provider === "opencode_go") {
+    headers["User-Agent"] = USER_AGENT;
+    headers["x-opencode-session"] =
+      typeof sessionId === "string" && sessionId ? sessionId : crypto.randomUUID();
+  }
+
   try {
     const response = await fetch(parsedUrl.toString(), {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
+      headers,
       body: JSON.stringify({
         model,
         messages,

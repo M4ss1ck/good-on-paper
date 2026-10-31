@@ -2,14 +2,10 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { Trans } from "@lingui/react/macro";
 import { t } from "@lingui/core/macro";
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
 import { useUIStore } from "../../store/uiStore";
 import { useCVStore } from "../../store/cvStore";
-import { generatePdfDefinition } from "./generatePdf";
+import { pdfBlob, renderPdf } from "./renderPdf";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
-
-pdfMake.addVirtualFileSystem(pdfFonts);
 
 export function PdfPreviewModal() {
   const open = useUIStore((s) => s.pdfModalOpen);
@@ -21,10 +17,9 @@ export function PdfPreviewModal() {
     if (!open || !cv) return;
 
     let revoked = false;
-    const def = generatePdfDefinition(cv);
-    pdfMake.createPdf(def).getBlob().then((blob) => {
+    renderPdf(cv).then((bytes) => {
       if (revoked) return;
-      const url = URL.createObjectURL(blob);
+      const url = URL.createObjectURL(pdfBlob(bytes));
       setBlobUrl(url);
     });
 

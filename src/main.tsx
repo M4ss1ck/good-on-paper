@@ -5,9 +5,8 @@ import { I18nProvider } from '@lingui/react'
 import './index.css'
 import App from './App'
 import { initI18n } from './i18n'
-import { registerFonts } from './lib/fonts'
 
-Promise.all([initI18n(), registerFonts()]).then(() => {
+initI18n().then(() => {
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <I18nProvider i18n={i18n}>

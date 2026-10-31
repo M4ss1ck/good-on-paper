@@ -4,12 +4,10 @@ import { Link } from "react-router";
 import { Trans } from "@lingui/react/macro";
 import { t } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react";
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
 import { useCVStore } from "../../store/cvStore";
 import { useUIStore } from "../../store/uiStore";
 import { useAIStore } from "../../store/aiStore";
-import { generatePdfDefinition } from "../pdf/generatePdf";
+import { downloadPdf } from "../pdf/renderPdf";
 import { ProviderSettings } from "../ai/ProviderSettings";
 import { DetectAIText } from "../ai/DetectAIText";
 import { TailorToJob } from "../ai/TailorToJob";
@@ -19,8 +17,6 @@ import { DiffPicker } from "../diff/DiffPicker";
 import { ImportDialog } from "../workspace/ImportDialog";
 import { loadCatalog, type AppLocale } from "../../i18n";
 import { GoodOnPaperLogo } from "../logo/GoodOnPaperLogo";
-
-pdfMake.addVirtualFileSystem(pdfFonts);
 
 /** Turns a CV name into a safe file base name. */
 function fileBaseName(name: string | undefined): string {
@@ -36,6 +32,7 @@ export function Toolbar() {
   const exportJson = useCVStore((s) => s.exportJson);
   const resetCV = useCVStore((s) => s.resetCV);
   const openModal = useUIStore((s) => s.setPdfModalOpen);
+  const pushToast = useUIStore((s) => s.pushToast);
   const saveStatus = useUIStore((s) => s.saveStatus);
   const setSettingsOpen = useAIStore((s) => s.setSettingsOpen);
   const hasProvider = useAIStore((s) => s.settings.provider !== null);
@@ -83,8 +80,10 @@ export function Toolbar() {
 
   const handleDownloadPdf = () => {
     if (!cv) return;
-    const def = generatePdfDefinition(cv);
-    pdfMake.createPdf(def).download(`${fileBaseName(cv.name)}.pdf`);
+    downloadPdf(cv, `${fileBaseName(cv.name)}.pdf`).catch((error: unknown) => {
+      console.error("PDF download failed", error);
+      pushToast({ tone: "error", message: t`Could not download the PDF` });
+    });
   };
 
   const handleExportJson = () => {

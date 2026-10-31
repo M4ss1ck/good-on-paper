@@ -1,4 +1,4 @@
-import type { TDocumentDefinitions, Style, Content } from "pdfmake/interfaces";
+import type { TDocumentDefinitions, Style, Content, ContentText } from "pdfmake/interfaces";
 import type {
   CV,
   Section,
@@ -9,6 +9,19 @@ import type {
   LanguageItem,
   CustomItem,
 } from "../../types/cv";
+
+/**
+ * A text node that is a named destination. pdfmake reads `id` from it, but @types/pdfmake
+ * does not declare the field, so it is typed here.
+ */
+type NamedDestinationText = ContentText & { id?: string };
+
+// Letter page with 50pt side margins. The divider spans the text column exactly.
+const PAGE_WIDTH = 612;
+const SIDE_MARGIN = 50;
+const DIVIDER_WIDTH = PAGE_WIDTH - 2 * SIDE_MARGIN;
+// Width of the bullet glyph column. Bullet text starts after it, so wrapped lines hang.
+const BULLET_MARKER_WIDTH = 10;
 
 const styles: Record<string, Style> = {
   name: { fontSize: 20, bold: true, color: "#1F3A5F" },
@@ -22,10 +35,15 @@ const styles: Record<string, Style> = {
   },
   body: { fontSize: 10, color: "#333333" },
   roleTitle: { fontSize: 10.5, bold: true, color: "#222222" },
-  companyLine: { fontSize: 10, italics: true, color: "#3A6EA5" },
-  bullet: { fontSize: 9.5 },
+  subline: { fontSize: 10, italics: true, color: "#3A6EA5" },
   dates: { fontSize: 9, color: "#888888" },
+  bullet: { fontSize: 9.5 },
 };
+
+/** The visible text of a link: its URL without the scheme and trailing slash (`github.com/jose`). */
+function linkText(url: string): string {
+  return url.replace(/^[a-z][a-z0-9+.-]*:\/\//i, "").replace(/\/$/, "");
+}
 
 function buildHeader(cv: CV): Content[] {
   const content: Content[] = [];
@@ -58,8 +76,19 @@ function buildHeader(cv: CV): Content[] {
 
   const filledLinks = cv.meta.links.filter((l) => l.label || l.url);
   if (filledLinks.length > 0) {
+    const parts: ContentText[] = [];
+    filledLinks.forEach((link, index) => {
+      if (index > 0) parts.push({ text: "  ·  " });
+      // A link with a URL prints the URL, not its label, and annotates the full address.
+      // A label-only link prints the label and carries no annotation.
+      parts.push(
+        link.url
+          ? { text: linkText(link.url), link: link.url }
+          : { text: link.label },
+      );
+    });
     content.push({
-      text: filledLinks.map((l) => l.label || l.url).join("  ·  "),
+      text: parts,
       style: "contact",
       color: "#3A6EA5",
       alignment: "center",
@@ -70,10 +99,19 @@ function buildHeader(cv: CV): Content[] {
   return content;
 }
 
-function sectionHeadingBlock(title: string, hideDivider?: boolean): Content[] {
+/**
+ * The heading is the section's named destination. It uses the stable section id, so a
+ * retitled section keeps its links.
+ */
+function sectionHeadingBlock(section: Section): Content[] {
+  const title: NamedDestinationText = {
+    text: section.title.toUpperCase(),
+    style: "sectionHeading",
+    id: section.id,
+  };
   return [
-    { text: title.toUpperCase(), style: "sectionHeading" },
-    ...(hideDivider
+    title,
+    ...(section.hideDivider
       ? []
       : [
           {
@@ -82,7 +120,7 @@ function sectionHeadingBlock(title: string, hideDivider?: boolean): Content[] {
                 type: "line" as const,
                 x1: 0,
                 y1: 0,
-                x2: 515,
+                x2: DIVIDER_WIDTH,
                 y2: 0,
                 lineWidth: 0.5,
                 lineColor: "#1F3A5F",
@@ -98,8 +136,8 @@ function keepTogether(content: Content[]): Content {
   return { stack: content, unbreakable: true };
 }
 
-function buildSection(title: string, blocks: Content[], hideDivider?: boolean): Content[] {
-  const heading = sectionHeadingBlock(title, hideDivider);
+function buildSection(section: Section, blocks: Content[]): Content[] {
+  const heading = sectionHeadingBlock(section);
 
   if (blocks.length === 0) {
     return [keepTogether(heading)];
@@ -117,12 +155,11 @@ function buildSummary(section: Section): Content[] {
       blocks.push({
         text: item.content,
         style: "body",
-        alignment: "justify" as const,
         unbreakable: true,
       });
     }
   }
-  return buildSection(section.title, blocks, section.hideDivider);
+  return buildSection(section, blocks);
 }
 
 function buildSkills(section: Section): Content[] {
@@ -141,37 +178,43 @@ function buildSkills(section: Section): Content[] {
       });
     }
   }
-  return buildSection(section.title, blocks, section.hideDivider);
+  return buildSection(section, blocks);
+}
+
+/**
+ * An experience role or education degree: a bold title with its dates right-aligned on the
+ * same row, then the subline (company or institution). `topMargin` is the gap above the title
+ * row, which differs by entry type. Dates are optional; the title row is skipped if both are empty.
+ */
+function entryHeader(
+  title: string | undefined,
+  subline: string,
+  dates: string,
+  topMargin: number,
+): Content[] {
+  const header: Content[] = [];
+  if (title || dates) {
+    header.push({
+      columns: [
+        { text: title ?? "", style: "roleTitle", width: "*" },
+        { text: dates, style: "dates", width: "auto", alignment: "right" as const },
+      ],
+      margin: [0, topMargin, 0, 0] as [number, number, number, number],
+    });
+  }
+  if (subline) {
+    header.push({ text: subline, style: "subline" });
+  }
+  return header;
 }
 
 function buildExperience(section: Section): Content[] {
   const items = section.items as ExperienceItem[];
   const blocks: Content[] = [];
   for (const item of items) {
-    const heading: Content[] = [];
     const dateText = [item.startDate, item.endDate].filter(Boolean).join(" – ");
-
-    if (item.role || dateText) {
-      heading.push({
-        columns: [
-          { text: item.role, style: "roleTitle", width: "*" },
-          {
-            text: dateText,
-            style: "dates",
-            width: "auto",
-            alignment: "right" as const,
-          },
-        ],
-        margin: [0, 4, 0, 0],
-      });
-    }
-
-    const companyLine = [item.company, item.location]
-      .filter(Boolean)
-      .join(", ");
-    if (companyLine) {
-      heading.push({ text: companyLine, style: "companyLine" });
-    }
+    const company = [item.company, item.location].filter(Boolean).join(", ");
+    const heading = entryHeader(item.role, company, dateText, 4);
 
     const bullets = item.bullets.filter(Boolean);
     if (bullets.length === 0) {
@@ -180,8 +223,13 @@ function buildExperience(section: Section): Content[] {
     }
 
     bullets.forEach((bullet, index) => {
+      // A "•" text glyph in a fixed-width column, so the marker is text in reading order
+      // and wrapped lines hang under the bullet text, not under the marker.
       const bulletBlock: Content = {
-        ul: [{ text: bullet, style: "bullet" }],
+        columns: [
+          { text: "•", style: "bullet", width: BULLET_MARKER_WIDTH },
+          { text: bullet, style: "bullet", width: "*" },
+        ],
         margin: [12, index === 0 ? 2 : 0, 0, 0],
         unbreakable: true,
       };
@@ -193,31 +241,14 @@ function buildExperience(section: Section): Content[] {
       );
     });
   }
-  return buildSection(section.title, blocks, section.hideDivider);
+  return buildSection(section, blocks);
 }
 
 function buildEducation(section: Section): Content[] {
   const items = section.items as EducationItem[];
   const blocks: Content[] = [];
   for (const item of items) {
-    const entry: Content[] = [];
-    if (item.degree || item.dates) {
-      entry.push({
-        columns: [
-          { text: item.degree, style: "roleTitle", width: "*" },
-          {
-            text: item.dates,
-            style: "dates",
-            width: "auto",
-            alignment: "right" as const,
-          },
-        ],
-        margin: [0, 3, 0, 0],
-      });
-    }
-    if (item.institution) {
-      entry.push({ text: item.institution, style: "companyLine" });
-    }
+    const entry = entryHeader(item.degree, item.institution ?? "", item.dates ?? "", 3);
     if (item.notes) {
       entry.push({
         text: item.notes,
@@ -227,13 +258,13 @@ function buildEducation(section: Section): Content[] {
     }
     if (entry.length > 0) blocks.push(keepTogether(entry));
   }
-  return buildSection(section.title, blocks, section.hideDivider);
+  return buildSection(section, blocks);
 }
 
 function buildLanguages(section: Section): Content[] {
   const items = section.items as LanguageItem[];
   const filled = items.filter((i) => i.language);
-  if (filled.length === 0) return buildSection(section.title, [], section.hideDivider);
+  if (filled.length === 0) return buildSection(section, []);
 
   const textParts = filled.flatMap((item, i) => {
     const parts: Content[] = [];
@@ -242,13 +273,13 @@ function buildLanguages(section: Section): Content[] {
     if (item.level) parts.push({ text: ` (${item.level})` });
     return parts;
   });
-  return buildSection(section.title, [
+  return buildSection(section, [
     {
       text: textParts,
       style: "body",
       unbreakable: true,
     },
-  ], section.hideDivider);
+  ]);
 }
 
 function buildCustom(section: Section): Content[] {
@@ -259,10 +290,13 @@ function buildCustom(section: Section): Content[] {
       blocks.push({ text: item.content, style: "body", unbreakable: true });
     }
   }
-  return buildSection(section.title, blocks, section.hideDivider);
+  return buildSection(section, blocks);
 }
 
-export function generatePdfDefinition(cv: CV): TDocumentDefinitions {
+export function generatePdfDefinition(
+  cv: CV,
+  options: { creationDate?: Date } = {},
+): TDocumentDefinitions {
   const content: Content[] = [...buildHeader(cv)];
 
   for (const section of cv.sections.filter((s) => s.visible)) {
@@ -288,12 +322,24 @@ export function generatePdfDefinition(cv: CV): TDocumentDefinitions {
     }
   }
 
+  // Title is "<name> - <title>", or the name alone when there is no title.
+  const title = [cv.meta.name, cv.meta.title].filter(Boolean).join(" - ");
+
   return {
     content,
     styles,
     defaultStyle: { font: cv.settings?.fontFamily ?? "Roboto", fontSize: 10, color: "#333333" },
     pageSize: "LETTER",
-    pageMargins: [50, 40, 50, 40],
-    info: { lang: cv.meta.locale ?? "en" } as Record<string, string>,
+    pageMargins: [SIDE_MARGIN, 40, SIDE_MARGIN, 40],
+    // Catalog /Lang comes from `language`; `info` carries only the document properties.
+    language: cv.meta.locale || "en",
+    version: "1.7",
+    info: {
+      title: title || undefined,
+      author: cv.meta.name || undefined,
+      subject: "Curriculum Vitae",
+      // pdfkit derives the trailer /ID from this too, so a fixed date fixes the whole file.
+      creationDate: options.creationDate,
+    },
   };
 }

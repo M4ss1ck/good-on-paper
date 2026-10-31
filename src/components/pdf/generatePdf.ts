@@ -31,7 +31,6 @@ const styles: Record<string, Style> = {
   roleTitle: { fontSize: 10.5, bold: true, color: "#222222" },
   companyLine: { fontSize: 10, italics: true, color: "#3A6EA5" },
   bullet: { fontSize: 9.5 },
-  dates: { fontSize: 9, color: "#888888" },
 };
 
 /** The visible text of a link: its URL without the scheme and trailing slash (`github.com/jose`). */
@@ -166,6 +165,11 @@ function buildSkills(section: Section): Content[] {
   return buildSection(section.title, blocks, section.hideDivider);
 }
 
+/** Company or institution line with its dates after a " · " separator; either part may be empty. */
+function joinSubline(name: string | undefined, dates: string | undefined): string {
+  return [name, dates].filter(Boolean).join(" · ");
+}
+
 function buildExperience(section: Section): Content[] {
   const items = section.items as ExperienceItem[];
   const blocks: Content[] = [];
@@ -173,24 +177,12 @@ function buildExperience(section: Section): Content[] {
     const heading: Content[] = [];
     const dateText = [item.startDate, item.endDate].filter(Boolean).join(" – ");
 
-    if (item.role || dateText) {
-      heading.push({
-        columns: [
-          { text: item.role, style: "roleTitle", width: "*" },
-          {
-            text: dateText,
-            style: "dates",
-            width: "auto",
-            alignment: "right" as const,
-          },
-        ],
-        margin: [0, 4, 0, 0],
-      });
+    if (item.role) {
+      heading.push({ text: item.role, style: "roleTitle", margin: [0, 4, 0, 0] });
     }
 
-    const companyLine = [item.company, item.location]
-      .filter(Boolean)
-      .join(", ");
+    // Dates ride on the company line, not in a right-aligned column, so they stay with the entry.
+    const companyLine = joinSubline([item.company, item.location].filter(Boolean).join(", "), dateText);
     if (companyLine) {
       heading.push({ text: companyLine, style: "companyLine" });
     }
@@ -228,22 +220,12 @@ function buildEducation(section: Section): Content[] {
   const blocks: Content[] = [];
   for (const item of items) {
     const entry: Content[] = [];
-    if (item.degree || item.dates) {
-      entry.push({
-        columns: [
-          { text: item.degree, style: "roleTitle", width: "*" },
-          {
-            text: item.dates,
-            style: "dates",
-            width: "auto",
-            alignment: "right" as const,
-          },
-        ],
-        margin: [0, 3, 0, 0],
-      });
+    if (item.degree) {
+      entry.push({ text: item.degree, style: "roleTitle", margin: [0, 3, 0, 0] });
     }
-    if (item.institution) {
-      entry.push({ text: item.institution, style: "companyLine" });
+    const subline = joinSubline(item.institution, item.dates);
+    if (subline) {
+      entry.push({ text: subline, style: "companyLine" });
     }
     if (item.notes) {
       entry.push({

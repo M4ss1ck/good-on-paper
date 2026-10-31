@@ -1,8 +1,19 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { renderPdf } from "./renderPdf";
-import { parsePdf, readBundledFontsFromDisk, type ParsedPdf } from "./pdfTestUtils";
+import {
+  parsePdf,
+  readBundledFontsFromDisk,
+  type ParsedPdf,
+  type PdfTextItem,
+} from "./pdfTestUtils";
 import { makeAtsCV, makeAtsCVTwoPages } from "../../test/fixtures";
-import type { CV, ExperienceItem } from "../../types/cv";
+import type {
+  CV,
+  EducationItem,
+  ExperienceItem,
+  Section,
+  SectionType,
+} from "../../types/cv";
 
 const fontSource = readBundledFontsFromDisk;
 const families: CV["settings"]["fontFamily"][] = ["Roboto", "Inter", "Lora"];
@@ -50,6 +61,103 @@ function expectedBullets(cv: CV): string[] {
 /** Drops all whitespace, so a bullet that wraps (or splits at a hyphen) still compares equal. */
 function squash(text: string): string {
   return text.replace(/\s+/g, "");
+}
+
+/** Whitespace-free, lowercase form used for every search in the reading-order index. */
+function key(text: string): string {
+  return squash(text).toLowerCase();
+}
+
+/**
+ * The whole text in pdf.js reading order, whitespace removed and lowercased, with each
+ * character mapped back to the text item it came from. Positions are indexes into `text`.
+ */
+function readingIndex(pdf: ParsedPdf) {
+  let text = "";
+  const owner: PdfTextItem[] = [];
+  for (const item of pdf.textItems) {
+    for (const ch of item.str) {
+      if (/\s/.test(ch)) continue;
+      text += ch.toLowerCase();
+      owner.push(item);
+    }
+  }
+  return {
+    find: (needle: string, from: number) => text.indexOf(key(needle), Math.max(from, 0)),
+    itemAt: (at: number) => owner[at],
+  };
+}
+
+function sameLine(a: PdfTextItem, b: PdfTextItem): boolean {
+  return a.page === b.page && Math.abs(a.y - b.y) < 1;
+}
+
+function sectionOf(cv: CV, type: SectionType): Section {
+  const found = cv.sections.find((s) => s.visible && s.type === type);
+  if (!found) throw new Error(`fixture has no visible ${type} section`);
+  return found;
+}
+
+/** A dated entry as the reader sees it: heading (role/degree), subline (company/institution), dates, first bullet or note. */
+interface DatedEntry {
+  heading: string;
+  subline: string;
+  dates: string;
+  firstLine: string;
+}
+
+function experienceEntries(cv: CV): DatedEntry[] {
+  return (sectionOf(cv, "experience").items as ExperienceItem[]).map((item) => ({
+    heading: item.role,
+    subline: [item.company, item.location].filter(Boolean).join(", "),
+    dates: [item.startDate, item.endDate].filter(Boolean).join(" – "),
+    firstLine: item.bullets.find(Boolean) ?? "",
+  }));
+}
+
+function educationEntries(cv: CV): DatedEntry[] {
+  return (sectionOf(cv, "education").items as EducationItem[]).map((item) => ({
+    heading: item.degree,
+    subline: item.institution,
+    dates: item.dates,
+    firstLine: item.notes ?? "",
+  }));
+}
+
+/**
+ * The layout rule for dated entries, checked in pdf.js reading order. For each section, in
+ * document order: the heading sits on its own line, the dates sit on the subline after it
+ * (on the same line as the subline), and the entry's first bullet or note comes last.
+ */
+function expectDatedEntries(
+  pdf: ParsedPdf,
+  sections: { title: string; entries: DatedEntry[] }[],
+) {
+  const reading = readingIndex(pdf);
+  let cursor = 0;
+  for (const section of sections) {
+    cursor = reading.find(section.title, cursor);
+    expect(cursor, `section heading "${section.title}"`).toBeGreaterThanOrEqual(0);
+    for (const entry of section.entries) {
+      const headingAt = reading.find(entry.heading, cursor);
+      expect(headingAt, `heading "${entry.heading}"`).toBeGreaterThanOrEqual(0);
+      const sublineAt = reading.find(entry.subline, headingAt);
+      expect(sublineAt, `subline "${entry.subline}"`).toBeGreaterThan(headingAt);
+      const datesAt = reading.find(entry.dates, sublineAt);
+      expect(datesAt, `dates "${entry.dates}" after "${entry.subline}"`).toBeGreaterThan(sublineAt);
+      expect(
+        sameLine(reading.itemAt(datesAt), reading.itemAt(sublineAt)),
+        `dates "${entry.dates}" on the subline line`,
+      ).toBe(true);
+      expect(
+        sameLine(reading.itemAt(headingAt), reading.itemAt(sublineAt)),
+        `heading "${entry.heading}" on its own line`,
+      ).toBe(false);
+      const firstAt = reading.find(entry.firstLine, datesAt);
+      expect(firstAt, `first line "${entry.firstLine}" after its dates`).toBeGreaterThan(datesAt);
+      cursor = firstAt;
+    }
+  }
 }
 
 describe.each(families)("renderPdf with %s", (fontFamily) => {
@@ -148,6 +256,14 @@ describe.each(families)("renderPdf with %s", (fontFamily) => {
       }
       expect(squash(read).startsWith(squash(bullet))).toBe(true);
     });
+  });
+
+  it("keeps each experience and education date with its entry, on the subline after the heading", () => {
+    const cv = makeAtsCV({ settings: { fontFamily } });
+    expectDatedEntries(pdf, [
+      { title: sectionOf(cv, "experience").title, entries: experienceEntries(cv) },
+      { title: sectionOf(cv, "education").title, entries: educationEntries(cv) },
+    ]);
   });
 
   it("titles an untitled CV with the name alone and takes Lang from the CV locale", async () => {

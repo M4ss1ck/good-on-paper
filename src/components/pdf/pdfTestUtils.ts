@@ -58,7 +58,7 @@ export interface PdfDestination {
   y: number | null;
 }
 
-export interface PdfOutlineNode {
+interface PdfOutlineNode {
   title: string;
   /** Resolved destination, or null when the bookmark has no internal destination. */
   dest: PdfDestination | null;
@@ -66,7 +66,7 @@ export interface PdfOutlineNode {
   children: PdfOutlineNode[];
 }
 
-export interface PdfLinkAnnotation {
+interface PdfLinkAnnotation {
   /** 0-based page index. */
   page: number;
   url: string;
@@ -74,7 +74,7 @@ export interface PdfLinkAnnotation {
   rect: [number, number, number, number];
 }
 
-export interface PdfOperator {
+interface PdfOperator {
   /** Operator name as pdf.js names it, e.g. "constructPath", "showText". */
   name: string;
   args: unknown[];

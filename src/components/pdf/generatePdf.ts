@@ -10,6 +10,11 @@ import type {
   CustomItem,
 } from "../../types/cv";
 
+// Letter page with 50pt side margins. The divider spans the text column exactly.
+const PAGE_WIDTH = 612;
+const SIDE_MARGIN = 50;
+const DIVIDER_WIDTH = PAGE_WIDTH - 2 * SIDE_MARGIN;
+
 const styles: Record<string, Style> = {
   name: { fontSize: 20, bold: true, color: "#1F3A5F" },
   title: { fontSize: 12, color: "#3A6EA5" },
@@ -82,7 +87,7 @@ function sectionHeadingBlock(title: string, hideDivider?: boolean): Content[] {
                 type: "line" as const,
                 x1: 0,
                 y1: 0,
-                x2: 515,
+                x2: DIVIDER_WIDTH,
                 y2: 0,
                 lineWidth: 0.5,
                 lineColor: "#1F3A5F",
@@ -117,7 +122,6 @@ function buildSummary(section: Section): Content[] {
       blocks.push({
         text: item.content,
         style: "body",
-        alignment: "justify" as const,
         unbreakable: true,
       });
     }
@@ -288,12 +292,22 @@ export function generatePdfDefinition(cv: CV): TDocumentDefinitions {
     }
   }
 
+  // Title is "<name> - <title>", or the name alone when there is no title.
+  const title = [cv.meta.name, cv.meta.title].filter(Boolean).join(" - ");
+
   return {
     content,
     styles,
     defaultStyle: { font: cv.settings?.fontFamily ?? "Roboto", fontSize: 10, color: "#333333" },
     pageSize: "LETTER",
-    pageMargins: [50, 40, 50, 40],
-    info: { lang: cv.meta.locale ?? "en" } as Record<string, string>,
+    pageMargins: [SIDE_MARGIN, 40, SIDE_MARGIN, 40],
+    // Catalog /Lang comes from `language`; `info` carries only the document properties.
+    language: cv.meta.locale || "en",
+    version: "1.7",
+    info: {
+      title: title || undefined,
+      author: cv.meta.name || undefined,
+      subject: "Curriculum Vitae",
+    },
   };
 }

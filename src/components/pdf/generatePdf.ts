@@ -1,4 +1,4 @@
-import type { TDocumentDefinitions, Style, Content } from "pdfmake/interfaces";
+import type { TDocumentDefinitions, Style, Content, ContentText } from "pdfmake/interfaces";
 import type {
   CV,
   Section,
@@ -32,6 +32,11 @@ const styles: Record<string, Style> = {
   dates: { fontSize: 9, color: "#888888" },
 };
 
+/** The visible text of a link: its URL without the scheme and trailing slash (`github.com/jose`). */
+function linkText(url: string): string {
+  return url.replace(/^[a-z][a-z0-9+.-]*:\/\//i, "").replace(/\/$/, "");
+}
+
 function buildHeader(cv: CV): Content[] {
   const content: Content[] = [];
 
@@ -63,8 +68,19 @@ function buildHeader(cv: CV): Content[] {
 
   const filledLinks = cv.meta.links.filter((l) => l.label || l.url);
   if (filledLinks.length > 0) {
+    const parts: ContentText[] = [];
+    filledLinks.forEach((link, index) => {
+      if (index > 0) parts.push({ text: "  ·  " });
+      // A link with a URL prints the URL, not its label, and annotates the full address.
+      // A label-only link prints the label and carries no annotation.
+      parts.push(
+        link.url
+          ? { text: linkText(link.url), link: link.url }
+          : { text: link.label },
+      );
+    });
     content.push({
-      text: filledLinks.map((l) => l.label || l.url).join("  ·  "),
+      text: parts,
       style: "contact",
       color: "#3A6EA5",
       alignment: "center",

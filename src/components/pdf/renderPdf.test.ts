@@ -79,6 +79,28 @@ describe.each(families)("renderPdf with %s", (fontFamily) => {
     expect(pdf.markInfo?.Marked ?? false).toBe(false);
   });
 
+  it("prints each linked URL without scheme or trailing slash and annotates the full URL", () => {
+    // makeAtsCV header links: GitHub (label + URL), LinkedIn (URL only), Portfolio (label only).
+    expect(pdf.text).toContain("github.com/jose");
+    expect(pdf.text).toContain("www.linkedin.com/in/jose-martinez");
+    expect(pdf.text).not.toContain("https://");
+    const annotated = new Set(pdf.links.map((link) => link.url));
+    expect(annotated).toEqual(
+      new Set(["https://github.com/jose", "https://www.linkedin.com/in/jose-martinez/"]),
+    );
+  });
+
+  it("prints a label-only link's label and adds no annotation for it", () => {
+    expect(pdf.text).toContain("Portfolio");
+    // Covered by the exact annotation set above: "Portfolio" must not appear as a URI.
+    expect(pdf.links.map((link) => link.url)).not.toContain("Portfolio");
+  });
+
+  it("does not print the label of a link that has a URL", () => {
+    expect(pdf.text).not.toContain("GitHub");
+    expect(pdf.text).not.toContain("LinkedIn");
+  });
+
   it("runs each section divider from the left margin to the right margin", async () => {
     const rules = await horizontalRules(pdf, 0);
     // One divider per visible section in makeAtsCV: summary, skills, experience,

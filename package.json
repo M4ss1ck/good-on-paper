@@ -25,7 +25,7 @@
     "immer": "^11.1.4",
     "lucide-react": "^1.8.0",
     "nanoid": "^5.1.9",
-    "pdfmake": "^0.3.7",
+    "pdfmake": "0.3.7",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router": "^7.14.1",

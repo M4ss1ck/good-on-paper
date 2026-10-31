@@ -339,6 +339,8 @@ describe.each(families)("renderPdf with %s", (fontFamily) => {
     const bullets = expectedBullets(makeAtsCV({ settings: { fontFamily } }));
     expect(bullets.length).toBeGreaterThan(0);
     expect(bulletItems(pdf)).toHaveLength(bullets.length);
+    // The same count in the extracted text, the way an ATS reads it.
+    expect(joinWrappedLines(pdf.text).split("•")).toHaveLength(bullets.length + 1);
   });
 
   it("puts each bullet glyph immediately before its bullet text in reading order", () => {
@@ -446,5 +448,21 @@ describe.each(families)("two-page outline and destinations with %s", (fontFamily
 
   it("names every visible section on its heading's page", () => {
     expectNamedDestinations(pdf, cv);
+  });
+});
+
+describe("renderPdf determinism", () => {
+  const sameBytes = (a: Uint8Array, b: Uint8Array) =>
+    a.length === b.length && a.every((byte, i) => byte === b[i]);
+
+  it("renders byte-identical PDFs for the same CV and creation date", async () => {
+    const cv = makeAtsCV({ settings: { fontFamily: "Inter" } });
+    const creationDate = new Date("2026-01-15T09:30:00Z");
+    const first = await renderPdf(cv, { fontSource, creationDate });
+    // Ms apart on purpose: the default creation date is "now", so a second render at a
+    // later instant would differ if the option were ignored.
+    await new Promise((resolve) => setTimeout(resolve, 20));
+    const second = await renderPdf(cv, { fontSource, creationDate });
+    expect(sameBytes(first, second)).toBe(true);
   });
 });

@@ -306,7 +306,10 @@ function buildCustom(section: Section): Content[] {
   return buildSection(section, blocks);
 }
 
-export function generatePdfDefinition(cv: CV): TDocumentDefinitions {
+export function generatePdfDefinition(
+  cv: CV,
+  options: { creationDate?: Date } = {},
+): TDocumentDefinitions {
   const content: Content[] = [...buildHeader(cv)];
 
   for (const section of cv.sections.filter((s) => s.visible)) {
@@ -348,6 +351,8 @@ export function generatePdfDefinition(cv: CV): TDocumentDefinitions {
       title: title || undefined,
       author: cv.meta.name || undefined,
       subject: "Curriculum Vitae",
+      // pdfkit derives the trailer /ID from this too, so a fixed date fixes the whole file.
+      creationDate: options.creationDate,
     },
   };
 }

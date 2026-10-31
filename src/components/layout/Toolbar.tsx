@@ -32,6 +32,7 @@ export function Toolbar() {
   const exportJson = useCVStore((s) => s.exportJson);
   const resetCV = useCVStore((s) => s.resetCV);
   const openModal = useUIStore((s) => s.setPdfModalOpen);
+  const pushToast = useUIStore((s) => s.pushToast);
   const saveStatus = useUIStore((s) => s.saveStatus);
   const setSettingsOpen = useAIStore((s) => s.setSettingsOpen);
   const hasProvider = useAIStore((s) => s.settings.provider !== null);
@@ -79,7 +80,10 @@ export function Toolbar() {
 
   const handleDownloadPdf = () => {
     if (!cv) return;
-    void downloadPdf(cv, `${fileBaseName(cv.name)}.pdf`);
+    downloadPdf(cv, `${fileBaseName(cv.name)}.pdf`).catch((error: unknown) => {
+      console.error("PDF download failed", error);
+      pushToast({ tone: "error", message: t`Could not download the PDF` });
+    });
   };
 
   const handleExportJson = () => {

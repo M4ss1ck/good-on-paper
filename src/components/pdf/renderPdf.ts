@@ -11,14 +11,19 @@ export type FontFiles = Record<string, Uint8Array>;
  * Supplies the font files that are not built into pdfmake (Inter and Lora).
  * The app fetches its bundled copies; node tests read them from disk.
  */
-export type FontSource = () => Promise<FontFiles>;
+type FontSource = () => Promise<FontFiles>;
 
-export interface RenderOptions {
+interface RenderOptions {
   fontSource?: FontSource;
+  /**
+   * The PDF's CreationDate. Defaults to the CV's last edit, so the same CV renders the same
+   * bytes for preview and download. Falls back to pdfmake's default (now) if updatedAt does not parse.
+   */
+  creationDate?: Date;
 }
 
 /** Fetches the TTF files the app ships (see lib/fonts.ts). Browser only. */
-export const fetchBundledFonts: FontSource = async () => {
+const fetchBundledFonts: FontSource = async () => {
   const entries = await Promise.all(
     Object.entries(bundledFontUrls).map(async ([name, url]) => {
       const res = await fetch(url);
@@ -88,7 +93,9 @@ function ensureFonts(source: FontSource): Promise<void> {
 /** Renders a CV to PDF bytes. Preview and download both call this so they match. */
 export async function renderPdf(cv: CV, options: RenderOptions = {}): Promise<Uint8Array> {
   await ensureFonts(options.fontSource ?? fetchBundledFonts);
-  const buffer = await pdfMake.createPdf(generatePdfDefinition(cv)).getBuffer();
+  const lastEdit = new Date(cv.updatedAt);
+  const creationDate = options.creationDate ?? (Number.isNaN(lastEdit.getTime()) ? undefined : lastEdit);
+  const buffer = await pdfMake.createPdf(generatePdfDefinition(cv, { creationDate })).getBuffer();
   return new Uint8Array(buffer);
 }
 
@@ -102,6 +109,9 @@ export async function downloadPdf(cv: CV, fileName: string, options: RenderOptio
   const link = document.createElement("a");
   link.href = url;
   link.download = fileName;
+  // Some browsers (older Firefox) ignore click() on a link that is not in the document.
+  document.body.append(link);
   link.click();
+  link.remove();
   setTimeout(() => URL.revokeObjectURL(url), 10_000);
 }

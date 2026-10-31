@@ -161,42 +161,6 @@ function expectDatedEntries(
   }
 }
 
-/** Titles of a tree, with its shape kept: the comparison unit for outlines. */
-interface TitleTree {
-  title: string;
-  children: TitleTree[];
-}
-
-function titleTree<T extends { title: string; children: T[] }>(nodes: T[]): TitleTree[] {
-  return nodes.map((node) => ({ title: node.title, children: titleTree(node.children) }));
-}
-
-/** Pre-order walk: the order entries appear on the page. */
-function preorder<T extends { children: T[] }>(nodes: T[]): T[] {
-  return nodes.flatMap((node) => [node, ...preorder(node.children)]);
-}
-
-/** Outline entries a visible section gets: a role per experience item, a degree per education item. */
-function childTitles(section: Section): string[] {
-  if (section.type === "experience") {
-    return (section.items as ExperienceItem[]).map((item) => item.role).filter(Boolean);
-  }
-  if (section.type === "education") {
-    return (section.items as EducationItem[]).map((item) => item.degree).filter(Boolean);
-  }
-  return [];
-}
-
-/** The outline the CV should produce. Section headings are set in capitals, so the entry is too. */
-function expectedOutline(cv: CV): TitleTree[] {
-  return cv.sections
-    .filter((section) => section.visible)
-    .map((section) => ({
-      title: section.title.toUpperCase(),
-      children: childTitles(section).map((title) => ({ title, children: [] })),
-    }));
-}
-
 /**
  * Finds each text in reading order. Each search starts after the previous match, so a
  * name that also appears in the header (the job title) resolves to its section entry.
@@ -232,15 +196,6 @@ function expectDestinationOnHeading(
   expect(Math.abs((dest?.x ?? NaN) - MARGIN), `${label}: x`).toBeLessThanOrEqual(
     DEST_X_TOLERANCE,
   );
-}
-
-function expectOutlineDestinations(pdf: ParsedPdf, cv: CV) {
-  const entries = preorder(pdf.outline);
-  const headings = locateInOrder(pdf, preorder(expectedOutline(cv)).map((e) => e.title));
-  expect(entries).toHaveLength(headings.length);
-  entries.forEach((entry, i) => {
-    expectDestinationOnHeading(entry.dest, headings[i], `outline "${entry.title}"`);
-  });
 }
 
 function expectNamedDestinations(pdf: ParsedPdf, cv: CV) {
@@ -379,50 +334,39 @@ describe.each(families)("renderPdf with %s", (fontFamily) => {
       await other.destroy();
     }
   });
-  it("lists each visible section as a top-level outline entry, in order, as printed", () => {
+
+  it("omits the hidden section and keeps the empty visible one, by named destination", () => {
     const cv = makeAtsCV({ settings: { fontFamily } });
-    expect(pdf.outline.map((node) => node.title)).toEqual(
-      expectedOutline(cv).map((node) => node.title),
-    );
+    const hidden = cv.sections.filter((section) => !section.visible).map((section) => section.id);
+    const empty = cv.sections
+      .filter((section) => section.visible && section.items.length === 0)
+      .map((section) => section.id);
+    expect(hidden.length).toBeGreaterThan(0);
+    expect(empty.length).toBeGreaterThan(0);
+    for (const id of hidden) expect(pdf.namedDestinations).not.toHaveProperty(id);
+    for (const id of empty) expect(pdf.namedDestinations).toHaveProperty(id);
+    expect(pdf.text).not.toContain("must not render");
   });
 
-  it("nests experience roles and education degrees under their section", () => {
-    const cv = makeAtsCV({ settings: { fontFamily } });
-    expect(titleTree(pdf.outline)).toEqual(expectedOutline(cv));
-    const children = Object.fromEntries(pdf.outline.map((node) => [node.title, node.children]));
-    expect(children["PROFESSIONAL EXPERIENCE"].map((node) => node.title)).toEqual([
-      "Senior Platform Engineer",
-      "Backend Engineer",
-    ]);
-    expect(children["EDUCATION"].map((node) => node.title)).toEqual([
-      "MSc Distributed Systems",
-    ]);
-  });
-
-  it("omits the hidden section and keeps the empty visible one", () => {
-    const titles = preorder(pdf.outline).map((node) => node.title);
-    expect(titles).not.toContain("PUBLICATIONS");
-    const certifications = pdf.outline.find((node) => node.title === "CERTIFICATIONS");
-    expect(certifications).toBeDefined();
-    expect(certifications?.children).toEqual([]);
-  });
-
-  it("points each outline entry at its heading: same page, top of text, left margin", () => {
-    expectOutlineDestinations(pdf, makeAtsCV({ settings: { fontFamily } }));
-  });
 
   it("names every visible section by its id, on the page its heading is on", () => {
     expectNamedDestinations(pdf, makeAtsCV({ settings: { fontFamily } }));
   });
 
   it("does not open the outline panel by default", () => {
-    // pdfmake sets /PageMode /UseOutlines whenever bookmarks exist. The patch removes it.
+    // pdfmake sets /PageMode /UseOutlines whenever a PDF has bookmarks. Without them, the
+    // viewer opens on the page.
     expect(pdf.pageMode).not.toBe("UseOutlines");
     expect(rawBytes).not.toMatch(/\/PageMode\s*\/UseOutlines/);
   });
+
+  it("has no outline: bookmarks are off and named destinations remain", () => {
+    expect(pdf.outline).toEqual([]);
+    expect(rawBytes).not.toMatch(/\/Outlines\b/);
+  });
 });
 
-describe.each(families)("two-page outline and destinations with %s", (fontFamily) => {
+describe.each(families)("two-page named destinations with %s", (fontFamily) => {
   let pdf: ParsedPdf;
   const cv = makeAtsCVTwoPages({ settings: { fontFamily } });
 
@@ -436,14 +380,6 @@ describe.each(families)("two-page outline and destinations with %s", (fontFamily
 
   it("renders onto a second page", () => {
     expect(pdf.pageCount).toBe(2);
-  });
-
-  it("points every outline entry at its heading on the page it is printed on", () => {
-    expectOutlineDestinations(pdf, cv);
-    // Some experience entries sit on page two, so their bookmarks must resolve there.
-    const pages = preorder(pdf.outline).map((node) => node.dest?.page);
-    expect(pages).toContain(0);
-    expect(pages).toContain(1);
   });
 
   it("names every visible section on its heading's page", () => {

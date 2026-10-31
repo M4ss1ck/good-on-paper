@@ -11,15 +11,10 @@ import type {
 } from "../../types/cv";
 
 /**
- * Fields pdfmake reads from a text node for named destinations (`id`) and outlines
- * (Renderer.renderLine in its bundle). @types/pdfmake does not declare them, so the
- * text nodes that carry them are typed here.
+ * A text node that is a named destination. pdfmake reads `id` from it, but @types/pdfmake
+ * does not declare the field, so it is typed here.
  */
-type OutlinedText = ContentText & {
-  id?: string;
-  outline?: boolean;
-  outlineParentId?: string;
-};
+type NamedDestinationText = ContentText & { id?: string };
 
 // Letter page with 50pt side margins. The divider spans the text column exactly.
 const PAGE_WIDTH = 612;
@@ -104,15 +99,14 @@ function buildHeader(cv: CV): Content[] {
 }
 
 /**
- * The heading is the section's outline entry and its named destination. Both use the stable
- * section id, so a retitled section keeps its links.
+ * The heading is the section's named destination. It uses the stable section id, so a
+ * retitled section keeps its links.
  */
 function sectionHeadingBlock(section: Section): Content[] {
-  const title: OutlinedText = {
+  const title: NamedDestinationText = {
     text: section.title.toUpperCase(),
     style: "sectionHeading",
     id: section.id,
-    outline: true,
   };
   return [
     title,
@@ -192,25 +186,17 @@ function joinSubline(name: string | undefined, dates: string | undefined): strin
 }
 
 /**
- * An experience role or education degree: a bold title that is the section's outline entry,
- * then its subline. `topMargin` is the gap above the title, which differs by entry type.
+ * An experience role or education degree: a bold title, then its subline. `topMargin` is the
+ * gap above the title, which differs by entry type.
  */
-function entryHeader(
-  title: string | undefined,
-  subline: string,
-  topMargin: number,
-  sectionId: string,
-): Content[] {
+function entryHeader(title: string | undefined, subline: string, topMargin: number): Content[] {
   const header: Content[] = [];
   if (title) {
-    const heading: OutlinedText = {
+    header.push({
       text: title,
       style: "roleTitle",
       margin: [0, topMargin, 0, 0] as [number, number, number, number],
-      outline: true,
-      outlineParentId: sectionId,
-    };
-    header.push(heading);
+    });
   }
   if (subline) {
     header.push({ text: subline, style: "subline" });
@@ -225,7 +211,7 @@ function buildExperience(section: Section): Content[] {
     const dateText = [item.startDate, item.endDate].filter(Boolean).join(" – ");
     // Dates ride on the subline, not in a right-aligned column, so they stay with the entry.
     const subline = joinSubline([item.company, item.location].filter(Boolean).join(", "), dateText);
-    const heading = entryHeader(item.role, subline, 4, section.id);
+    const heading = entryHeader(item.role, subline, 4);
 
     const bullets = item.bullets.filter(Boolean);
     if (bullets.length === 0) {
@@ -259,7 +245,7 @@ function buildEducation(section: Section): Content[] {
   const items = section.items as EducationItem[];
   const blocks: Content[] = [];
   for (const item of items) {
-    const entry = entryHeader(item.degree, joinSubline(item.institution, item.dates), 3, section.id);
+    const entry = entryHeader(item.degree, joinSubline(item.institution, item.dates), 3);
     if (item.notes) {
       entry.push({
         text: item.notes,

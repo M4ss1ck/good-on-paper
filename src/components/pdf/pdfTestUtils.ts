@@ -2,7 +2,7 @@
 // Test-only helpers. Nothing in the app imports this file.
 //
 // parsePdf() reads PDF bytes the way an ATS or a reader does (pdf.js), so tests
-// assert on extracted text, positions, outline, destinations, annotations and
+// assert on extracted text, positions, destinations, annotations and
 // the page drawing operators instead of on the pdfmake definition.
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
@@ -58,14 +58,6 @@ export interface PdfDestination {
   y: number | null;
 }
 
-interface PdfOutlineNode {
-  title: string;
-  /** Resolved destination, or null when the bookmark has no internal destination. */
-  dest: PdfDestination | null;
-  url: string | null;
-  children: PdfOutlineNode[];
-}
-
 interface PdfLinkAnnotation {
   /** 0-based page index. */
   page: number;
@@ -92,7 +84,8 @@ export interface ParsedPdf {
   pageText(pageIndex: number): string;
   /** All pages, joined with newlines. */
   text: string;
-  outline: PdfOutlineNode[];
+  /** pdf.js getOutline() (bookmarks), or [] when the PDF has none. */
+  outline: unknown[];
   /** Named destinations (pdf.js getDestinations), resolved to positions. */
   namedDestinations: Record<string, PdfDestination>;
   /** Every link annotation on every page. */
@@ -172,23 +165,7 @@ export async function parsePdf(bytes: Uint8Array): Promise<ParsedPdf> {
     };
   };
 
-  type RawOutline = {
-    title: string;
-    dest: unknown;
-    url: string | null;
-    items: RawOutline[];
-  };
-  const toOutline = async (nodes: RawOutline[]): Promise<PdfOutlineNode[]> =>
-    Promise.all(
-      nodes.map(async (node) => ({
-        title: node.title,
-        dest: await resolveDest(node.dest),
-        url: node.url,
-        children: await toOutline(node.items),
-      })),
-    );
-  const rawOutline = ((await doc.getOutline()) ?? []) as RawOutline[];
-  const outline = await toOutline(rawOutline);
+  const outline = (await doc.getOutline()) ?? [];
 
   const namedDestinations: Record<string, PdfDestination> = {};
   const destinations = await doc.getDestinations();

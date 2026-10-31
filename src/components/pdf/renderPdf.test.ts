@@ -2,7 +2,7 @@ import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { renderPdf } from "./renderPdf";
 import { parsePdf, readBundledFontsFromDisk, type ParsedPdf } from "./pdfTestUtils";
 import { makeAtsCV, makeAtsCVTwoPages } from "../../test/fixtures";
-import type { CV } from "../../types/cv";
+import type { CV, ExperienceItem } from "../../types/cv";
 
 const fontSource = readBundledFontsFromDisk;
 const families: CV["settings"]["fontFamily"][] = ["Roboto", "Inter", "Lora"];
@@ -37,6 +37,19 @@ async function horizontalRules(pdf: ParsedPdf, pageIndex: number) {
     rules.push({ startX: buffer[1], endX: buffer[4], y: buffer[2] });
   }
   return rules;
+}
+
+/** Non-empty experience bullets of the fixture, in document order. Input-derived, not rendered. */
+function expectedBullets(cv: CV): string[] {
+  return cv.sections
+    .filter((s) => s.visible && s.type === "experience")
+    .flatMap((s) => (s.items as ExperienceItem[]).flatMap((item) => item.bullets))
+    .filter(Boolean);
+}
+
+/** Drops all whitespace, so a bullet that wraps (or splits at a hyphen) still compares equal. */
+function squash(text: string): string {
+  return text.replace(/\s+/g, "");
 }
 
 describe.each(families)("renderPdf with %s", (fontFamily) => {
@@ -110,6 +123,31 @@ describe.each(families)("renderPdf with %s", (fontFamily) => {
       expect(rule.startX).toBeCloseTo(MARGIN, 2);
       expect(rule.endX).toBeCloseTo(PAGE_WIDTH - MARGIN, 2);
     }
+  });
+
+  // pdf.js merges a bullet's "•" into the text item that follows it on the same line, so a
+  // "•" item is one whose text starts with the glyph. Empty zero-width items are not bullets.
+  const bulletItems = (pdf: ParsedPdf) =>
+    pdf.textItems.flatMap((item, i) => (item.str.trimStart().startsWith("•") ? [i] : []));
+
+  it("starts every non-empty bullet with a bullet glyph text item", () => {
+    const bullets = expectedBullets(makeAtsCV({ settings: { fontFamily } }));
+    expect(bullets.length).toBeGreaterThan(0);
+    expect(bulletItems(pdf)).toHaveLength(bullets.length);
+  });
+
+  it("puts each bullet glyph immediately before its bullet text in reading order", () => {
+    const bullets = expectedBullets(makeAtsCV({ settings: { fontFamily } }));
+    const glyphIndexes = bulletItems(pdf);
+    bullets.forEach((bullet, n) => {
+      // Read forward from the n-th glyph item until the bullet's text is covered.
+      const start = glyphIndexes[n];
+      let read = pdf.textItems[start].str.trimStart().slice(1);
+      for (let j = start + 1; j < pdf.textItems.length && squash(read).length < squash(bullet).length; j++) {
+        read += pdf.textItems[j].str;
+      }
+      expect(squash(read).startsWith(squash(bullet))).toBe(true);
+    });
   });
 
   it("titles an untitled CV with the name alone and takes Lang from the CV locale", async () => {

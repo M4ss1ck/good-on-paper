@@ -14,6 +14,8 @@ import type {
 const PAGE_WIDTH = 612;
 const SIDE_MARGIN = 50;
 const DIVIDER_WIDTH = PAGE_WIDTH - 2 * SIDE_MARGIN;
+// Width of the bullet glyph column. Bullet text starts after it, so wrapped lines hang.
+const BULLET_MARKER_WIDTH = 10;
 
 const styles: Record<string, Style> = {
   name: { fontSize: 20, bold: true, color: "#1F3A5F" },
@@ -200,8 +202,13 @@ function buildExperience(section: Section): Content[] {
     }
 
     bullets.forEach((bullet, index) => {
+      // A "•" text glyph in a fixed-width column, so the marker is text in reading order
+      // and wrapped lines hang under the bullet text, not under the marker.
       const bulletBlock: Content = {
-        ul: [{ text: bullet, style: "bullet" }],
+        columns: [
+          { text: "•", style: "bullet", width: BULLET_MARKER_WIDTH },
+          { text: bullet, style: "bullet", width: "*" },
+        ],
         margin: [12, index === 0 ? 2 : 0, 0, 0],
         unbreakable: true,
       };

@@ -1,0 +1,37 @@
+diff --git a/node_modules/pdfmake/build/pdfmake.js b/node_modules/pdfmake/build/pdfmake.js
+index 343aa0a..6538e7b 100644
+--- a/node_modules/pdfmake/build/pdfmake.js
++++ b/node_modules/pdfmake/build/pdfmake.js
+@@ -7877,8 +7877,11 @@ class Renderer {
+       if (line._outline.parentId && this.outlineMap[line._outline.parentId]) {
+         parentOutline = this.outlineMap[line._outline.parentId];
+       }
++      // PATCHED (see patches/README.md): pass the line's top-left so the bookmark lands on the heading.
+       let outline = parentOutline.addItem(line._outline.text, {
+-        expanded: line._outline.expanded
++        expanded: line._outline.expanded,
++        left: x || 0,
++        top: y || 0
+       });
+       if (line._outline.id) {
+         this.outlineMap[line._outline.id] = outline;
+@@ -19882,7 +19885,8 @@ class PDFOutline {
+       const destWidth = dest.data.MediaBox[2];
+       const destHeight = dest.data.MediaBox[3];
+       const top = destHeight - (options.top || 0);
+-      const left = destWidth - (options.left || 0);
++      // PATCHED (see patches/README.md): `left` is an absolute x, not an inset from the right edge.
++      const left = options.left ?? destWidth;
+       const zoom = options.zoom || 0;
+       this.outlineData['Dest'] = options.fit ? [dest, 'Fit'] : [dest, 'XYZ', left, top, zoom];
+     }
+@@ -19933,8 +19937,8 @@ var OutlineMixin = {
+   endOutline() {
+     this.outline.endOutline();
+     if (this.outline.children.length > 0) {
++      // PATCHED (see patches/README.md): no PageMode /UseOutlines, the outline panel stays closed.
+       this._root.data.Outlines = this.outline.dictionary;
+-      return this._root.data.PageMode = this._root.data.PageMode || 'UseOutlines';
+     }
+   }
+ };

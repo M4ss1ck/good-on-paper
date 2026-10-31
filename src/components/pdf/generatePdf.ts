@@ -1,4 +1,15 @@
 import type { TDocumentDefinitions, Style, Content, ContentText } from "pdfmake/interfaces";
+
+/**
+ * Fields pdfmake reads from a text node for named destinations (`id`) and outlines
+ * (Renderer.renderLine in its bundle). @types/pdfmake does not declare them, so the
+ * text nodes that carry them are typed here.
+ */
+type OutlinedText = ContentText & {
+  id?: string;
+  outline?: boolean;
+  outlineParentId?: string;
+};
 import type {
   CV,
   Section,
@@ -92,10 +103,20 @@ function buildHeader(cv: CV): Content[] {
   return content;
 }
 
-function sectionHeadingBlock(title: string, hideDivider?: boolean): Content[] {
+/**
+ * The heading is the section's outline entry and its named destination. Both use the stable
+ * section id, so a retitled section keeps its links.
+ */
+function sectionHeadingBlock(section: Section): Content[] {
+  const title: OutlinedText = {
+    text: section.title.toUpperCase(),
+    style: "sectionHeading",
+    id: section.id,
+    outline: true,
+  };
   return [
-    { text: title.toUpperCase(), style: "sectionHeading" },
-    ...(hideDivider
+    title,
+    ...(section.hideDivider
       ? []
       : [
           {
@@ -120,8 +141,8 @@ function keepTogether(content: Content[]): Content {
   return { stack: content, unbreakable: true };
 }
 
-function buildSection(title: string, blocks: Content[], hideDivider?: boolean): Content[] {
-  const heading = sectionHeadingBlock(title, hideDivider);
+function buildSection(section: Section, blocks: Content[]): Content[] {
+  const heading = sectionHeadingBlock(section);
 
   if (blocks.length === 0) {
     return [keepTogether(heading)];
@@ -143,7 +164,7 @@ function buildSummary(section: Section): Content[] {
       });
     }
   }
-  return buildSection(section.title, blocks, section.hideDivider);
+  return buildSection(section, blocks);
 }
 
 function buildSkills(section: Section): Content[] {
@@ -162,7 +183,7 @@ function buildSkills(section: Section): Content[] {
       });
     }
   }
-  return buildSection(section.title, blocks, section.hideDivider);
+  return buildSection(section, blocks);
 }
 
 /** Company or institution line with its dates after a " · " separator; either part may be empty. */
@@ -178,7 +199,14 @@ function buildExperience(section: Section): Content[] {
     const dateText = [item.startDate, item.endDate].filter(Boolean).join(" – ");
 
     if (item.role) {
-      heading.push({ text: item.role, style: "roleTitle", margin: [0, 4, 0, 0] });
+      const role: OutlinedText = {
+        text: item.role,
+        style: "roleTitle",
+        margin: [0, 4, 0, 0],
+        outline: true,
+        outlineParentId: section.id,
+      };
+      heading.push(role);
     }
 
     // Dates ride on the company line, not in a right-aligned column, so they stay with the entry.
@@ -212,7 +240,7 @@ function buildExperience(section: Section): Content[] {
       );
     });
   }
-  return buildSection(section.title, blocks, section.hideDivider);
+  return buildSection(section, blocks);
 }
 
 function buildEducation(section: Section): Content[] {
@@ -221,7 +249,14 @@ function buildEducation(section: Section): Content[] {
   for (const item of items) {
     const entry: Content[] = [];
     if (item.degree) {
-      entry.push({ text: item.degree, style: "roleTitle", margin: [0, 3, 0, 0] });
+      const degree: OutlinedText = {
+        text: item.degree,
+        style: "roleTitle",
+        margin: [0, 3, 0, 0],
+        outline: true,
+        outlineParentId: section.id,
+      };
+      entry.push(degree);
     }
     const subline = joinSubline(item.institution, item.dates);
     if (subline) {
@@ -236,13 +271,13 @@ function buildEducation(section: Section): Content[] {
     }
     if (entry.length > 0) blocks.push(keepTogether(entry));
   }
-  return buildSection(section.title, blocks, section.hideDivider);
+  return buildSection(section, blocks);
 }
 
 function buildLanguages(section: Section): Content[] {
   const items = section.items as LanguageItem[];
   const filled = items.filter((i) => i.language);
-  if (filled.length === 0) return buildSection(section.title, [], section.hideDivider);
+  if (filled.length === 0) return buildSection(section, []);
 
   const textParts = filled.flatMap((item, i) => {
     const parts: Content[] = [];
@@ -251,13 +286,13 @@ function buildLanguages(section: Section): Content[] {
     if (item.level) parts.push({ text: ` (${item.level})` });
     return parts;
   });
-  return buildSection(section.title, [
+  return buildSection(section, [
     {
       text: textParts,
       style: "body",
       unbreakable: true,
     },
-  ], section.hideDivider);
+  ]);
 }
 
 function buildCustom(section: Section): Content[] {
@@ -268,7 +303,7 @@ function buildCustom(section: Section): Content[] {
       blocks.push({ text: item.content, style: "body", unbreakable: true });
     }
   }
-  return buildSection(section.title, blocks, section.hideDivider);
+  return buildSection(section, blocks);
 }
 
 export function generatePdfDefinition(cv: CV): TDocumentDefinitions {

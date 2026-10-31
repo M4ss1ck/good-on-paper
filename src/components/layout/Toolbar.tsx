@@ -17,15 +17,7 @@ import { DiffPicker } from "../diff/DiffPicker";
 import { ImportDialog } from "../workspace/ImportDialog";
 import { loadCatalog, type AppLocale } from "../../i18n";
 import { GoodOnPaperLogo } from "../logo/GoodOnPaperLogo";
-
-/** Turns a CV name into a safe file base name. */
-function fileBaseName(name: string | undefined): string {
-  const cleaned = (name ?? "")
-    .replace(/[\\/:*?"<>|]/g, "-")
-    .replace(/\s+/g, " ")
-    .trim();
-  return cleaned || "cv";
-}
+import { fileBaseName, pdfFileName } from "../../lib/fileName";
 
 export function Toolbar() {
   const cv = useCVStore((s) => s.activeCv());
@@ -80,7 +72,7 @@ export function Toolbar() {
 
   const handleDownloadPdf = () => {
     if (!cv) return;
-    downloadPdf(cv, `${fileBaseName(cv.name)}.pdf`).catch((error: unknown) => {
+    downloadPdf(cv, pdfFileName(cv)).catch((error: unknown) => {
       console.error("PDF download failed", error);
       pushToast({ tone: "error", message: t`Could not download the PDF` });
     });

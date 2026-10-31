@@ -70,27 +70,15 @@ function key(text: string): string {
 }
 
 /**
- * The whole text in pdf.js reading order, whitespace removed and lowercased, with each
- * character mapped back to the text item it came from. Positions are indexes into `text`.
+ * The whole text in pdf.js reading order, whitespace removed and lowercased. `find` returns
+ * the index of the first match at or after `from`, or -1. Positions are only comparable with
+ * each other, not with coordinates on the page.
  */
 function readingIndex(pdf: ParsedPdf) {
-  let text = "";
-  const owner: PdfTextItem[] = [];
-  for (const item of pdf.textItems) {
-    for (const ch of item.str) {
-      if (/\s/.test(ch)) continue;
-      text += ch.toLowerCase();
-      owner.push(item);
-    }
-  }
+  const text = pdf.textItems.map((item) => key(item.str)).join("");
   return {
     find: (needle: string, from: number) => text.indexOf(key(needle), Math.max(from, 0)),
-    itemAt: (at: number) => owner[at],
   };
-}
-
-function sameLine(a: PdfTextItem, b: PdfTextItem): boolean {
-  return a.page === b.page && Math.abs(a.y - b.y) < 1;
 }
 
 function sectionOf(cv: CV, type: SectionType): Section {
@@ -99,10 +87,9 @@ function sectionOf(cv: CV, type: SectionType): Section {
   return found;
 }
 
-/** A dated entry as the reader sees it: heading (role/degree), subline (company/institution), dates, first bullet or note. */
+/** A dated entry as the reader sees it: heading (role/degree), its dates, first bullet or note. */
 interface DatedEntry {
   heading: string;
-  subline: string;
   dates: string;
   firstLine: string;
 }
@@ -110,7 +97,6 @@ interface DatedEntry {
 function experienceEntries(cv: CV): DatedEntry[] {
   return (sectionOf(cv, "experience").items as ExperienceItem[]).map((item) => ({
     heading: item.role,
-    subline: [item.company, item.location].filter(Boolean).join(", "),
     dates: [item.startDate, item.endDate].filter(Boolean).join(" – "),
     firstLine: item.bullets.find(Boolean) ?? "",
   }));
@@ -119,16 +105,15 @@ function experienceEntries(cv: CV): DatedEntry[] {
 function educationEntries(cv: CV): DatedEntry[] {
   return (sectionOf(cv, "education").items as EducationItem[]).map((item) => ({
     heading: item.degree,
-    subline: item.institution,
     dates: item.dates,
     firstLine: item.notes ?? "",
   }));
 }
 
 /**
- * The layout rule for dated entries, checked in pdf.js reading order. For each section, in
- * document order: the heading sits on its own line, the dates sit on the subline after it
- * (on the same line as the subline), and the entry's first bullet or note comes last.
+ * The order rule for dated entries, checked in pdf.js reading order. For each section, in
+ * document order: each entry's heading comes first, then its dates, then its first bullet or
+ * note. Where the dates sit between those is left to the layout (a right-aligned column).
  */
 function expectDatedEntries(
   pdf: ParsedPdf,
@@ -142,18 +127,8 @@ function expectDatedEntries(
     for (const entry of section.entries) {
       const headingAt = reading.find(entry.heading, cursor);
       expect(headingAt, `heading "${entry.heading}"`).toBeGreaterThanOrEqual(0);
-      const sublineAt = reading.find(entry.subline, headingAt);
-      expect(sublineAt, `subline "${entry.subline}"`).toBeGreaterThan(headingAt);
-      const datesAt = reading.find(entry.dates, sublineAt);
-      expect(datesAt, `dates "${entry.dates}" after "${entry.subline}"`).toBeGreaterThan(sublineAt);
-      expect(
-        sameLine(reading.itemAt(datesAt), reading.itemAt(sublineAt)),
-        `dates "${entry.dates}" on the subline line`,
-      ).toBe(true);
-      expect(
-        sameLine(reading.itemAt(headingAt), reading.itemAt(sublineAt)),
-        `heading "${entry.heading}" on its own line`,
-      ).toBe(false);
+      const datesAt = reading.find(entry.dates, headingAt);
+      expect(datesAt, `dates "${entry.dates}" after "${entry.heading}"`).toBeGreaterThan(headingAt);
       const firstAt = reading.find(entry.firstLine, datesAt);
       expect(firstAt, `first line "${entry.firstLine}" after its dates`).toBeGreaterThan(datesAt);
       cursor = firstAt;
@@ -312,7 +287,7 @@ describe.each(families)("renderPdf with %s", (fontFamily) => {
     });
   });
 
-  it("keeps each experience and education date with its entry, on the subline after the heading", () => {
+  it("keeps each experience and education date after its entry heading and before its first bullet or note", () => {
     const cv = makeAtsCV({ settings: { fontFamily } });
     expectDatedEntries(pdf, [
       { title: sectionOf(cv, "experience").title, entries: experienceEntries(cv) },

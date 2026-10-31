@@ -36,6 +36,7 @@ const styles: Record<string, Style> = {
   body: { fontSize: 10, color: "#333333" },
   roleTitle: { fontSize: 10.5, bold: true, color: "#222222" },
   subline: { fontSize: 10, italics: true, color: "#3A6EA5" },
+  dates: { fontSize: 9, color: "#888888" },
   bullet: { fontSize: 9.5 },
 };
 
@@ -180,21 +181,24 @@ function buildSkills(section: Section): Content[] {
   return buildSection(section, blocks);
 }
 
-/** Company or institution line with its dates after a " · " separator; either part may be empty. */
-function joinSubline(name: string | undefined, dates: string | undefined): string {
-  return [name, dates].filter(Boolean).join(" · ");
-}
-
 /**
- * An experience role or education degree: a bold title, then its subline. `topMargin` is the
- * gap above the title, which differs by entry type.
+ * An experience role or education degree: a bold title with its dates right-aligned on the
+ * same row, then the subline (company or institution). `topMargin` is the gap above the title
+ * row, which differs by entry type. Dates are optional; the title row is skipped if both are empty.
  */
-function entryHeader(title: string | undefined, subline: string, topMargin: number): Content[] {
+function entryHeader(
+  title: string | undefined,
+  subline: string,
+  dates: string,
+  topMargin: number,
+): Content[] {
   const header: Content[] = [];
-  if (title) {
+  if (title || dates) {
     header.push({
-      text: title,
-      style: "roleTitle",
+      columns: [
+        { text: title ?? "", style: "roleTitle", width: "*" },
+        { text: dates, style: "dates", width: "auto", alignment: "right" as const },
+      ],
       margin: [0, topMargin, 0, 0] as [number, number, number, number],
     });
   }
@@ -209,9 +213,8 @@ function buildExperience(section: Section): Content[] {
   const blocks: Content[] = [];
   for (const item of items) {
     const dateText = [item.startDate, item.endDate].filter(Boolean).join(" – ");
-    // Dates ride on the subline, not in a right-aligned column, so they stay with the entry.
-    const subline = joinSubline([item.company, item.location].filter(Boolean).join(", "), dateText);
-    const heading = entryHeader(item.role, subline, 4);
+    const company = [item.company, item.location].filter(Boolean).join(", ");
+    const heading = entryHeader(item.role, company, dateText, 4);
 
     const bullets = item.bullets.filter(Boolean);
     if (bullets.length === 0) {
@@ -245,7 +248,7 @@ function buildEducation(section: Section): Content[] {
   const items = section.items as EducationItem[];
   const blocks: Content[] = [];
   for (const item of items) {
-    const entry = entryHeader(item.degree, joinSubline(item.institution, item.dates), 3);
+    const entry = entryHeader(item.degree, item.institution ?? "", item.dates ?? "", 3);
     if (item.notes) {
       entry.push({
         text: item.notes,
